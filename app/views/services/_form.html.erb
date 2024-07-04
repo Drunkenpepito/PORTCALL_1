@@ -1,0 +1,10 @@
+
+<%= simple_form_for [@contract,@service.parent,service], html: { class: "service form " } do |f| %>
+  <% if service.errors.any? %>
+    <div class="error-message">
+      <%= service.errors.full_messages.to_sentence.capitalize %>
+    </div>
+  <% end %>
+  <%= f.input :name, input_html: { autofocus: true ,class:"form1"} %>
+  <%= f.submit class: "btn1" %>
+<% end %>

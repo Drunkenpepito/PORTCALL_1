@@ -1,0 +1,11 @@
+
+<%= simple_form_for contract, html: { class: "contract form " } do |f| %>
+  <% if contract.errors.any? %>
+    <div class="error-message">
+      <%= contract.errors.full_messages.to_sentence.capitalize %>
+    </div>
+  <% end %>
+
+  <%= f.input :name, input_html: { autofocus: true ,class:"form1"} %>
+  <%= f.submit class: "btn1" %>
+<% end %>

@@ -1,0 +1,17 @@
+
+<%= link_to sanitize("&larr; Contracs"), contracts_path, class:"white" %>
+<% if @service.is_root? == false  %> 
+  <%= link_to sanitize("&larr; Back"), contract_service_path(@contract,@service.parent) , class:"white"%>
+<% end %>
+<main class="container white">
+
+  <div class="header">
+    <h1>Services for <%= @contract.name %></h1>
+    <h3><%=  @service.ancestors.map(&:name) if @service.ancestors.map(&:name) != [] %>
+    <h1 class="red"><%= @service.name %> </h1>
+    <%= link_to "New service",new_contract_service_service_path(@contract, @service),class: "btn1" %>
+  </div>
+  
+  <%= render @services  if @services != nil %>
+
+</main>
