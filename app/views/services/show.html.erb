@@ -1,17 +1,30 @@
 
 <%= link_to sanitize("&larr; Contracs"), contracts_path, class:"white" %>
 <% if @service.is_root? == false  %> 
-  <%= link_to sanitize("&larr; Back"), contract_service_path(@contract,@service.parent) , class:"white"%>
+  <%= link_to sanitize("&larr; Back"), service_path( @service.parent) , class:"white"%>
 <% end %>
+
 <main class="container white">
 
   <div class="header">
-    <h1>Services for <%= @contract.name %></h1>
-    <h3><%=  @service.ancestors.map(&:name) if @service.ancestors.map(&:name) != [] %>
-    <h1 class="red"><%= @service.name %> </h1>
-    <%= link_to "New service",new_contract_service_service_path(@contract, @service),class: "btn1" %>
+    <%= @service.contract.name + "/"%>
+    <% if @service.ancestors.map(&:name) != [] %> 
+      <%  @service.ancestors.map(&:name).each do |s|%>
+       <%= s + "/" %>
+      <% end %>
+    <% end %>
+    <span class="red"><%= @service.name%>  <%= link_to "New service",service_new_child_service_path(@service),class: "btn1" %></span>
   </div>
   
-  <%= render @services  if @services != nil %>
-
 </main>
+
+
+
+<!--   MENU    -->
+
+      <div class="white">
+        <% @services.each do |service| %>
+            <li><%= link_to service.name, service_path(service), class:"white " %></li>
+            <%= render 'sub_menu_services', services: service.descendants.arrange %>
+        <% end %>
+      </div>

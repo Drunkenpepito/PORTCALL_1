@@ -7,7 +7,7 @@ class ContractsController < ApplicationController
     end
     
     def show
-        @services = @contract.services
+        @services = @contract.services.select{ |s| s.is_root? }
     end
     
     def new
@@ -40,6 +40,8 @@ class ContractsController < ApplicationController
         @contract.destroy
         redirect_to contracts_path, notice: "Contract was successfully destroyed."
     end
+
+
     
     private
     

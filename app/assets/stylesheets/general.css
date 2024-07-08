@@ -16,6 +16,10 @@ body {
     color:#09507A
 }
 
+.big {
+  font-size: 26px;
+}
+
 .btn1 {
   background-color: #FFFFFF;
   border: 1px solid #222222;
@@ -25,12 +29,12 @@ body {
   cursor: pointer;
   display: inline-block;
   font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 20px;
   margin: 0;
   outline: none;
-  padding: 13px 23px;
+  padding: 8px 14px;
   position: relative;
   text-align: center;
   text-decoration: none;

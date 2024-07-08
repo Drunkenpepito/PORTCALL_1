@@ -1,12 +1,12 @@
 <div class="service flex ">
   
   <div>
-    <%= link_to service.name, contract_service_path(@contract, service), class:"red" %>
+    <%= link_to service.name, service_path, class:"red" %>
   </div>
 
   <%# <span class="service__actions "> %>
-  <div> <%= button_to "Delete",contract_service_path(@contract,service),method: :delete,class: "btn1" %></div>
-  <div><%= link_to "Edit",edit_contract_service_path(@contract,service),class: "btn1" %></div>           
+  <div> <%= button_to "Delete",service_path,method: :delete,class: "btn1" %></div>
+  <div><%= link_to "Edit",edit_service_path,class: "btn1" %></div>           
   <%# </span> %>
 
 </div>

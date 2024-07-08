@@ -1,12 +1,60 @@
 <%= link_to sanitize("&larr; Back to contracts"), contracts_path, class:"btn1" %>
+<%= link_to sanitize("New Service"), contract_new_master_service_path(@contract), class:"btn1" %>
 
-<main class="container white">
+<!--   MENU 2   -->
 
-  <div class="header">
-    <h1>Services for <%= @contract.name %></h1>
-    <%= link_to "New service",new_contract_service_path(@contract),class: "btn1" %>
-  </div>
-  
-  <%= render @services  if @services != nil %>
+<div class="white">
+  <% @services.each do |service| %>
+      <li><%= link_to service.name, service_path(service), class:"big red " %></li>
+      <%= render 'sub_menu_services', services: service.descendants.arrange %>
+  <% end %>
+</div>
 
-</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- TABLE DE SERVICES -->
+<%#
+      <div>
+        <table class="table tableservices">
+          <tr class= trservices>
+            <th>NAME</th>
+            <th>PRICE</th>
+            <th class="empty"></th>
+          </tr>
+          <% @services.each do |s| 
+              <tr>
+                <td><%=link_to s.name.upcase, supplier_service_path(@supplier,s), class: "linkservices"</td>
+                <td><%=link_to s.price, supplier_service_cost_lines_path(@supplier,s), class: "linkservices2 white"</td>
+                <% if current_user.supplier_id != "" && current_user.supplier_id !=nil 
+                  <td class="text-right" >
+                    <% if s.ancestry != nil 
+                      <%= link_to '',edit_supplier_service_path(@supplier,s), class: "fas fa-pencil-alt", style: "color:#09507A" 
+                    <% else 
+                      <%= link_to '',supplier_service_edit_masterservice_path(@supplier,s), class: "fas fa-pencil-alt", style: "color:#09507A"
+                    <% end 
+                    <%= link_to " ", supplier_service_path(@supplier,s), method: :delete, data: {confirm: 'Are you sure?'}, class: "fas fa-trash-alt" , style: "color:#09507A"
+                  </td>
+                <% end 
+              </tr>
+          <% end 
+        </table>
+      </div> %>
