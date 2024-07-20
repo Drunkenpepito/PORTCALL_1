@@ -4,6 +4,7 @@
   <%= link_to sanitize("&larr; Back"), service_path( @service.parent) , class:"white"%>
 <% end %>
 <%= link_to sanitize("Copy Service from ..."), copy_service_path, class:"btn1" %>
+<%= link_to "New service",service_new_child_service_path(@service),class: "btn1" %>
 
 
 <main class="container white">
@@ -15,7 +16,8 @@
        <%= s + "/" %>
       <% end %>
     <% end %>
-    <span class="red"><%= @service.name%>  <%= link_to "New service",service_new_child_service_path(@service),class: "btn1" %></span>
+    <span class="red"><%= @service.name%> <%= link_to sanitize("Formula"), new_service_formula_path(@service), class:"btn1" %>
+ </span>
   </div>
   
 </main>

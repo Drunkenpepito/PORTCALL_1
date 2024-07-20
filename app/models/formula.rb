@@ -1,3 +1,3 @@
 class Formula < ApplicationRecord
-  belongs_to :service_id
+  belongs_to :service
 end
