@@ -3,6 +3,8 @@
 <% if @service.is_root? == false  %> 
   <%= link_to sanitize("&larr; Back"), service_path( @service.parent) , class:"white"%>
 <% end %>
+<%= link_to sanitize("Copy Service from ..."), copy_service_path, class:"btn1" %>
+
 
 <main class="container white">
 

@@ -93,6 +93,10 @@ class ServicesController < ApplicationController
     # def show_master_service
     #     @service = Service.new
     # end
+
+    def copy_service
+        
+    end
     
     private
     

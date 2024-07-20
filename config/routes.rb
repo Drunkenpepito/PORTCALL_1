@@ -15,5 +15,6 @@ Rails.application.routes.draw do
     # CAS 2 ( CAS GENERAL) - pour creer un service , on a un parent
     get "add_child_service", to: "services#new_child" , as:"new_child_service"
   end
+  get "copy_service", to: "services#copy_service", as:"copy_service"
   
 end
