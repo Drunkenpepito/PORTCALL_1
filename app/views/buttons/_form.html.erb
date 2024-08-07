@@ -1,0 +1,14 @@
+<div class="d-flex flex-column align-items-center">
+  <div class="ingredient-card">
+    <div class="ingredient-value cellule">
+      <%= simple_form_for variable, html: {class:"d-flex align-items-start"} do |f| %>
+        <%= f.input :value, label:false, input_html: {class: "input-fit-content"},
+        wrapper_html:{class:'m-0'} %>
+        <%= button_tag :submit, class:"--no-border"  do%>
+          <i class="fa-solid fa-circle-check text-success" style="font-size='1rem'"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <p> <%= variable.name %></p>
+</div>

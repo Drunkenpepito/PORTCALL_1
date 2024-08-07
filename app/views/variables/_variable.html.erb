@@ -1,0 +1,26 @@
+<div class="d-flex flex-column align-items-center">
+  <div class="ingredient-card">
+    <div class="remove-ingredient-btn">
+    <span class="translate-middle badge rounded-pill bg-danger">
+      <%= button_to variable_path(variable), method: :delete do%>
+          X
+          <span class="visually-hidden">removed</span>
+      <% end %>
+    </span>
+    </div>
+    <% unless variable.fixed? %>
+      <div class="edit-ingredient-btn">
+        <span class="translate-middle badge rounded-pill bg-primary">
+          <%= link_to edit_service_variable_path(variable) do%>
+              <i class="fa-solid fa-pen"></i>
+              <span class="visually-hidden">edit</span>
+          <% end %>
+        </span>
+      </div>
+    <% end %>
+    <div class="ingredient-value">
+      <%=variable.operator? ? variable.name : variable.value %>
+    </div>
+  </div>
+  <p><%= variable.name %> </p>
+</div>

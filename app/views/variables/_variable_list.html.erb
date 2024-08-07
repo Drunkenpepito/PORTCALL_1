@@ -1,0 +1,5 @@
+<div class="ingredients-list">
+  <% service.variables.sort_by(&:position).each do |variable| %>
+    <%= render 'variables/variable' , variable: %>
+  <% end %>
+</div>

@@ -1,3 +1,3 @@
 class Variable < ApplicationRecord
-  belongs_to :formula
+  belongs_to :service
 end

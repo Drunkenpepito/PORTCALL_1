@@ -1,0 +1,19 @@
+<%= simple_form_for @formula, html: { class: "" } do |f| %>
+  <% if @formula.errors.any? %>
+    <div class="error-message">
+      <%= @formula.errors.full_messages.to_sentence.capitalize %>
+    </div>
+  <% end %>
+
+  <%= f.input :name, input_html: { autofocus: true, class:"form2" }, label:false %>
+  
+    <div>
+  <% @variables.each do |v| %> 
+      <%= link_to v.name,edit_variable_path(v), class:"red" %>
+      <%= button_to '❌',formula_variable_path(@formula,v),method: :delete, class:"red" %>
+  <% end %>
+    </div>
+
+  <%= link_to "New variable",new_formula_variable_path(@formula), class:"btn1" %>
+  <%= f.submit class: "btn1" %>
+<% end %>

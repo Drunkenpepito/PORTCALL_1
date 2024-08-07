@@ -3,32 +3,68 @@
 <% if @service.is_root? == false  %> 
   <%= link_to sanitize("&larr; Back"), service_path( @service.parent) , class:"white"%>
 <% end %>
-<%= link_to sanitize("Copy Service from ..."), copy_service_path, class:"btn1" %>
+<%= link_to sanitize("Copy Service from ..."), service_copy_service_path(@service), class:"btn1" %>
 <%= link_to "New service",service_new_child_service_path(@service),class: "btn1" %>
 
 
 <main class="container white">
 
-  <div class="header">
+<!--   PATH    -->
+
+  <span class="header">
     <%= @service.contract.name + "/"%>
     <% if @service.ancestors.map(&:name) != [] %> 
       <%  @service.ancestors.map(&:name).each do |s|%>
        <%= s + "/" %>
       <% end %>
+      <h6 class="ingredient-value"><%= @service.name %></h6>
     <% end %>
-    <span class="red"><%= @service.name%> <%= link_to sanitize("Formula"), new_service_formula_path(@service), class:"btn1" %>
- </span>
+  </span>
+
+<!--   MENU    -->
+  <div class="ingredient-card">
+        <p class="white">
+          <% @services.each do |service| %>
+              <li><%= link_to service.name, service_path(service), class:"white " %></li>
+              <%= render 'sub_menu_services', services: service.descendants.arrange %>
+          <% end %>
+        </p>
   </div>
+  
+
+  <!--   VIEW FROM BENOIT MODEL    -->
+
+  <h2>FORMULE:</h2>
+  <%= turbo_frame_tag "variables_list" do %>
+    <% if  @service.variables.empty? %>
+      <h4 ><italic>Vous n'avez pas encore de formule pour ce service</italic></h4>
+    <% else %>
+      <%= render "variables/variable_list", service: @service %>
+    <% end %>
+  <% end %>
+  <div class="d-flex">
+    <div class="operateur-add me-5 p-2">
+
+      <h2>ADD OPERATEUR</h2>
+      <%= render 'buttons/operators' %>
+    </div>
+    <div class="value-add p-2">
+
+      <h2>ADD VARIABLE</h2>
+      <div class="d-flex ">
+        <%= render 'buttons/add_value', service: @service,
+        variable: Variable.new( operator:false ,fixed: false,role: "value") %>
+
+      </div>
+    </div>
+  </div>
+  <%= link_to  services_path do%>
+    <I class="fa-solid fa-arrow-left"></I> Retour aux services
+  <% end %>
+</div>
   
 </main>
 
 
 
-<!--   MENU    -->
 
-      <div class="white">
-        <% @services.each do |service| %>
-            <li><%= link_to service.name, service_path(service), class:"white " %></li>
-            <%= render 'sub_menu_services', services: service.descendants.arrange %>
-        <% end %>
-      </div>

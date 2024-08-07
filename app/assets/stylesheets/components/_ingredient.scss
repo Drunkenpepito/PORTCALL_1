@@ -1,0 +1,47 @@
+.ingredients-list{
+    display: flex;
+    gap: 1rem;
+  }
+  .ingredient-card{
+      display: flex;
+      flex-direction: column;
+      width: fit-content;
+      align-items: center;
+      justify-content: space-between;
+    p{
+      font-weight: lighter;
+      font-style: italic;
+      margin: none;
+    }
+  }
+  .ingredient-value {
+    width: fit-content;
+    padding: 0.5em 1em;
+    border: thin solid black;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+  }
+  .value-add{
+    border-left: thin solid grey;
+  }
+  
+  // form
+  .cellule{
+  height: 2.65em !important;
+  padding: 0.1rem 0.3em 0.8rem 1rem !important;
+  i{
+    font-size: 2rem;
+  }
+  }
+  form{
+    display: flex;
+    align-items: baseline;
+  }
+  .input-fit-content {
+    width: 14ch !important;
+    text-align: end;
+  }
+  

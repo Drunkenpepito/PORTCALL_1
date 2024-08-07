@@ -8,8 +8,9 @@ class ServicesController < ApplicationController
     end
     
     def show
-        @service = Service.find(params[:id])
+        @service = Service.includes(:variables).find(params[:id])
         @services = @service.children 
+
     end
     
     def new

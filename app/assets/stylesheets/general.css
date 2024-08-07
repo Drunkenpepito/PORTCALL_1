@@ -16,6 +16,18 @@ body {
     color:#09507A
 }
 
+.formula{
+    background-color: #222222;
+    color:aquamarine;
+    border-radius: 8px;
+    padding: 4px 7px;
+    text-decoration: none;
+}
+
+.large{
+width: 100%;
+}
+
 .big {
   font-size: 26px;
 }
@@ -83,4 +95,14 @@ body {
     border-radius: 20px;
     background-color:#eafafb;
     color: #09507A;
+}
+
+.form2 {
+  margin: 20px;
+  border:5px solid aquamarine;
+  font-size: 30px;
+  border-radius: 20px;
+  background-color:#eafafb;
+  color: #09507A;
+  width: 100%;
 }

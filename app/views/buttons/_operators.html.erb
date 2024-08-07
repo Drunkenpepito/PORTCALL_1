@@ -1,0 +1,14 @@
+<div class="d-flex ">
+  <%= render 'buttons/add_operator', service: @service,
+  variable: Variable.new(name: "X",value: "*", operator:true,fixed: true,role: "value") %>
+  <%= render 'buttons/add_operator', service: @service,
+  variable: Variable.new(name: "/",value: "/", operator:true,fixed: true,role: "value") %>
+  <%= render 'buttons/add_operator', service: @service,
+  variable: Variable.new(name: "+",value: "+", operator:true,fixed: true,role: "value") %>
+  <%= render 'buttons/add_operator', service: @service,
+  variable: Variable.new(name: "-",value: "-", operator:true,fixed: true,role: "value") %>
+  <%= render 'buttons/add_operator', service: @service,
+  variable: Variable.new(name: "(",value: "(", operator:true,fixed: true,role: "value") %>
+  <%= render 'buttons/add_operator', service: @service,
+  variable: Variable.new(name: ")",value: ")", operator:true,fixed: true,role: "value") %>
+</div>

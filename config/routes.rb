@@ -14,8 +14,10 @@ Rails.application.routes.draw do
     # ON UTILISE PAS LE NEW
     # CAS 2 ( CAS GENERAL) - pour creer un service , on a un parent
     get "add_child_service", to: "services#new_child" , as:"new_child_service"
-    resources :formulas
+    # resources :formulas, only: [:new, :create]
+    get "copy_service", to: "services#copy_service", as:"copy_service"
+    resources :variables, only: [:new, :create, :edit, :update,]
   end
-  get "copy_service", to: "services#copy_service", as:"copy_service"
-  
+  resources :variables , only: [:show, :index,  :destroy]
+ 
 end
