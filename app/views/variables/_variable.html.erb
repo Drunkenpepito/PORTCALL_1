@@ -1,26 +1,36 @@
-<div class="d-flex flex-column align-items-center">
-  <div class="ingredient-card">
-    <div class="remove-ingredient-btn">
-    <span class="translate-middle badge rounded-pill bg-danger">
-      <%= button_to variable_path(variable), method: :delete do%>
-          X
-          <span class="visually-hidden">removed</span>
-      <% end %>
-    </span>
+
+<%= turbo_frame_tag variable, data: { url: "/variables/#{variable.id}/move" } do %>
+  <div class="d-flex flex-column align-items-center">
+    <div class="ingredient-card">
+
+      <%# DELETE %>
+            <div class="remove-ingredient-btn">
+            <span class="translate-middle badge border border-light rounded-pill bg-danger">
+              <%= button_to variable_path(variable),  method: :delete do %>
+                X
+                <span class="visually-hidden">removed</span>
+              <% end %>
+            </span>
+            </div>
+
+      <%# EDIT %>
+            <% unless variable.fixed? %>
+              <div class="edit-ingredient-btn">
+                <span class="translate-middle badge  border border-light rounded-pill bg-primary">
+                  <%= link_to edit_variable_path(variable) do%>
+                      <i class="fa-solid fa-pen "></i>
+                      <span class="visually-hidden">edit</span>
+                  <% end %>
+                </span>
+              </div>
+            <% end %>
+
+      <%# VALUE %>
+            <div class="ingredient-value">
+              <%=variable.operator? ? variable.name : variable.value %>
+            </div>
+
     </div>
-    <% unless variable.fixed? %>
-      <div class="edit-ingredient-btn">
-        <span class="translate-middle badge rounded-pill bg-primary">
-          <%= link_to edit_service_variable_path(variable) do%>
-              <i class="fa-solid fa-pen"></i>
-              <span class="visually-hidden">edit</span>
-          <% end %>
-        </span>
-      </div>
-    <% end %>
-    <div class="ingredient-value">
-      <%=variable.operator? ? variable.name : variable.value %>
-    </div>
+    <p><%= variable.name %> </p>
   </div>
-  <p><%= variable.name %> </p>
-</div>
+<% end %>

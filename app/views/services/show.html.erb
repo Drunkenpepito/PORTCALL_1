@@ -1,27 +1,29 @@
 
-<%= link_to sanitize("&larr; Contracs"), contracts_path, class:"white" %>
+<%= link_to sanitize("&larr; Contracs"), contracts_path, class:"btn btn-secondary" %>
 <% if @service.is_root? == false  %> 
-  <%= link_to sanitize("&larr; Back"), service_path( @service.parent) , class:"white"%>
+  <%= link_to sanitize("&larr; Back"), service_path( @service.parent) , class:"btn btn-secondary"%>
 <% end %>
-<%= link_to sanitize("Copy Service from ..."), service_copy_service_path(@service), class:"btn1" %>
-<%= link_to "New service",service_new_child_service_path(@service),class: "btn1" %>
+<%= link_to sanitize("Copy Service from ..."), service_copy_service_path(@service), class:"btn btn-outline-warning" %>
+<%= link_to "New service",service_new_child_service_path(@service),class: "btn btn-outline-primary" %>
 
 
 <main class="container white">
 
 <!--   PATH    -->
 
-  <span class="header">
+  <span class="d-flex justify-content-start m-3">
     <%= @service.contract.name + "/"%>
     <% if @service.ancestors.map(&:name) != [] %> 
       <%  @service.ancestors.map(&:name).each do |s|%>
        <%= s + "/" %>
       <% end %>
-      <h6 class="ingredient-value"><%= @service.name %></h6>
+    <span class="text-danger"> &nbsp;<%=@service.name %></span>
+    <% else %>
+      <%= @service.name %>
     <% end %>
   </span>
 
-<!--   MENU    -->
+<!--   SERVICE PATH    -->
   <div class="ingredient-card">
         <p class="white">
           <% @services.each do |service| %>
@@ -32,37 +34,38 @@
   </div>
   
 
-  <!--   VIEW FROM BENOIT MODEL    -->
+  <!--   VARIABLE LIST    -->
+  <div class="">
+    <h2 class = "calculator_card"></h2>
 
-  <h2>FORMULE:</h2>
-  <%= turbo_frame_tag "variables_list" do %>
-    <% if  @service.variables.empty? %>
-      <h4 ><italic>Vous n'avez pas encore de formule pour ce service</italic></h4>
-    <% else %>
-      <%= render "variables/variable_list", service: @service %>
+    <%= turbo_frame_tag "variable_list" do %>
+      <% if  @service.variables.empty? %>
+        <h4 ><italic>No Formula for this service</italic></h4>
+      <% else %>
+        <%= render "variables/variable_list", service: @service , class:"calculator-card p-3"%>
+      <% end %>
     <% end %>
-  <% end %>
-  <div class="d-flex">
-    <div class="operateur-add me-5 p-2">
 
-      <h2>ADD OPERATEUR</h2>
-      <%= render 'buttons/operators' %>
-    </div>
-    <div class="value-add p-2">
+  <!--   FORMULA ELEMENTS   -->
+    <div class="d-flex">
+      <div class="operateur-add me-5 p-2">
 
-      <h2>ADD VARIABLE</h2>
-      <div class="d-flex ">
-        <%= render 'buttons/add_value', service: @service,
-        variable: Variable.new( operator:false ,fixed: false,role: "value") %>
+        <h2>ADD OPERATOR</h2>
+        <%= render 'buttons/operators' %>
+      </div>
+      <div class="value-add p-2">
 
+        <h2>ADD VARIABLE</h2>
+        <div class="d-flex ">
+          <%= render 'buttons/add_value', service: @service,
+          variable: Variable.new( operator:false ,fixed: false,role: "value") %>
+
+        </div>
       </div>
     </div>
+
   </div>
-  <%= link_to  services_path do%>
-    <I class="fa-solid fa-arrow-left"></I> Retour aux services
-  <% end %>
-</div>
-  
+
 </main>
 
 

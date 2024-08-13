@@ -1,13 +1,10 @@
 class VariablesController < ApplicationController
     def new
-        @formula = Formula.find(params[:formula_id])
         @variable = Variable.new
     end
     
 
     def create
-       
-
         @service = Service.find(params[:service_id])
         @variable = Variable.new(variable_params)
         @variable.service = @service
@@ -26,7 +23,7 @@ class VariablesController < ApplicationController
     def update
         @variable = Variable.find(params[:id])
         if @variable.update(variable_params)
-            redirect_to edit_formula_path( @variable.formula), notice: "Variable was successfully updated."
+            redirect_to service_path( @variable.service), notice: "Variable was successfully updated."
         else
             render :edit, status: :unprocessable_entity
         end
@@ -44,6 +41,16 @@ class VariablesController < ApplicationController
     def show
         @variable = Variable.find(params[:id])
     end
+
+
+
+  def move
+    raise
+    # @variable = Variable.find(params[:id])
+    @variable.insert_at(params[:position].to_i)
+    head :no_content # renvoie le http code 204 server OK et no content to send back
+  end
+
 
     def variable_params
         params.require(:variable).permit(:name, :value, :operator, :fixed, :position)

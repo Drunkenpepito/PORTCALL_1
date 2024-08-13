@@ -75,6 +75,9 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
+    acts_as_list (1.2.2)
+      activerecord (>= 6.1)
+      activesupport (>= 6.1)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
     ancestry (4.3.3)
@@ -278,6 +281,7 @@ PLATFORMS
   x86_64-darwin
 
 DEPENDENCIES
+  acts_as_list
   ancestry
   autoprefixer-rails
   bootsnap

@@ -16,8 +16,11 @@ Rails.application.routes.draw do
     get "add_child_service", to: "services#new_child" , as:"new_child_service"
     # resources :formulas, only: [:new, :create]
     get "copy_service", to: "services#copy_service", as:"copy_service"
-    resources :variables, only: [:new, :create, :edit, :update,]
+    resources :variables, only: [:new, :create,]
   end
-  resources :variables , only: [:show, :index,  :destroy]
- 
+  resources :variables , only: [:show, :index,  :destroy , :edit, :update,] do
+    member do
+      patch :move 
+    end
+  end
 end

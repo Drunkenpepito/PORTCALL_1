@@ -1,32 +1,18 @@
-<%= link_to sanitize("&larr; Back to contracts"), contracts_path, class:"btn1" %>
+<%= link_to sanitize("&larr; Back to contracts"), contracts_path, class:"btn btn-outline-secondary" %>
 <%= link_to sanitize("New Service"), contract_new_master_service_path(@contract), class:"btn1" %>
+
+
+<h2 class = "d-flex justify-content-center" >CONTRACT <%= @contract.name %> </h2>
 
 
 <!--   MENU 2   -->
 
-<div class="white">
+<div class="m-3">
   <% @services.each do |service| %>
       <li><%= link_to service.name, service_path(service), class:"big red " %></li>
       <%= render 'sub_menu_services', services: service.descendants.arrange %>
   <% end %>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

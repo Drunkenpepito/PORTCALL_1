@@ -1,5 +1,8 @@
-<div class="ingredients-list">
+<div class="ingredients-list" data-controller="drag-and-drop">
   <% service.variables.sort_by(&:position).each do |variable| %>
     <%= render 'variables/variable' , variable: %>
   <% end %>
 </div>
+
+
+
