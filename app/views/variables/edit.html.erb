@@ -1,3 +1,12 @@
+
+<%= turbo_frame_tag @variable do %>
+  <%= render 'variables/form', variable: @variable %>
+<% end %>
+
+
+
+<!-- 
+
 <%= simple_form_for @variable, html: { class: "" } do |f| %>
   <% if @variable.errors.any? %>
     <div class="error-message">
@@ -9,4 +18,6 @@
   <%= f.input :value, input_html: { autofocus: true, class:"form1" } %>
 
   <%= f.submit class: "btn1" %>
-<% end %>
+<% end %> %>
+-->
+

@@ -1,0 +1,1 @@
+$calculator = Dentaku::Calculator.new

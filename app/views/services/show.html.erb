@@ -23,19 +23,23 @@
     <% end %>
   </span>
 
-<!--   SERVICE PATH    -->
+<!--   SERVICE FAMILY    -->
   <div class="ingredient-card">
-        <p class="white">
+        <ul class="white">
           <% @services.each do |service| %>
-              <li><%= link_to service.name, service_path(service), class:"white " %></li>
+              <li><%= link_to service.name, service_path(service), class:"white " %>
+                <% if service.calculate %>
+                  <span><%= link_to service.calculate, service_path(service), class:"text-success" %></span>
+                <% end %>
+              </li>
               <%= render 'sub_menu_services', services: service.descendants.arrange %>
           <% end %>
-        </p>
+        </ul>
   </div>
   
+  <div class="container rounded-4 border border-5e border-dark">
 
   <!--   VARIABLE LIST    -->
-  <div class="">
     <h2 class = "calculator_card"></h2>
 
     <%= turbo_frame_tag "variable_list" do %>
@@ -47,24 +51,27 @@
     <% end %>
 
   <!--   FORMULA ELEMENTS   -->
-    <div class="d-flex">
+    <div class="d-flex ">
+      <%# <h2>ADD OPERATOR</h2> %>
       <div class="operateur-add me-5 p-2">
-
-        <h2>ADD OPERATOR</h2>
         <%= render 'buttons/operators' %>
       </div>
-      <div class="value-add p-2">
 
-        <h2>ADD VARIABLE</h2>
+      <%# <h2>ADD VARIABLE</h2> %>
+      <div class="value-add p-2">
         <div class="d-flex ">
           <%= render 'buttons/add_value', service: @service,
           variable: Variable.new( operator:false ,fixed: false,role: "value") %>
-
         </div>
       </div>
+
     </div>
 
   </div>
+        <%# RESULT %>
+        <div class="d-flex justify-content-center m-2 ">
+          <%= render 'services/resultat', service: @service%>
+        </div>
 
 </main>
 

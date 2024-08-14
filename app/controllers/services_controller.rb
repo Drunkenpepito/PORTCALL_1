@@ -98,6 +98,11 @@ class ServicesController < ApplicationController
     def copy_service
         
     end
+
+    def calculate
+        @service = Service.find(params[:id])
+        @resultat = @service.calculate
+      end
     
     private
     

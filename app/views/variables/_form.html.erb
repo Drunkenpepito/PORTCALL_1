@@ -1,12 +1,16 @@
 
-<%= simple_form_for [@formula, variable], html: { class: " " } do |f| %>
-  <% if variable.errors.any? %>
-    <div class="error-message">
-      <%= variable.errors.full_messages.to_sentence.capitalize %>
-    </div>
-  <% end %>
+<div class="ingredient-card">
+  <p>
+  <%= simple_form_for variable, html: { class: " " } do |f| %>
+    <% if variable.errors.any? %>
+      <div class="error-message">
+        <%= variable.errors.full_messages.to_sentence.capitalize %>
+      </div>
+    <% end %>
 
-  <%= f.input :name, input_html: { autofocus: true ,class:"form1"} %>
-  <%= f.input :value, input_html: { autofocus: true ,class:"form1"} %>   
-  <%= f.submit class: "btn1" %>
-<% end %>
+    <div><%= f.input :name,label: false,  input_html: { autofocus: true ,class:"form1"} %> </div>
+    <div><%= f.input :value,label: false, input_html: { autofocus: true ,class:"form1"} %>   </div> 
+    <div><%= f.submit class: "btn1" %> </div>
+  <% end %>
+  </p>
+</div>
