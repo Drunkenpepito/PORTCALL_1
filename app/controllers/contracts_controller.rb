@@ -8,6 +8,11 @@ class ContractsController < ApplicationController
     
     def show
         @services = @contract.services.select{ |s| s.is_root? }
+        @services_all_contracts = Service.all.select{ |s| s.is_root? }
+
+        @contract = Contract.find(params[:id])
+        @service = Service.new
+        @service.contract= @contract
     end
     
     def new

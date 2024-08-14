@@ -1,0 +1,16 @@
+<%= simple_form_for [service,variable] do |f| %>
+<div class="d-none">
+  <%= f.input :value %>
+  <%= f.input :name %>
+  <%= f.input :operator %>
+  <%= f.input :fixed %>
+  <%= f.input :role %>
+</div>
+  <%= button_tag :submit, class: "--no-border" do  %>
+      <div class="ingredient-card">
+        <div class="ingredient-value">
+          <%=variable.operator? ? variable.name : variable.value %>
+        </div>
+      </div>
+  <% end %>
+<% end %>

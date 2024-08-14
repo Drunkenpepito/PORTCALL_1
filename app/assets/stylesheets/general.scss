@@ -16,6 +16,18 @@ body {
     color:#09507A
 }
 
+.formula{
+    background-color: #222222;
+    color:aquamarine;
+    border-radius: 8px;
+    padding: 4px 7px;
+    text-decoration: none;
+}
+
+.large{
+width: 100%;
+}
+
 .big {
   font-size: 26px;
 }
@@ -63,6 +75,31 @@ body {
   opacity: 1;
 }
 
+.btn2 {
+  background-color: #FFFFFF;
+  border: 1px solid rgb(180, 124, 21);
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #09507A;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  padding: 8px 14px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
+  user-select: none;
+  -webkit-user-select: none;
+  width: auto;
+}
+
 .flex {
     display: flex;
     flex-wrap: nowrap;
@@ -83,4 +120,14 @@ body {
     border-radius: 20px;
     background-color:#eafafb;
     color: #09507A;
+}
+
+.form2 {
+  margin: 20px;
+  border:5px solid aquamarine;
+  font-size: 30px;
+  border-radius: 20px;
+  background-color:#eafafb;
+  color: #09507A;
+  width: 100%;
 }

@@ -1,0 +1,30 @@
+.remove-ingredient-btn {
+  height: 0px;
+  position: relative;
+  left: 59%;
+  top: -5%;
+  // padding: 4px !important;
+  span{
+        padding: 3px 0;
+  }
+  button{
+    border: none !important;
+    background-color: inherit !important;
+    color: inherit !important;
+  }
+}
+.edit-ingredient-btn{
+height: 0px;
+position: relative;
+left: -23%;
+top: -5%;
+span{
+  padding: 4px;
+}
+a{
+  border: none !important;
+  background-color: inherit !important;
+  color: inherit !important;
+};
+
+}

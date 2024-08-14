@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_22_103838) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_06_162739) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,6 +18,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_103838) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "formulas", force: :cascade do |t|
+    t.string "name"
+    t.bigint "service_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "result"
+    t.index ["service_id"], name: "index_formulas_on_service_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -30,5 +39,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_103838) do
     t.index ["contract_id"], name: "index_services_on_contract_id"
   end
 
+  create_table "variables", force: :cascade do |t|
+    t.string "name"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "service_id"
+    t.integer "position"
+    t.boolean "operator"
+    t.boolean "fixed"
+    t.string "role"
+    t.index ["service_id"], name: "index_variables_on_service_id"
+  end
+
+  add_foreign_key "formulas", "services"
   add_foreign_key "services", "contracts"
+  add_foreign_key "variables", "services"
 end
