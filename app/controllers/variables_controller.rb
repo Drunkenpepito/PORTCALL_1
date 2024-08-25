@@ -45,8 +45,7 @@ class VariablesController < ApplicationController
 
 
   def move
-    raise
-    # @variable = Variable.find(params[:id])
+    @variable = Variable.find(params[:id])
     @variable.insert_at(params[:position].to_i)
     head :no_content # renvoie le http code 204 server OK et no content to send back
   end

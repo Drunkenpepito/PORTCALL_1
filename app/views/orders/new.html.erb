@@ -1,0 +1,7 @@
+<%= turbo_frame_tag "#{@invoice.id}_new_order" do%>
+  <%= simple_form_for [@invoice, @order] do |f|%>
+    <%= f.association :contract, collection: @contracts, prompt: "Choose a Contract" , selected: get_selected_contract(@contract, @contract.first.anme ) %> 
+    <%= f.association :service, label_method: :name, value_method: :id, include_blank: false %>
+    <%= f.button :submit %>
+  <% end %>
+<% end %>

@@ -62,7 +62,7 @@ class ServicesController < ApplicationController
     
     def update
         if @service.update(service_params)
-        redirect_to contract_services_path, notice: "Service was successfully updated."
+        redirect_to service_path(@service), notice: "Service was successfully updated."
         else
         render :edit, status: :unprocessable_entity
         end
@@ -96,12 +96,16 @@ class ServicesController < ApplicationController
     # end
 
     def copy_service
-        
+        @contracts = Contract.all
     end
 
     def calculate
         @service = Service.find(params[:id])
-        @resultat = @service.calculate
+        # @fee = @service.contract.fee
+        # if @fee != 0 && @service_agency_fee == true
+        # @add_to_result = @service.resultat * @fee
+        @resultat =   @service.calculate
+       
       end
     
     private
@@ -111,6 +115,6 @@ class ServicesController < ApplicationController
     end
     
     def service_params
-        params.require(:service).permit(:name, :ancestry)
+        params.require(:service).permit(:name, :ancestry, :description)
     end
 end
