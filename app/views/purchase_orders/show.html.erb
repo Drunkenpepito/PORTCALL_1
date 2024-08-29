@@ -1,0 +1,64 @@
+<%= link_to sanitize("&larr; Back to PO"), purchase_orders_path, class:"btn btn-outline-secondary" %>
+ 
+<div class=" d-flex justify-content-center">
+
+  <div class="dropdown dropdown-hover">
+    <button data-mdb-button-init data-mdb-ripple-init data-mdb-dropdown-init
+      class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+      data-mdb-toggle="dropdown" aria-expanded="false">
+      Dropdown button
+    </button>
+    <ul class="dropdown-menu dropdown-menu-hover" aria-labelledby="dropdownMenuButton">
+      <li><a class="dropdown-item" href="#">Action</a></li>
+      <li>
+        <a class="dropdown-item" href="#">Another action</a>
+      </li>
+      <li>
+        <a class="dropdown-item" href="#"> Submenu &raquo; </a>
+        <ul class="dropdown-menu dropdown-submenu">
+          <li>
+            <a class="dropdown-item" href="#">Submenu item 1</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Submenu item 2</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Submenu item 3 &raquo; </a>
+            <ul class="dropdown-menu dropdown-submenu">
+              <li>
+                <a class="dropdown-item" href="#">Multi level 1</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Multi level 2</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Submenu item 4</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Submenu item 5</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  
+</div>
+
+
+
+
+<h2 class = "d-flex justify-content-center" >PO <%= @purchase_order.name %> </h2>
+
+
+<!--   MENU 2   -->
+
+<div class="m-3">
+<% if @orders != nil %>
+  <% @orders.each do |order| %>
+      <li><%= link_to order.name, order_path(order), class:"big red " %></li>
+      <%= render 'sub_menu_orders', orders: order.descendants.arrange %>
+  <% end %>
+<% end %>
+</div>

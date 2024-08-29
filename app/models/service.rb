@@ -10,15 +10,15 @@ class Service < ApplicationRecord
       result = $calculator.evaluate!(formula)
     rescue Dentaku::UnboundVariableError => e
       # Gérer l'erreur de variable non liée
-      result = "Variable non liée - #{e.message}"
+      result = "Variable not linked - #{e.message}"
       # ou une valeur par défaut
     rescue Dentaku::ParseError => e
       # Gérer l'erreur de syntaxe
-      result = "Erreur de syntaxe - #{e.message}"
+      result = "Syntax error - #{e.message}"
       # ou une valeur par défaut
     rescue StandardError => e
       # Gérer toute autre erreur
-      result = "Erreur: #{e.message}"
+      result = "Error: #{e.message}"
       # ou une valeur par défaut
     end
     # Utilisez le résultat

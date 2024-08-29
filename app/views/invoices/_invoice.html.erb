@@ -1,0 +1,6 @@
+<span class="d-flex justify-content-around p-3">
+    <%= link_to invoice.name, invoice_path(invoice), class:"btn btn-outline-dark" %>
+    <%= link_to invoice.description, invoice_path(invoice), class:"btn " %>
+    <%= link_to "Edit",edit_invoice_path(invoice),class: "btn btn-outline-primary" %></div>           
+    <%= button_to "Delete",invoice_path(invoice),method: :delete,class: "btn1" %>
+</span>

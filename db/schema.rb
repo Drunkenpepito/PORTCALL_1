@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_06_162739) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_19_163945) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,12 +29,53 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_06_162739) do
     t.index ["service_id"], name: "index_formulas_on_service_id"
   end
 
+  create_table "invoices", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "description"
+  end
+
+  create_table "order_variables", force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.boolean "operator"
+    t.boolean "fixed"
+    t.string "value"
+    t.string "role"
+    t.bigint "order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_variables_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string "name"
+    t.bigint "service_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "invoice_id"
+    t.bigint "purchase_order_id"
+    t.index ["invoice_id"], name: "index_orders_on_invoice_id"
+    t.index ["purchase_order_id"], name: "index_orders_on_purchase_order_id"
+    t.index ["service_id"], name: "index_orders_on_service_id"
+  end
+
+  create_table "purchase_orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "description"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "contract_id"
     t.string "ancestry", null: false, collation: "C"
+    t.text "description"
+    t.boolean "agency_fee"
     t.index ["ancestry"], name: "index_services_on_ancestry"
     t.index ["contract_id"], name: "index_services_on_contract_id"
   end
@@ -53,6 +94,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_06_162739) do
   end
 
   add_foreign_key "formulas", "services"
+  add_foreign_key "order_variables", "orders"
+  add_foreign_key "orders", "invoices"
+  add_foreign_key "orders", "purchase_orders"
+  add_foreign_key "orders", "services"
   add_foreign_key "services", "contracts"
   add_foreign_key "variables", "services"
 end

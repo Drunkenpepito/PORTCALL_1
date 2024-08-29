@@ -1,0 +1,13 @@
+
+<%= simple_form_for [order], html: { class: "service form " } do |f| %>
+  <% if order.errors.any? %>
+    <div class="error-message">
+      <%= order.errors.full_messages.to_sentence.capitalize %>
+    </div>
+  <% end %>
+  <%= f.input :name, input_html: { autofocus: true ,value: "",class:"form1"} %>
+  <%= f.hidden_field :ancestry %>
+  <%= f.input :service_id, collection: @services %>
+  <%= f.input :purchase_order_id, collection: @purchase_orders %>
+  <%= f.submit class: "btn1" %>
+<% end %>

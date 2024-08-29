@@ -1,10 +1,16 @@
-<%= simple_form_for @service, html: { class: "service form white" } do |f| %>
+<%= simple_form_for @service, html: { class: "card" } do |f| %>
   <% if @service.errors.any? %>
     <div class="error-message">
       <%= @service.errors.full_messages.to_sentence.capitalize %>
     </div>
   <% end %>
 
-  <%= f.input :name, input_html: { autofocus: true, class:"form1" } %>
+  <div><%= f.input :name,label: false,  input_html: { autofocus: true, class:"form1" } %></div>
+  <div class="container">
+    <%= f.input :description,label: false, placeholder: "Service description",  input_html: { autofocus: true ,class:"form1"} %>
+    <%= f.input :agency_fee,  input_html: { autofocus: true ,class:"form1"} %>
+
+  </div>
+
   <%= f.submit class: "btn1" %>
 <% end %>
