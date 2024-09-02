@@ -9,9 +9,14 @@
 
 <div class="m-3">
 <% if @orders != nil %>
-  <% @orders.each do |order| %>
-      <li><%= link_to order.name, order_path(order), class:"big red " %></li>
-      <%= render 'sub_menu_orders', orders: order.descendants.arrange %>
-  <% end %>
+  <%# <%= turbo_frame_tag "orders" do %> 
+    <% @orders.each do |order| %>
+        <li><%= link_to order.name, order_path(order), class:"big red " %></li>
+        <% if order.calculate %>
+          <span><%= link_to order.calculate, order_path(order), class:"text-success" %></span>
+        <% end %>
+        <%= render 'sub_menu_orders', orders: order.descendants.arrange  %>
+    <% end %>
+  <%# <% end %> 
 <% end %>
 </div>

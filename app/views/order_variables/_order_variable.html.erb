@@ -1,0 +1,11 @@
+<%= turbo_frame_tag order_variable, data: { url: "/order_variables/#{order_variable.id}/move" } do %>
+  <div class="d-flex flex-column align-items-center">
+    <div class="ingredient-card">
+      <%# VALUE %>
+            <div class="ingredient-value">
+              <%=order_variable.operator? ? order_variable.name : order_variable.value %>
+            </div>
+    </div>
+    <p><%= order_variable.name %> </p>
+  </div>
+<% end %>

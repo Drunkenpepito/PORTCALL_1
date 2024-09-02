@@ -1,0 +1,5 @@
+<div class="variables-list bg-light p-3 rounded-4 border border-secondary" data-controller="drag-and-drop">
+  <% order.order_variables.sort_by(&:position).each do |order_variable| %>
+    <%= render 'order_variables/order_variable' , order_variable: %>
+  <% end %>
+</div>

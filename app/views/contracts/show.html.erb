@@ -9,7 +9,11 @@
 
 <div class="m-3">
   <% @services.each do |service| %>
-      <li><%= link_to service.name, service_path(service), class:"big red " %></li>
+      <li><%= link_to service.name, service_path(service), class:"big red " %>
+        <% if service.calculate %>
+          <span><%= link_to service.calculate, service_path(service), class:"text-danger" %></span>
+        <% end %>
+      </li>
       <%= render 'sub_menu_services', services: service.descendants.arrange %>
   <% end %>
 </div>

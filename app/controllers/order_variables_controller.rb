@@ -15,6 +15,6 @@ class OrderVariablesController < ApplicationController
   private
 
   def order_variable_params
-    params.require(:order_variable).permit(:name, :value)
+    params.require(:order_variable).permit(:name, :value, :operator, :fixed, :position)
   end
 end

@@ -31,6 +31,7 @@ class VariablesController < ApplicationController
 
     def destroy
         @variable = Variable.find(params[:id])
+        @service = @variable.service
         @variable.destroy
         respond_to do |format|
             format.html { redirect_to service_path(@variable.service) }

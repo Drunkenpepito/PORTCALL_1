@@ -1,8 +1,8 @@
 class Order < ApplicationRecord
-  belongs_to :service
-  belongs_to :purchase_order
-  has_one :invoice
-  has_many :order_variables, dependent: :destroy
+  has_ancestry
+  # belongs_to :service
+  belongs_to :invoice
+  has_many :order_variables, -> { order(position: :asc) }, dependent: :destroy
   after_create :create_order_variables
   validates :name, presence: true
 

@@ -8,5 +8,9 @@
 
   <%= f.input :name, input_html: { autofocus: true ,class:"form1"} %>
   <%= f.input :description, input_html: { autofocus: true ,class:"form1"} %>
+  <div>
+    <%= f.association :contract, label_method: :name, value_method: :id, include_blank: false %>
+  </div>
+
   <%= f.submit class: "btn1" %>
 <% end %>

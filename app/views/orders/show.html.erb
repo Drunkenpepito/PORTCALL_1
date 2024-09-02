@@ -1,0 +1,81 @@
+
+<%= link_to sanitize("&larr; Invoices"), invoices_path, class:"btn btn-secondary" %>
+<% if @order.is_root? == false  %> 
+  <%= link_to sanitize("&larr; Back"), order_path( @order.parent) , class:"btn btn-secondary"%>
+<% else %>
+  <%= link_to sanitize("&larr; Back"), invoice_path( @order.invoice) , class:"btn btn-secondary"%>
+<% end %>
+<%= link_to "New cutom order",'#',class: "btn btn-outline-primary" %>
+
+
+<main class="container white">
+
+    <!--   PATH    -->
+
+                              <span class="d-flex justify-content-start align-items-center m-3">
+                                <%= @order.invoice.name + "/"%>
+                                <% if @order.ancestors.map(&:name) != [] %> 
+                                  <%  @order.ancestors.map(&:name).each do |s|%>
+                                  <%= s + "/" %>
+                                  <% end %>
+                                <span class="text-danger"> &nbsp;<%=@order.name %></span>
+                                <%= link_to "✏️",edit_order_path(@order),class: "m-2" %>
+                                <% else %>
+                              <%= @order.name %> 
+                              <%= link_to "✏️",edit_order_path(@order),class: "m-2" %>
+                                <% end %>
+                              </span>
+
+    <!--   order FAMILY    -->
+                              <div class="ingredient-card">
+                                    <ul class="white">
+                                      <% @orders.each do |order| %>
+                                          <li><%= link_to order.name, order_path(order), class:"white " %>
+                                            <% if order.calculate %>
+                                              <span><%= link_to order.calculate, order_path(order), class:"text-success" %></span>
+                                            <% end %>
+                                          </li>
+                                          <%= render 'sub_menu_orders', orders: order.descendants.arrange %>
+                                      <% end %>
+                                    </ul>
+                              </div>
+      
+    <div class="container rounded-4 border border-5e border-dark">
+
+      <!--   order_variable LIST    -->
+                                <h2 class = "calculator_card"></h2>
+
+                                <%= turbo_frame_tag "order_variable_list" do %>
+                                  <% if  @order.order_variables.empty? %>
+                                    <h4 ><italic>No Formula for this order</italic></h4>
+                                  <% else %>
+                                    <%= render "order_variables/order_variable_list", order: @order , class:"calculator-card p-3"%>
+                                  <% end %>
+                                <% end %>
+
+        <!--   FORMULA ELEMENTS   -->
+                                <div class="d-flex ">
+
+
+                                    <%# RESULT %>
+                                  <div class="ingredient-card">
+                                    <div class=" btn btn-primary p-0 border border-5 border-dark">
+                                      <%= render 'orders/resultat', order: @order   %>
+                                    </div>
+                                  </div>
+
+
+
+                                </div>
+
+    </div>
+
+
+            <%# DESCRIPTION %>
+            <div class="d-flex justify-content-center m-2 text-dark">
+              <% if @order.description != nil %>
+                <%= @order.description %>
+              <% end %>
+            </div>
+
+</main>

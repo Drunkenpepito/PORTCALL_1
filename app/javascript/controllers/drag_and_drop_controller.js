@@ -15,7 +15,8 @@ export default class extends Controller {
   // console.log(this.sortable)
 }
 
-
+// au moment du drop , on doit avoir la position de la variable droppée qui prend la position de la variable remplacée
+// pas clair : demander a Benoit
   end(event){
     const url = event.item.dataset.url
     // console.log(event)

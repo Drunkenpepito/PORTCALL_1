@@ -31,13 +31,15 @@ class InvoicesController < ApplicationController
   
     def show 
       @invoice = Invoice.includes(:orders).find(params[:id])
+      @orders = @invoice.orders.select{ |s| s.is_root? }
+
     end
   
  
     private
   
     def invoice_params
-      params.require(:invoice).permit(:name, :description)
+      params.require(:invoice).permit(:name, :description, :contract_id)
     end
 
   

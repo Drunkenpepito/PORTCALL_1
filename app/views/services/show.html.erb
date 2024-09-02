@@ -31,9 +31,11 @@
                               <div class="ingredient-card">
                                     <ul class="white">
                                       <% @services.each do |service| %>
-                                          <li><%= link_to service.name, service_path(service), class:"white " %>
+                                          <li class= "d-flex"><%= link_to service.name, service_path(service), class:"white " %>
                                             <% if service.calculate %>
-                                              <span><%= link_to service.calculate, service_path(service), class:"text-success" %></span>
+                                              <span><%= link_to service.calculate, service_path(service), class:"text-success p-2" %></span>
+                                                  <%= render 'buttons/add_sub_service', service: @service,
+                                                 variable: Variable.new( operator:false ,fixed: false,role: "value", name: service.name, value: service.calculate ) %>
                                             <% end %>
                                           </li>
                                           <%= render 'sub_menu_services', services: service.descendants.arrange %>
