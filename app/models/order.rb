@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
   has_ancestry
-  # belongs_to :service
+  belongs_to :service
   belongs_to :invoice
   has_many :order_variables, -> { order(position: :asc) }, dependent: :destroy
   after_create :create_order_variables

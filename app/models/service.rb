@@ -4,6 +4,7 @@ class Service < ApplicationRecord
     has_ancestry 
     has_many :variables , -> { order(position: :asc) }, dependent: :destroy
     validates :name, presence: true
+    has_many :orders
 
   def calculate
     begin
