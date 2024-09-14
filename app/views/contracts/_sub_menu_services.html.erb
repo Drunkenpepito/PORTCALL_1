@@ -4,9 +4,11 @@
       <li>
         <%= link_to_unless_current service.name, service_path(service),
         class: "  #{ 'white' if service.ancestry != nil } " %>
-      <% if service.calculate %>
-        <span><%= link_to service.calculate, service_path(service), class:"text-success" %></span>
-      <% end %>
+      <%# <% if service.calculate %> 
+        <span><%= service.calculate %></span>
+      <%# <% else  
+        <span><%= link_to service.calculate, service_path(service), class:"text-danger" </span> 
+      <% end %> 
       </li>
         <%= render 'sub_menu_services', services: children if children.present? %>
   <% end %>

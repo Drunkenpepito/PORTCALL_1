@@ -23,6 +23,7 @@ class VariablesController < ApplicationController
     def update
         @variable = Variable.find(params[:id])
         if @variable.update(variable_params)
+            # @variable.service.calculate_totals
             redirect_to service_path( @variable.service), notice: "Variable was successfully updated."
         else
             render :edit, status: :unprocessable_entity

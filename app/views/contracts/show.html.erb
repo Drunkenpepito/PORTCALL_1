@@ -5,47 +5,15 @@
 <h2 class = "d-flex justify-content-center" >CONTRACT <%= @contract.name %> </h2>
 
 
-<!--   MENU 2   -->
+<!--   MENU   -->
 
 <div class="m-3">
   <% @services.each do |service| %>
-      <li><%= link_to service.name, service_path(service), class:"big red " %>
-        <% if service.calculate %>
-          <span><%= link_to service.calculate, service_path(service), class:"text-danger" %></span>
-        <% end %>
+      <li class= 'h4'><%= link_to service.name.upcase, service_path(service), class:"  " %>
+          <span class="h6"><%= link_to service.calculate, service_path(service), class:"text-dark" %></span> 
       </li>
       <%= render 'sub_menu_services', services: service.descendants.arrange %>
   <% end %>
 </div>
 
 
-
-
-
-<!-- TABLE DE SERVICES -->
-<%#
-      <div>
-        <table class="table tableservices">
-          <tr class= trservices>
-            <th>NAME</th>
-            <th>PRICE</th>
-            <th class="empty"></th>
-          </tr>
-          <% @services.each do |s| 
-              <tr>
-                <td><%=link_to s.name.upcase, supplier_service_path(@supplier,s), class: "linkservices"</td>
-                <td><%=link_to s.price, supplier_service_cost_lines_path(@supplier,s), class: "linkservices2 white"</td>
-                <% if current_user.supplier_id != "" && current_user.supplier_id !=nil 
-                  <td class="text-right" >
-                    <% if s.ancestry != nil 
-                      <%= link_to '',edit_supplier_service_path(@supplier,s), class: "fas fa-pencil-alt", style: "color:#09507A" 
-                    <% else 
-                      <%= link_to '',supplier_service_edit_masterservice_path(@supplier,s), class: "fas fa-pencil-alt", style: "color:#09507A"
-                    <% end 
-                    <%= link_to " ", supplier_service_path(@supplier,s), method: :delete, data: {confirm: 'Are you sure?'}, class: "fas fa-trash-alt" , style: "color:#09507A"
-                  </td>
-                <% end 
-              </tr>
-          <% end 
-        </table>
-      </div> %>

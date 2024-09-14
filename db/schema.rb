@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_30_162427) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_14_143448) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,6 +79,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_30_162427) do
     t.string "ancestry", null: false, collation: "C"
     t.text "description"
     t.boolean "agency_fee"
+    t.integer "value"
     t.index ["ancestry"], name: "index_services_on_ancestry"
     t.index ["contract_id"], name: "index_services_on_contract_id"
   end

@@ -1,7 +1,8 @@
 class OrdersController < ApplicationController
 
     # skip_before_action :authenticate_user!
-  
+    before_action :set_order, only: [:show, :edit, :update, :destroy]
+
     def index
     end
       
@@ -35,11 +36,21 @@ class OrdersController < ApplicationController
     end
   
     def destroy
-      @order = Order.find(params[:id])
       @order.destroy
       respond_to do |format|
         format.html { redirect_to order_path(@order) }
         format.turbo_stream
+      end
+    end
+
+    def edit
+    end
+
+    def update
+      if @order.update(order_params)
+      redirect_to order_path(@order), notice: "Order was successfully updated."
+      else
+      render :edit, status: :unprocessable_entity
       end
     end
   
@@ -54,7 +65,8 @@ class OrdersController < ApplicationController
     end
 
     def index
-      raise
+      @orders = Order.all
+      @invoice = Invoice.find(params[:invoice_id])
     end
   
     def calculate
@@ -62,11 +74,14 @@ class OrdersController < ApplicationController
       @resultat =   @order.calculate
     end
 
-
     private
     
     def order_params
       params.require(:order).permit(:name)
+    end
+
+    def set_order
+      @service = Order.find(params[:id])
     end
 
     def orderize(service,order)

@@ -8,6 +8,8 @@ export default class extends Controller {
     //  console.log(this.element)
     // creation des elements drag and dropable ICI tous les enfants du controller
     // AKA les turbo_frames de variables
+    console.log('drag & drop controller connected')
+    console.log(this.element.dataset)
     this.sortable = Sortable.create(this.element,{
     onEnd: this.end.bind(this) //callback sur l'event onEnd qui se déclenche
     // lorsqu'un élément a été déplacé
