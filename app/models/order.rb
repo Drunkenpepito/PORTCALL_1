@@ -4,7 +4,6 @@ class Order < ApplicationRecord
   belongs_to :invoice
   has_many :order_variables, -> { order(position: :asc) }, dependent: :destroy
   after_create :create_order_variables
-  after_update :update_family_values
   validates :name, presence: true
 
 

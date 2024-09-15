@@ -1,0 +1,14 @@
+<%= simple_form_for @order, html: { class: "card" } do |f| %>
+  <% if @order.errors.any? %>
+    <div class="error-message">
+      <%= @order.errors.full_messages.to_sentence.capitalize %>
+    </div>
+  <% end %>
+    
+
+  <div class="d-flex"><%= f.input :name,label: false,  input_html: { autofocus: true, class:"m-2" } %>
+  </div>
+    <%= f.input :description,label: false, placeholder: "order description",  input_html: { autofocus: true ,class:"form1 m-2"} %>
+  <%= f.submit class: "btn btn-outline-primary m-2" %>
+<% end %>
+<%= button_to "❌ Delete Order", order_path(@order),method: :delete,class: "btn btn-outline-danger" %>

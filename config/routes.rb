@@ -46,7 +46,7 @@ Rails.application.routes.draw do
 
 
 
-  resources :orders, only: [:index, :show, :destroy, :edit] do
+  resources :orders do
     member do
       get :calculate 
     end

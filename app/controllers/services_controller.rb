@@ -95,16 +95,6 @@ class ServicesController < ApplicationController
         @resultat = @service.calculate 
     end
 
-    # def show_totals
-    #    @service.calculate_totals
-    #    services.each { |s| 
-    #     s.has_children?   &&   s.formula == ""  &&   s.children.map(&:calculate).all? { |c| c != nil}?
-    #     s.formula = s.children.sum(&:calculate).to_i   :   s.formula = "" }
-    # end
-
-    
-   
-    
     private
     
     def set_service

@@ -7,12 +7,19 @@
 
 <!--   MENU   -->
 
-<div class="m-3">
+<div class="m-3" >
   <% @services.each do |service| %>
-      <li class= 'h4'><%= link_to service.name.upcase, service_path(service), class:"  " %>
-          <span class="h6"><%= link_to service.calculate, service_path(service), class:"text-dark" %></span> 
+      <li class= '' data-controller="toggle-family"><%= link_to service.name.upcase, service_path(service), class:" h4 " %>
+          <span class="h6" >
+            <%= link_to service.calculate, service_path(service), class:"text-dark" %>
+          </span> 
+          <button class="btn btn-light" data-action="click->toggle-family#toggle">
+            🔽
+          </button>
+          <span data-toggle-family-target="family" class="">
+            <%= render 'sub_menu_services', services: service.descendants.arrange %>
+          </span>
       </li>
-      <%= render 'sub_menu_services', services: service.descendants.arrange %>
   <% end %>
 </div>
 

@@ -12,7 +12,6 @@ class OrdersController < ApplicationController
       @invoice = Invoice.find(params[:invoice_id])
       @contract = @invoice.contract
       @services = @contract.services.select{|s| s.is_root? == true}
-
     end
   
     def create
@@ -25,12 +24,8 @@ class OrdersController < ApplicationController
       if @order.save!
         # get_variables(@service,@order) if @service.variables != []
         orderize(@service, @order)
-        respond_to do |format|
-          format.html { redirect_to invoice_path(@invoice) }
-          format.turbo_stream
-        end
+        redirect_to invoice_path(@invoice) 
       else
-        raise
         render :new
       end
     end
@@ -47,8 +42,8 @@ class OrdersController < ApplicationController
     end
 
     def update
-      if @order.update(order_params)
-      redirect_to order_path(@order), notice: "Order was successfully updated."
+      if @order.update!(order_params)
+        redirect_to order_path(@order), notice: "Order was successfully updated."
       else
       render :edit, status: :unprocessable_entity
       end
@@ -77,11 +72,11 @@ class OrdersController < ApplicationController
     private
     
     def order_params
-      params.require(:order).permit(:name)
+      params.require(:order).permit(:name, :description, :ancestry)
     end
 
     def set_order
-      @service = Order.find(params[:id])
+      @order = Order.find(params[:id])
     end
 
     def orderize(service,order)
