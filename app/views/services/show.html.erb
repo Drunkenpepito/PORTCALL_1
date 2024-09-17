@@ -28,6 +28,30 @@
                               </span>
 
     <!--   SERVICE FAMILY    -->
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Service</th>
+          <th scope="col">Budget Price</th>
+          <th scope="col">Fee 5%</th>
+          <th scope="col">VAT 20%</th>
+          <th scope="col">Invoice Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @services.each do |service| %>
+          <tr>
+            <td><%= service.name  %> </td>
+            <td><%= service.calculate %></td>
+            <td><%= (service.calculate * 0.05).round(2) %></td>
+            <td><%= ((service.calculate * 0.05).round(2) * 0.2).round(2) %></td>
+            <td><%= (service.calculate +  (service.calculate * 0.05) + ((service.calculate * 0.05) * 0.2).round(2)).round(2)%></td>
+
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
                               <div class="ingredient-card">
                                     <ul class="white">
                                       <% @services.each do |service| %>

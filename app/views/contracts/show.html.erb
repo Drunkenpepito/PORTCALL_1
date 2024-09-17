@@ -1,9 +1,19 @@
 <%= link_to sanitize("&larr; Back to contracts"), contracts_path, class:"btn btn-outline-secondary" %>
-<%= link_to sanitize("✚"), contract_new_master_service_path(@contract), class:"btn btn-outline-primary" %>
+<%= link_to sanitize("✚ Service"), contract_new_master_service_path(@contract), class:"btn btn-outline-primary" %>
+<%= link_to sanitize("✚ Tax"), new_contract_tax_regime_path(@contract), class:"btn btn-outline-primary" %>
 
 
-<h2 class = "d-flex justify-content-center" >CONTRACT <%= @contract.name %> </h2>
-
+<div class= "container d-flex justify-content-center">
+  <h2 class = "d-flex justify-content-center" >CONTRACT <%= @contract.name %> </h2>
+  <% if @tax_regimes != nil  %> 
+    <span class = " h6 align-items-center d-flex  btn-outline-dark justify-content-center m-2"> (Taxes:
+    <% @tax_regimes.each do |tax| %>
+      <span class = " h6 align-items-center d-flex  btn-outline-dark justify-content-center m-2" > <%= tax.name.upcase %> </span>
+      <%= link_to "✏️",edit_tax_regime_path(tax), class: "pr-2" %>
+    <% end %>
+     )
+  <% end %>
+</div>
 
 <!--   MENU   -->
 

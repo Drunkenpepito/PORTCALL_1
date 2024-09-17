@@ -14,7 +14,9 @@ Rails.application.routes.draw do
                 # get "index_master_services" , to: "services#index_master_services" , as: "index_master_services" # CAS UNIQUE MASTERSERVICE - que pour masterservices
       get "show_master_services" , to: "services#show_master_services" , as: "show_master_services" 
                 # CAS UNIQUE MASTERSERVICE - que pour masterservices
+      resources :tax_regimes, only: [:new, :create,]
   end
+  resources :tax_regimes , only: [:show, :index,  :destroy , :edit, :update,]
 
 
 

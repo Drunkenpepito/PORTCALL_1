@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_14_143448) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_16_180649) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,11 +22,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_14_143448) do
 
   create_table "formulas", force: :cascade do |t|
     t.string "name"
-    t.bigint "service_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "result"
-    t.index ["service_id"], name: "index_formulas_on_service_id"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -84,6 +82,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_14_143448) do
     t.index ["contract_id"], name: "index_services_on_contract_id"
   end
 
+  create_table "tax_regimes", force: :cascade do |t|
+    t.string "name"
+    t.integer "percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "contract_id"
+    t.index ["contract_id"], name: "index_tax_regimes_on_contract_id"
+  end
+
   create_table "variables", force: :cascade do |t|
     t.string "name"
     t.string "value"
@@ -97,11 +104,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_14_143448) do
     t.index ["service_id"], name: "index_variables_on_service_id"
   end
 
-  add_foreign_key "formulas", "services"
   add_foreign_key "invoices", "contracts"
   add_foreign_key "order_variables", "orders"
   add_foreign_key "orders", "invoices"
   add_foreign_key "orders", "services"
   add_foreign_key "services", "contracts"
+  add_foreign_key "tax_regimes", "contracts"
   add_foreign_key "variables", "services"
 end

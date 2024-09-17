@@ -1,0 +1,5 @@
+<%# <%= turbo_frame_tag @variable do %> 
+  <%= render 'tax_regimes/form', tax_regime: @tax_regime %>
+  <div> <%= button_to "Delete",tax_regime_path,method: :delete,class: "btn1" %></div>
+
+<%# <% end %> 
