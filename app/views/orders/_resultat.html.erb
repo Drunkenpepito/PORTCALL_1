@@ -1,0 +1,6 @@
+<%= turbo_frame_tag "resultat" do %>
+  <div class="d-flex align-items-baseline">
+    <%= link_to "Result",calculate_order_path(@order),class:"btn btn-primary me-3"  %>
+    <div class="result-calcul ms-2"> <%=@resultat  %> </div>
+  </div>
+<% end %>

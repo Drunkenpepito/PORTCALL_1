@@ -1,47 +1,36 @@
 <%= link_to sanitize("&larr; Back to contracts"), contracts_path, class:"btn btn-outline-secondary" %>
-<%= link_to sanitize("✚"), contract_new_master_service_path(@contract), class:"btn btn-outline-primary" %>
+<%= link_to sanitize("✚ Service"), contract_new_master_service_path(@contract), class:"btn btn-outline-primary" %>
+<%= link_to sanitize("✚ Tax"), new_contract_tax_regime_path(@contract), class:"btn btn-outline-primary" %>
 
 
-<h2 class = "d-flex justify-content-center" >CONTRACT <%= @contract.name %> </h2>
+<div class= "container d-flex justify-content-center">
+  <h2 class = "d-flex justify-content-center" >CONTRACT <%= @contract.name %> </h2>
+  <% if @tax_regimes != nil  %> 
+    <span class = " h6 align-items-center d-flex  btn-outline-dark justify-content-center m-2"> (Taxes:
+    <% @tax_regimes.each do |tax| %>
+      <span class = " h6 align-items-center d-flex  btn-outline-dark justify-content-center m-2" > <%= tax.name.upcase %> </span>
+      <%= link_to "✏️",edit_tax_regime_path(tax), class: "pr-2" %>
+    <% end %>
+     )
+  <% end %>
+</div>
 
+<!--   MENU   -->
 
-<!--   MENU 2   -->
-
-<div class="m-3">
+<div class="m-3" >
   <% @services.each do |service| %>
-      <li><%= link_to service.name, service_path(service), class:"big red " %></li>
-      <%= render 'sub_menu_services', services: service.descendants.arrange %>
+      <li class= '' data-controller="toggle-family"><%= link_to service.name.upcase, service_path(service), class:" h4 " %>
+          <span class="h6" >
+            <%= link_to service.calculate, service_path(service), class:"text-dark" %>
+          </span> 
+          <button class="btn btn-light" data-action="click->toggle-family#toggle">
+            🔽
+          </button>
+          <span data-toggle-family-target="family" class="">
+            <%= render 'sub_menu_services', services: service.descendants.arrange %>
+          </span>
+      </li>
   <% end %>
 </div>
 
 
-
-
-
-<!-- TABLE DE SERVICES -->
-<%#
-      <div>
-        <table class="table tableservices">
-          <tr class= trservices>
-            <th>NAME</th>
-            <th>PRICE</th>
-            <th class="empty"></th>
-          </tr>
-          <% @services.each do |s| 
-              <tr>
-                <td><%=link_to s.name.upcase, supplier_service_path(@supplier,s), class: "linkservices"</td>
-                <td><%=link_to s.price, supplier_service_cost_lines_path(@supplier,s), class: "linkservices2 white"</td>
-                <% if current_user.supplier_id != "" && current_user.supplier_id !=nil 
-                  <td class="text-right" >
-                    <% if s.ancestry != nil 
-                      <%= link_to '',edit_supplier_service_path(@supplier,s), class: "fas fa-pencil-alt", style: "color:#09507A" 
-                    <% else 
-                      <%= link_to '',supplier_service_edit_masterservice_path(@supplier,s), class: "fas fa-pencil-alt", style: "color:#09507A"
-                    <% end 
-                    <%= link_to " ", supplier_service_path(@supplier,s), method: :delete, data: {confirm: 'Are you sure?'}, class: "fas fa-trash-alt" , style: "color:#09507A"
-                  </td>
-                <% end 
-              </tr>
-          <% end 
-        </table>
-      </div> %>

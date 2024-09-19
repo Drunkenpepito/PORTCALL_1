@@ -23,6 +23,7 @@ class VariablesController < ApplicationController
     def update
         @variable = Variable.find(params[:id])
         if @variable.update(variable_params)
+            # @variable.service.calculate_totals
             redirect_to service_path( @variable.service), notice: "Variable was successfully updated."
         else
             render :edit, status: :unprocessable_entity
@@ -31,6 +32,7 @@ class VariablesController < ApplicationController
 
     def destroy
         @variable = Variable.find(params[:id])
+        @service = @variable.service
         @variable.destroy
         respond_to do |format|
             format.html { redirect_to service_path(@variable.service) }

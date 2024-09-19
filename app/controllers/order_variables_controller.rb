@@ -1,20 +1,20 @@
 class OrderVariablesController < ApplicationController
   def edit
-    @order_variable = Ordervariable.find(params[:id])
+    @order_variable = OrderVariable.find(params[:id])
   end
 
   def update
-    @variable = OrderVariable.find(params[:id])
-    @variable.update(order_variable_params)
-    respond_to do |format|
-      format.html { redirect_to order_path(@variable.order) }
-      format.turbo_stream
+    @order_variable = OrderVariable.find(params[:id])
+    if @order_variable.update(order_variable_params)
+        redirect_to order_path( @order_variable.order), notice: "Variable was successfully updated."
+    else
+        render :edit, status: :unprocessable_entity
     end
   end
 
   private
 
   def order_variable_params
-    params.require(:order_variable).permit(:name, :value)
+    params.require(:order_variable).permit(:name, :value, :operator, :fixed, :position)
   end
 end

@@ -13,6 +13,7 @@ class ContractsController < ApplicationController
         @contract = Contract.find(params[:id])
         @service = Service.new
         @service.contract= @contract
+        @tax_regimes = @contract.tax_regimes
     end
     
     def new

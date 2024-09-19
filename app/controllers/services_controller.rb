@@ -1,16 +1,16 @@
 class ServicesController < ApplicationController
 
-    before_action :set_service, only: [:show, :edit, :update, :destroy]
+    before_action :set_service, only: [:show, :edit, :update, :destroy, :calculate]
+    # before_action :show_totals, only: [:show]
     
     def index
         @services = Service.all
         @contract = Contract.find(params[:contract_id])
     end
-    
+
     def show
         @service = Service.includes(:variables).find(params[:id])
         @services = @service.children 
-
     end
     
     def new
@@ -70,7 +70,7 @@ class ServicesController < ApplicationController
     
     def destroy
         @service.destroy
-        redirect_to contract_services_path, notice: "Service was successfully destroyed."
+        redirect_to services_path, notice: "Service was successfully destroyed."
     end
 
     def new_child # NOT USED
@@ -81,33 +81,20 @@ class ServicesController < ApplicationController
         @new_child.parent = @service
     end
 
-    # def index_master_services # NOT USED
-    #     @services = @contract.services.select{ |s| s.is_root? }
-    # end
-
     def new_master_service
         @service = Service.new
         @contract = Contract.find(params[:contract_id])
         @service.contract= @contract
     end
 
-    # def show_master_service
-    #     @service = Service.new
-    # end
-
     def copy_service
         @contracts = Contract.all
     end
 
     def calculate
-        @service = Service.find(params[:id])
-        # @fee = @service.contract.fee
-        # if @fee != 0 && @service_agency_fee == true
-        # @add_to_result = @service.resultat * @fee
-        @resultat =   @service.calculate
-       
-      end
-    
+        @resultat = @service.calculate 
+    end
+
     private
     
     def set_service
@@ -115,6 +102,6 @@ class ServicesController < ApplicationController
     end
     
     def service_params
-        params.require(:service).permit(:name, :ancestry, :description)
+        params.require(:service).permit(:name, :ancestry, :description, :value)
     end
 end

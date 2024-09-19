@@ -1,8 +1,8 @@
 class Order < ApplicationRecord
+  has_ancestry
   belongs_to :service
-  belongs_to :purchase_order
-  has_one :invoice
-  has_many :order_variables, dependent: :destroy
+  belongs_to :invoice
+  has_many :order_variables, -> { order(position: :asc) }, dependent: :destroy
   after_create :create_order_variables
   validates :name, presence: true
 
@@ -15,6 +15,10 @@ class Order < ApplicationRecord
                              value: v.value,
                              role: v.role)
     end
+  end
+
+  def update_family_values
+    
   end
 
   def calculate
@@ -30,11 +34,18 @@ class Order < ApplicationRecord
     result
   end
 
+
+
   def formula
-    order_variables.sort_by(&:position).map do |v|
-      "#{v.value}"
-    end.join(" ")
+    if order_variables != []
+      order_variables.sort_by(&:position).map do |v|
+        "#{v.value}"
+      end.join(" ")  
+    else
+      self.children.map(&:calculate).join('+')
+    end
   end
+
 end
 
 

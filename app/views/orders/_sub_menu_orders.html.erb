@@ -2,8 +2,10 @@
    <% orders.each do |order, children| %>
 
       <li>
-        <%= link_to_unless_current order.name, order_path(order),
-       class: "  #{ 'white' if order.ancestry != nil } " %>
+        <%= link_to_unless_current order.name, order_path(order), class: "  #{ 'white' if order.ancestry != nil } " %>
+        <% if order.calculate %>
+          <span><%= link_to order.calculate, order_path(order), class:"text-success" %></span>
+        <% end %>
       </li>
         <%= render 'sub_menu_orders', orders: children if children.present? %>
   <% end %>

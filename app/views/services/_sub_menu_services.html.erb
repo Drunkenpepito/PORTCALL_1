@@ -3,7 +3,12 @@
 
       <li>
         <%= link_to_unless_current service.name, service_path(service),
-       class: "  #{ 'white' if service.ancestry != nil } " %>
+        class: "  #{ 'white' if service.ancestry != nil } " %>
+        <%# <% if service.calculate%> 
+          <span><%= service.calculate %></span>
+                <%# <% else 
+          <span><%= link_to @resultat, service_path(service), class:"text-danger p-2" </span>
+        <% end %> 
       </li>
         <%= render 'sub_menu_services', services: children if children.present? %>
   <% end %>

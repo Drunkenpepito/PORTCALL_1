@@ -1,5 +1,6 @@
 class InvoicesController < ApplicationController
-  
+  before_action :set_invoice, only: [:show, :edit, :update, :destroy]
+
     def index
       @invoices = Invoice.all
     end
@@ -19,25 +20,38 @@ class InvoicesController < ApplicationController
         render :new
       end
     end
+
+    def edit
+    end
+
+    def update
+      if @invoice.update(invoice_params)
+      redirect_to invoices_path, notice: "Invoice was successfully updated."
+      else
+      render :edit, status: :unprocessable_entity
+      end
+    end
   
     def destroy
-      @invoice = Invoice.find(params[:id])
       @invoice.destroy
-      respond_to do |format|
-        format.html { redirect_to invoice_path(@invoice) }
-        format.turbo_stream
-      end
+      redirect_to invoice_path(@invoice) 
     end
   
     def show 
       @invoice = Invoice.includes(:orders).find(params[:id])
+      @orders = @invoice.orders.select{ |s| s.is_root? }
+
     end
   
  
     private
+
+    def set_invoice
+      @invoice = Invoice.find(params[:id])
+    end
   
     def invoice_params
-      params.require(:invoice).permit(:name, :description)
+      params.require(:invoice).permit(:name, :description, :contract_id)
     end
 
   

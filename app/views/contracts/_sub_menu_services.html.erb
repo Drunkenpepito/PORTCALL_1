@@ -1,9 +1,11 @@
-<ul>
+<ul >
    <% services.each do |service, children| %>
 
       <li>
         <%= link_to_unless_current service.name, service_path(service),
-       class: "  #{ 'white' if service.ancestry != nil } " %>
+        class: "  #{ 'white' if service.ancestry != nil } " %>
+        <span><%= service.calculate %></span>
+
       </li>
         <%= render 'sub_menu_services', services: children if children.present? %>
   <% end %>

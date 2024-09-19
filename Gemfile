@@ -24,6 +24,7 @@ gem "autoprefixer-rails"
 gem "font-awesome-sass", "~> 6.1"
 gem "sassc-rails"
 gem "acts_as_list"
+gem "pry-byebug"
 
 
 group :development, :test do

@@ -28,13 +28,39 @@
                               </span>
 
     <!--   SERVICE FAMILY    -->
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Service</th>
+          <th scope="col">Budget Price</th>
+          <th scope="col">Fee 5%</th>
+          <th scope="col">VAT 20%</th>
+          <th scope="col">Invoice Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @services.each do |service| %>
+          <tr>
+            <td><%= service.name  %> </td>
+            <td><%= service.calculate %></td>
+            <td><%= (service.calculate * 0.05).round(2) %></td>
+            <td><%= ((service.calculate * 0.05).round(2) * 0.2).round(2) %></td>
+            <td><%= (service.calculate +  (service.calculate * 0.05) + ((service.calculate * 0.05) * 0.2).round(2)).round(2)%></td>
+
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
                               <div class="ingredient-card">
                                     <ul class="white">
                                       <% @services.each do |service| %>
-                                          <li><%= link_to service.name, service_path(service), class:"white " %>
-                                            <% if service.calculate %>
-                                              <span><%= link_to service.calculate, service_path(service), class:"text-success" %></span>
-                                            <% end %>
+                                          <li class= "d-flex"><%= link_to service.name, service_path(service), class:"white " %>
+                                            <%# <% if @resultat%> 
+                                              <span><%= service.calculate %></span>
+                                            <%# <% else 
+                                              <span><%= link_to @resultat, service_path(service), class:"text-danger p-2" </span>
+                                            <% end %> 
                                           </li>
                                           <%= render 'sub_menu_services', services: service.descendants.arrange %>
                                       <% end %>
@@ -43,12 +69,12 @@
       
     <div class="container rounded-4 border border-5e border-dark">
 
-      <!--   VARIABLE LIST    -->
+      <!--   FORMULA = VARIABLE LIST    -->
                                 <h2 class = "calculator_card"></h2>
 
                                 <%= turbo_frame_tag "variable_list" do %>
                                   <% if  @service.variables.empty? %>
-                                    <h4 ><italic>No Formula for this service</italic></h4>
+                                    <h4>NO FORMULA</h4>
                                   <% else %>
                                     <%= render "variables/variable_list", service: @service , class:"calculator-card p-3"%>
                                   <% end %>

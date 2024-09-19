@@ -1,0 +1,6 @@
+<%# <%= turbo_frame_tag "#{@contract.id}_new_tax_regime" do%> 
+  <%= simple_form_for [@contract, @tax_regime] do |f|%>
+    <%= f.input :name%>
+    <%= f.input :percentage %>
+    <%= f.button :submit %>
+  <% end %>

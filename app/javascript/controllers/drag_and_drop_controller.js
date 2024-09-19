@@ -8,6 +8,8 @@ export default class extends Controller {
     //  console.log(this.element)
     // creation des elements drag and dropable ICI tous les enfants du controller
     // AKA les turbo_frames de variables
+    console.log('drag & drop controller connected')
+    console.log(this.element.dataset)
     this.sortable = Sortable.create(this.element,{
     onEnd: this.end.bind(this) //callback sur l'event onEnd qui se déclenche
     // lorsqu'un élément a été déplacé
@@ -15,7 +17,8 @@ export default class extends Controller {
   // console.log(this.sortable)
 }
 
-
+// au moment du drop , on doit avoir la position de la variable droppée qui prend la position de la variable remplacée
+// pas clair : demander a Benoit
   end(event){
     const url = event.item.dataset.url
     // console.log(event)
