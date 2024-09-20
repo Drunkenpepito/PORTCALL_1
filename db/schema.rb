@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_16_180649) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_19_223200) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,12 +82,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_16_180649) do
     t.index ["contract_id"], name: "index_services_on_contract_id"
   end
 
+  create_table "services_tax_regimes", id: false, force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "tax_regime_id"
+    t.index ["service_id"], name: "index_services_tax_regimes_on_service_id"
+    t.index ["tax_regime_id"], name: "index_services_tax_regimes_on_tax_regime_id"
+  end
+
   create_table "tax_regimes", force: :cascade do |t|
     t.string "name"
     t.integer "percentage"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "contract_id"
+    t.boolean "isfee"
     t.index ["contract_id"], name: "index_tax_regimes_on_contract_id"
   end
 

@@ -31,9 +31,12 @@ Rails.application.routes.draw do
       get :calculate # permet de calculer le prix d'un service
     end
     resources :variables, only: [:new, :create,]
+    post "tax_regimes/:id/link_tax_service", to:"services#link_tax_service", as: :link_tax
+    post "tax_regimes/:id/unlink_tax_service", to:"services#unlink_tax_service", as: :unlink_tax
+
   end
 
-
+  
 
 
 

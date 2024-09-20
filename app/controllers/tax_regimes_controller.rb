@@ -43,6 +43,6 @@ class TaxRegimesController < ApplicationController
   end
   
   def tax_regime_params
-      params.require(:tax_regime).permit(:name, :percentage, :contract_id)
+      params.require(:tax_regime).permit(:name, :percentage, :contract_id, :isfee)
   end
 end

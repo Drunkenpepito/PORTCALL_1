@@ -23,8 +23,8 @@
           <span class="h6" >
             <%= link_to service.calculate, service_path(service), class:"text-dark" %>
           </span> 
-          <button class="btn btn-light" data-action="click->toggle-family#toggle">
-            🔽
+          <button class="btn btn-light rounded-circle" data-action="click->toggle-family#toggle">
+            ▽
           </button>
           <span data-toggle-family-target="family" class="">
             <%= render 'sub_menu_services', services: service.descendants.arrange %>

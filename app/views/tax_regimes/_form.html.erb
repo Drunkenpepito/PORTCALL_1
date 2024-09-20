@@ -1,6 +1,16 @@
 <%# <%= turbo_frame_tag "#{@contract.id}_new_tax_regime" do%> 
   <%= simple_form_for [@contract, @tax_regime] do |f|%>
+    <h5 class="d-flex m-auto">
+    <%= f.input :isfee, 
+            as: :select, 
+            collection: [['FEE',true],['TAX',false]], 
+            include_blank: false, 
+            label: false
+    %>
+    </h5>
+    <div class="d-flex container p-3 ">
     <%= f.input :name%>
     <%= f.input :percentage %>
-    <%= f.button :submit %>
+    <%= f.button :submit , label:"Create Tax or Fee"%>
+  </div>
   <% end %>
