@@ -1,24 +1,33 @@
-<%= link_to sanitize("&larr; Back to Invoices"), invoices_path, class:"btn btn-outline-secondary" %>
-<%= link_to sanitize("✚"), new_invoice_order_path(@invoice), class:"btn btn-outline-primary" %>
+<%= link_to sanitize("&larr; Back to Invoices"), invoices_path, class:"btn1" %>
+<%= link_to sanitize("✚ Service"), new_invoice_order_path(@invoice), class:"btn1" %>
+<%= link_to sanitize("✚ Tax"), new_invoice_tax_path(@invoice), class:"btn1" %>
 
 
-<h2 class = "d-flex justify-content-center" >INVOICE <%= @invoice.name %> </h2>
+<h2 class = "d-flex justify-content-center green  " >INVOICE <%= @invoice.name %> </h2>
 
 
 <!--   MENU 2   -->
 
-<div class="m-3">
-<% if @orders != nil %>
-  <%# <%= turbo_frame_tag "orders" do %> 
-    <% @orders.each do |order| %>
-        <li data-controller="toggle-family"><%= link_to order.name, order_path(order), class:"big red " %>
-          <span><%= link_to order.calculate, order_path(order), class:"text-danger" %></span>
-          <button class="btn btn-light" data-action="click->toggle-family#toggle">
-          🔽
-          </button>
-          <span data-toggle-family-target="family"><%= render 'sub_menu_orders', orders: order.descendants.arrange  %></span>
-      </li>
+<table class="table table-success table-striped table-bordered table-hover">
+  <tbody>
+    <% if @orders != nil %>
+        <% @orders.each do |order| %>
+          <tr>
+            <th scope="row">
+              <li class="blue" data-controller="toggle-family"><%= link_to order.name.upcase, order_path(order), class:" h4" %>
+                <% if  order.calculate.is_a? Numeric %>
+                  <span><%= link_to order.calculate, order_path(order), class:"green" %></span>
+                <% else %>
+                  ❌
+                <% end %>
+                <button class="btn" data-action="click->toggle-family#toggle">
+                ▽
+                </button>
+                <span data-toggle-family-target="family"><%= render 'sub_menu_orders', orders: order.descendants.arrange  %></span>
+              </li>
+            </th>
+          </tr>
+        <% end %>
     <% end %>
-  <%# <% end %> 
-<% end %>
-</div>
+  </tbody>
+</table>

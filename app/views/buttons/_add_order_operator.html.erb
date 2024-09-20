@@ -1,0 +1,16 @@
+<%= simple_form_for [order,order_variable] do |f| %>
+<div class="d-none">
+  <%= f.input :value %>
+  <%= f.input :name %>
+  <%= f.input :operator %>
+  <%= f.input :fixed %>
+  <%= f.input :role %>
+</div>
+  <%= button_tag :submit, class: "--no-border" do  %>
+      <div class="ingredient-card">
+        <div class="ingredient-value">
+          <%=order_variable.operator? ? order_variable.name : order_variable.value %>
+        </div>
+      </div>
+  <% end %>
+<% end %>

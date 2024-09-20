@@ -5,7 +5,7 @@ export default class extends Controller {
   static targets = ["family"]
   connect() {
     console.log('toggle_Family connected')
-    console.log(this.familyTarget )
+    console.log(this)
   }
   toggle(){
     this.familyTarget.classList.toggle("d-none") 

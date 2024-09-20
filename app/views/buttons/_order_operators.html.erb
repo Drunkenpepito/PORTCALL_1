@@ -1,0 +1,14 @@
+<div class="d-flex ">
+  <%= render 'buttons/add_order_operator', order: @order,
+  order_variable: OrderVariable.new(name: "X",value: "*", operator:true,fixed: true,role: "value") %>
+  <%= render 'buttons/add_order_operator', order: @order,
+  order_variable: OrderVariable.new(name: "/",value: "/", operator:true,fixed: true,role: "value") %>
+  <%= render 'buttons/add_order_operator', order: @order,
+  order_variable: OrderVariable.new(name: "+",value: "+", operator:true,fixed: true,role: "value") %>
+  <%= render 'buttons/add_order_operator', order: @order,
+  order_variable: OrderVariable.new(name: "-",value: "-", operator:true,fixed: true,role: "value") %>
+  <%= render 'buttons/add_order_operator', order: @order,
+  order_variable: OrderVariable.new(name: "(",value: "(", operator:true,fixed: true,role: "value") %>
+  <%= render 'buttons/add_order_operator', order: @order,
+  order_variable: OrderVariable.new(name: ")",value: ")", operator:true,fixed: true,role: "value") %>
+</div>

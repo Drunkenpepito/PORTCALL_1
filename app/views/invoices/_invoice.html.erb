@@ -1,6 +1,9 @@
-<span class="d-flex justify-content-around p-3">
-    <%= link_to invoice.name, invoice_path(invoice), class:"btn btn-outline-dark" %>
-    <%= link_to invoice.description, invoice_path(invoice), class:"btn " %>
-    <%= link_to "Edit",edit_invoice_path(invoice),class: "btn btn-outline-primary" %></div>           
-    <%= button_to "Delete",invoice_path(invoice),method: :delete,class: "btn1" %>
-</span>
+
+
+    <tr>
+      <th scope="row "><%= link_to invoice.name.upcase, invoice_path(invoice), class:" m-auto btn1 " %></th>
+      <td class="text-center"><%= link_to invoice.description, invoice_path(invoice), class:"btn m-auto " %></td>
+      <td><%= link_to invoice.description, invoice_path(invoice), class:"btn  m-auto" %></td>
+      <td class="text-center"><%= link_to "✏️ Edit ",edit_invoice_path(invoice),class: "btn1 m-auto " %></td>
+      <td><%= button_to "❌ Delete",invoice_path(invoice),method: :delete,class: "btn1 m-auto" %></td>
+    </tr>

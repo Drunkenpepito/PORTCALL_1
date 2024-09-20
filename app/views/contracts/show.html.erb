@@ -1,36 +1,45 @@
-<%= link_to sanitize("&larr; Back to contracts"), contracts_path, class:"btn btn-outline-secondary" %>
-<%= link_to sanitize("✚ Service"), contract_new_master_service_path(@contract), class:"btn btn-outline-primary" %>
-<%= link_to sanitize("✚ Tax"), new_contract_tax_regime_path(@contract), class:"btn btn-outline-primary" %>
+<%= link_to sanitize("&larr; Back to contracts"), contracts_path, class:"btn1" %>
+<%= link_to sanitize("✚ Service"), contract_new_master_service_path(@contract), class:"btn1" %>
+<%= link_to sanitize("✚ Tax"), new_contract_tax_regime_path(@contract), class:"btn1" %>
 
 
-<div class= "container d-flex justify-content-center">
-  <h2 class = "d-flex justify-content-center" >CONTRACT <%= @contract.name %> </h2>
+<div class= "container d-flex justify-content-center m-3">
+  <h2 class = " blue m-auto" >CONTRACT <%= @contract.name %> </h2>
   <% if @tax_regimes != nil  %> 
-    <span class = " h6 align-items-center d-flex  btn-outline-dark justify-content-center m-2"> (Taxes:
+    <span class = " mh-3">
     <% @tax_regimes.each do |tax| %>
-      <span class = " h6 align-items-center d-flex  btn-outline-dark justify-content-center m-2" > <%= tax.name.upcase %> </span>
-      <%= link_to "✏️",edit_tax_regime_path(tax), class: "pr-2" %>
+      <%= link_to tax.name.upcase ,edit_tax_regime_path(tax), class: "btn1" %>
     <% end %>
-     )
+    </span>
   <% end %>
 </div>
 
 <!--   MENU   -->
 
-<div class="m-3" >
+<table class="table table-primary table-striped table-bordered table-hover">
+  <tbody>
   <% @services.each do |service| %>
-      <li class= '' data-controller="toggle-family"><%= link_to service.name.upcase, service_path(service), class:" h4 " %>
-          <span class="h6" >
-            <%= link_to service.calculate, service_path(service), class:"text-dark" %>
-          </span> 
-          <button class="btn btn-light rounded-circle" data-action="click->toggle-family#toggle">
-            ▽
-          </button>
-          <span data-toggle-family-target="family" class="">
-            <%= render 'sub_menu_services', services: service.descendants.arrange %>
-          </span>
-      </li>
+    <tr>
+      <th scope="row">
+        <li class= 'blue' data-controller="toggle-family"><%= link_to service.name.upcase, service_path(service), class:" h4  " %>
+            <span class="h6 " >
+            <% if  service.calculate.is_a? Numeric %>
+              <%= link_to "✔️", service_path(service), class:"green" %> 
+            <% else %>
+              ❌
+            <% end %>
+            </span> 
+            <button class="btn " data-action="click->toggle-family#toggle">
+              ▽ 
+            </button>
+            <span data-toggle-family-target="family" class="d-none">
+              <%= render 'sub_menu_services', services: service.descendants.arrange %>
+            </span>
+        </li>
+      </th>
+    </tr>
   <% end %>
-</div>
+  </tbody>
+</table>
 
 

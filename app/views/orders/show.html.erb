@@ -12,7 +12,7 @@
 
     <!--   PATH    -->
 
-                              <span class="d-flex justify-content-start align-items-center m-3">
+                              <span class="d-flex justify-content-start align-items-center m-3 bg-dark text-light p-2 rounded-pill">
                                 <%= @order.invoice.name + "/"%>
                                 <% if @order.ancestors.map(&:name) != [] %> 
                                   <%  @order.ancestors.map(&:name).each do |s|%>
@@ -27,34 +27,94 @@
                               </span>
 
     <!--   order FAMILY    -->
-                              <div class="ingredient-card">
-                                    <ul class="white">
-                                      <% @orders.each do |order| %>
-                                          <li><%= link_to order.name, order_path(order), class:"white " %>
-                                            <% if order.calculate %>
-                                              <span><%= link_to order.calculate, order_path(order), class:"text-success" %></span>
-                                            <% end %>
-                                          </li>
-                                          <%= render 'sub_menu_orders', orders: order.descendants.arrange %>
-                                      <% end %>
-                                    </ul>
-                              </div>
+    <table class="table table-success table-striped table-hover <%='d-none' if @order.has_children? == false %>">
       
-    <div class="container rounded-4 border border-5e border-dark">
+      <thead>
+        <tr class="text-center table h6 ">
+          <th class="text-start fs-6" scope="col">SERVICE</th>
+          <% @order.invoice.taxes.where(isfee:true).each do |tax| %>
+            <th scope="col"> <%= tax.name.upcase %> </th>
+          <% end %>
+          <th class="" scope="col">BUDGET PRICE</th>
+          <% @order.invoice.taxes.where(isfee:false).each do |tax| %>
+            <th class=""  scope="col"> <%= tax.name.upcase %> </th>
+          <% end %>
+          <th class="text_center" scope="col">INVOICE PRICE</th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr class="text-center">
+                 <td class="text-start h5" ><%= link_to order.name, order_path(order), class:"blue" %> </td>
+            <%# FEES %>
+                  <% order.invoice.taxes.where(isfee:true).each do |tax| %>
+                    <% if order.calculate.is_a? Numeric %> 
+                      <td><%= render "tax_order", order:order, tax:tax  %></td>
+                    <% else %>
+                      <td>❌</td>
+                    <% end %>
+                  <% end %>
+            <%# BUDGET PRICE %>
+                  <% if order.calculate.is_a? Numeric %> 
+                    <td class="text-center"><%= order.calculate %></td>
+                  <% else %>
+                    <td>❌</td>
+                  <% end %>
+            <%# TAXES %>
+                  <% if order.calculate.is_a? Numeric %> 
+                    <% @order.invoice.taxes.where(isfee:false).each do |tax| %>
+                      <td><%= render "tax_order", order:order, tax:tax  %></td>
+                    <% end %>
+                  <% else %>
+                    <td>❌</td>
+                  <% end %>
+            <%# INVOICE PRICE   %>
+                  <% if order.calculate.is_a? Numeric %> 
+                    <td class="fw-bold"><%= order.calculate * ( 1 + order.taxes.where(isfee:false).sum(&:percentage)*0.01).round(4) %><td>
+                  <% else %>
+                    <td>❌</td>
+                  <% end %>
+</tr>
+        <% end %>
+      </tbody>
+      
+    </table>
+
+
+      
+    <div class="container rounded-4 border border-5e border-dark <%='d-none' if @order.has_children?%>">
+
 
       <!--   order_variable LIST    -->
+                              
                                 <h2 class = "calculator_card"></h2>
-
                                 <%= turbo_frame_tag "order_variable_list" do %>
                                   <% if  @order.order_variables.empty? %>
-                                    <h4 ><italic>No Formula for this order</italic></h4>
+                                    <h4>NO FORMULA</h4>
                                   <% else %>
                                     <%= render "order_variables/order_variable_list", order: @order , class:"calculator-card p-3"%>
                                   <% end %>
                                 <% end %>
 
         <!--   FORMULA ELEMENTS   -->
+                    
+
                                 <div class="d-flex ">
+
+                                  <%# <h2>ADD OPERATOR</h2> %>
+                                  <div class="operateur-add me-5 p-2">
+                                    <%= render 'buttons/order_operators' %>
+                                  </div>
+
+                                  <%# <h2>ADD VARIABLE</h2> %>
+                                  <div class="value-add p-2">
+                                    <div class="d-flex ">
+                                      <%= render 'buttons/add_order_value', order: @order,
+                                      variable: OrderVariable.new( operator:false ,fixed: false,role: "value") %>
+                                    </div>
+                                  </div>
 
                                     <%# RESULT %>
                                   <div class="ingredient-card">
@@ -62,7 +122,6 @@
                                       <%= render 'orders/resultat', order: @order   %>
                                     </div>
                                   </div>
-
 
                                 </div>
 

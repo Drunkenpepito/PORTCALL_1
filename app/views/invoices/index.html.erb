@@ -1,9 +1,8 @@
-<main class="container white">
-  <div class="header">
-    <h1>INVOICES
-    <%= link_to "✚",new_invoice_path,class: "btn btn-lg btn-outline-primary" %> </h1>
-  </div>
-  
-  <%= render @invoices %>
-  
-</main>
+
+
+
+<table class="table table-success table-striped table-bordered table-hover">
+  <tbody>
+    <%= render @invoices %>
+  </tbody>
+</table>

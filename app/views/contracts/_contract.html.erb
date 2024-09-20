@@ -1,5 +1,6 @@
-<span class="d-flex justify-content-around p-3">
-    <%= link_to contract.name, contract_path(contract), class:"btn btn-outline-dark" %>
-    <%= link_to "Edit",edit_contract_path(contract),class: "btn2" %></div>           
-    <%= button_to "Delete",contract_path(contract),method: :delete,class: "btn1" %>
-</span>
+
+    <tr>
+      <th scope="row"><%= link_to contract.name.upcase, contract_path(contract), class:"btn1 m-auto " %></th>
+      <td class="text-center"><%= link_to "✏️ Edit",edit_contract_path(contract),class: "btn1 m-auto " %></td>
+      <td><%= button_to "❌ Delete",contract_path(contract),method: :delete,class: "btn1 m-auto " %></td>
+    </tr>

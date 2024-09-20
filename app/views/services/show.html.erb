@@ -9,7 +9,7 @@
 <%= link_to "New service",service_new_child_service_path(@service),class: "btn btn-outline-primary" %>
 
 
-<main class="container white">
+
 
     <!--   PATH    -->
 
@@ -18,25 +18,25 @@
                                  &nbsp<%=  "/" %>&nbsp
                                 <% if @service.ancestors.map(&:name) != [] %> 
                                   <%  @service.ancestors.each do |s|%>
-                                    <%= link_to s.name.upcase, service_path(s) %>
+                                    <%= link_to s.name.upcase, service_path(s)%>
                                     &nbsp<%=  "/" %>&nbsp
                                   <% end %>
-                                <span class="text-danger"> &nbsp;<%=@service.name.upcase %></span>
+                                <span class="text-light h4"> &nbsp;<%=@service.name.upcase %></span>
                                 <%= link_to "✏️",edit_service_path(@service),class: "m-2" %>
                                 <% else %>
-                              <%= @service.name.upcase %> 
+                              <span class="text-light h4"><%=@service.name.upcase %></span>
                               <%= link_to "✏️",edit_service_path(@service),class: "m-2" %>
                                 <% end %>
                               </span>
 
     <!--   SERVICE FAMILY    -->
 
-    <table class="table table-hover <%='d-none' if @service.has_children? == false %>">
+    <table class="table table-primary table-striped table-hover <%='d-none' if @service.has_children? == false %>">
 
       
       <thead>
-        <tr class="flex justify-content-evenly text-center">
-          <th class="text-start" scope="col">Service</th>
+        <tr class="text-center table  h6 ">
+          <th class="text-start fs-6" scope="col">SERVICE</th>
           <% @service.contract.tax_regimes.where(isfee:true).each do |tax| %>
             <th scope="col"> <%= tax.name.upcase %> </th>
           <% end %>
@@ -52,37 +52,42 @@
       <tbody>
         <% @services.each do |service| %>
           <tr class="text-center">
-                 <td class="text-start" ><%= link_to service.name, service_path(service), class:"white " %> </td>
+                 <td class="text-start h5" ><%= link_to service.name, service_path(service), class:"blue" %> </td>
             <%# FEES %>
                   <% service.contract.tax_regimes.where(isfee:true).each do |tax| %>
-                    <td><%= render "tax_service", service:service, tax:tax  %></td>
+                    <% if service.calculate.is_a? Numeric %> 
+                      <td><%= render "tax_service", service:service, tax:tax  %></td>
+                    <% else %>
+                      <td>❌</td>
+                    <% end %>
                   <% end %>
             <%# BUDGET PRICE %>
-                  <td class="text-center"><%= service.calculate %></td>
+                  <% if service.calculate.is_a? Numeric %> 
+                    <td class="text-center"><%= service.calculate %></td>
+                  <% else %>
+                    <td>❌</td>
+                  <% end %>
             <%# TAXES %>
-                  <% @service.contract.tax_regimes.where(isfee:false).each do |tax| %>
-                    <td><%= render "tax_service", service:service, tax:tax  %></td>
+                  <% if service.calculate.is_a? Numeric %> 
+                    <% @service.contract.tax_regimes.where(isfee:false).each do |tax| %>
+                      <td><%= render "tax_service", service:service, tax:tax  %></td>
+                    <% end %>
+                  <% else %>
+                    <td>❌</td>
                   <% end %>
             <%# INVOICE PRICE   %>
-                  <td><%= service.calculate * ( 1 + service.tax_regimes.where(isfee:false).sum(&:percentage)*0.01).round(4) %><td>
-          </tr>
+                  <% if service.calculate.is_a? Numeric %> 
+                    <td class="fw-bold"><%= service.calculate * ( 1 + service.tax_regimes.where(isfee:false).sum(&:percentage)*0.01).round(4) %><td>
+                  <% else %>
+                    <td>❌</td>
+                  <% end %>
+</tr>
         <% end %>
       </tbody>
 
     </table>
-<!--
-                              <div class="ingredient-card">
-                                    <ul class="white">
-                                      <% @services.each do |service| %>
-                                          <li class= "d-flex"><%= link_to service.name, service_path(service), class:"white " %>
-                                              <span><%= service.calculate %></span>
-                                          </li>
-                                          <%= render 'sub_menu_services', services: service.descendants.arrange %>
-                                      <% end %>
-                                    </ul>
-                              </div>
-      
-  -->
+
+
     <div class="container rounded-4 border border-5e border-dark <%='d-none' if @service.has_children?%>">
 
       <!--   FORMULA = VARIABLE LIST    -->
@@ -134,7 +139,6 @@
               <% end %>
             </div>
 
-</main>
 
 
 

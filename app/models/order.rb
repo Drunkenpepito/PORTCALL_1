@@ -5,6 +5,8 @@ class Order < ApplicationRecord
   has_many :order_variables, -> { order(position: :asc) }, dependent: :destroy
   after_create :create_order_variables
   validates :name, presence: true
+  has_and_belongs_to_many :taxes
+
 
 
   def create_order_variables

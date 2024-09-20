@@ -1,0 +1,15 @@
+  <%= simple_form_for [@invoice, @tax] do |f|%>
+    <h5 class="d-flex m-auto">
+    <%= f.input :isfee, 
+            as: :select, 
+            collection: [['FEE',true],['TAX',false]], 
+            include_blank: false, 
+            label: false
+    %>
+    </h5>
+    <div class="d-flex container p-3 ">
+    <%= f.input :name%>
+    <%= f.input :percentage %>
+    <%= f.button :submit , label:"Create Tax or Fee"%>
+  </div>
+  <% end %>

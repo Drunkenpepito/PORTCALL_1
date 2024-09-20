@@ -1,3 +1,4 @@
+<!--
 <%= turbo_frame_tag order_variable, data: { url: "/order_variables/#{order_variable.id}/move" } do %>
   <div class="d-flex flex-column align-items-center">
     <div class="ingredient-card">
@@ -20,3 +21,44 @@
     <p><%= order_variable.name %> </p>
   </div>
 <% end %>
+
+-->
+
+
+<%= turbo_frame_tag order_variable, data: { url: "/order_variables/#{order_variable.id}/move" } do %>
+<%# <% raise %> 
+  <div class="d-flex flex-column align-items-center">
+    <div class="ingredient-card">
+
+      <%# DELETE %>
+            <div class="remove-ingredient-btn">
+            <span class="translate-middle badge border border-light rounded-pill bg-danger">
+              <%= button_to order_variable_path(order_variable) , method: :delete do %>
+                X
+                <span class="visually-hidden">removed</span>
+              <% end %>
+            </span>
+            </div>
+
+      <%# EDIT %>
+            <% unless order_variable.fixed? %>
+              <div class="edit-ingredient-btn">
+                <span class="translate-middle badge  border border-light rounded-pill bg-primary">
+                  <%= link_to edit_order_variable_path(order_variable) do%>
+                      <i class="fa-solid fa-pen "></i>
+                      <span class="visually-hidden">edit</span>
+                  <% end %>
+                </span>
+              </div>
+            <% end %>
+
+      <%# VALUE %>
+            <div class="ingredient-value">
+              <%=order_variable.operator? ? order_variable.name : order_variable.value %>
+            </div>
+
+    </div>
+    <p><%= order_variable.name %> </p>
+  </div>
+<% end %>
+

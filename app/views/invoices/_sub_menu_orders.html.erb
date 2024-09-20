@@ -1,11 +1,12 @@
 <ul>
    <% orders.each do |order, children| %>
-
       <li>
-        <%= link_to_unless_current order.name, order_path(order),class: "  #{ 'white' if order.ancestry != nil } " %>
-      <%# <% if order.calculate %> 
-        <span><%= link_to order.calculate, order_path(order), class:"text-success" %></span>
-      <%# <% end %> 
+        <%= link_to_unless_current order.name, order_path(order),class: " #{ 'blue fw-light' if order.ancestry != nil } " %>
+        <% if order.calculate.is_a? Numeric %> 
+          <span><%= link_to order.calculate, order_path(order), class:" green" %></span>
+        <% else %>
+          <span class="text-danger fw-lighter fs-6 " > 𝘅  </span>
+        <% end %>
       </li>
         <%= render 'sub_menu_orders', orders: children if children.present? %>
   <% end %>
