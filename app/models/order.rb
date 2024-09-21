@@ -49,11 +49,19 @@ class Order < ApplicationRecord
   end
 
   def budget_price
-    (self.calculate * ( 1 + self.taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)
+    if !self.has_children?
+      (self.calculate * ( 1 + self.taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)
+    else
+      self.children.sum(&:budget_price)
+    end
   end
 
   def invoice_price
+    if !self.has_children?
     ((self.calculate * ( 1 + self.taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)* ( 1 + self.taxes.where(isfee:false).sum(&:percentage)*0.01)).round(4) 
+    else
+      self.children.sum(&:invoice_price)
+    end
   end
 
 end

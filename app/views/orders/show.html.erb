@@ -1,14 +1,14 @@
 
-<%= link_to sanitize("&larr; Invoices"), invoices_path, class:"btn btn-secondary" %>
+<%= link_to sanitize("&larr; Invoices"), invoices_path, class:"btn1" %>
 <% if @order.is_root? == false  %> 
-  <%= link_to sanitize("&larr; Back"), order_path( @order.parent) , class:"btn btn-secondary"%>
+  <%= link_to sanitize("&larr; Back"), order_path( @order.parent) , class:"btn1"%>
 <% else %>
-  <%= link_to sanitize("&larr; Back"), invoice_path( @order.invoice) , class:"btn btn-secondary"%>
+  <%= link_to sanitize("&larr; Back"), invoice_path( @order.invoice) , class:"btn1"%>
 <% end %>
-<%= link_to "New cutom order",'#',class: "btn btn-outline-primary" %>
+<%= link_to "New cutom order",'#',class: "btn1" %>
 
 
-<h2 class = "d-flex justify-content-center green  " >INVOICE <%= @order.invoice.name.upcase%></h2>
+<div class = "d-flex justify-content-center h3 " > <%=  link_to @order.invoice.name.upcase, invoice_path(@order.invoice) , class:"green"%></div>
 <main class="container white">
 
     <!--   PATH    -->
