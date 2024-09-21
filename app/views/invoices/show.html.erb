@@ -29,7 +29,7 @@
                 <button class="btn" data-action="click->toggle-family#toggle">
                 ▽
                 </button>
-                <span data-toggle-family-target="family"><%= render 'sub_menu_orders', orders: order.descendants.arrange  %></span>
+                <span data-toggle-family-target="family" class="d-none"><%= render 'sub_menu_orders', orders: order.descendants.arrange  %></span>
               </li>
             </th>
           </tr>

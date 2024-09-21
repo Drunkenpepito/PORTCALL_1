@@ -113,6 +113,10 @@ class OrdersController < ApplicationController
       end
     end
 
+    # def budget_price(order)
+    #   @budget_price = (order.calculate * ( 1 + order.taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)
+    # end
+
     def get_variables(service,order)
       service.variables.each do |v|
         var = OrderVariable.new

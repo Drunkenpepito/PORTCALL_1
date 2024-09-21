@@ -48,6 +48,14 @@ class Order < ApplicationRecord
     end
   end
 
+  def budget_price
+    (self.calculate * ( 1 + self.taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)
+  end
+
+  def invoice_price
+    ((self.calculate * ( 1 + self.taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)* ( 1 + self.taxes.where(isfee:false).sum(&:percentage)*0.01)).round(4) 
+  end
+
 end
 
 

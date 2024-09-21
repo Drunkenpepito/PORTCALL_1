@@ -14,3 +14,12 @@
   <%= render "orders/budget_price" ,  order: @order %>
 <% end %>
 
+<%# UPDATE TOTAL BUDGET PRICE%>
+<%= turbo_stream.update "budget_prices_#{@order.parent.id}" do %>
+  <%= render "orders/budget_prices" ,  order: @order.parent %>
+<% end %>
+
+<%# UPDATE TOTAL INVOICE PRICE%>
+<%= turbo_stream.update "invoice_prices_#{@order.parent.id}" do %>
+  <%= render "orders/invoice_prices" ,  order: @order.parent %>
+<% end %>
