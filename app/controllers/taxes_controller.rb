@@ -8,7 +8,7 @@ class TaxesController < ApplicationController
     end
   
     def create
-      @ivoice = Invoice.find(params[:invoice_id])
+      @invoice = Invoice.find(params[:invoice_id])
       @tax = Tax.new(tax_params)
       @tax.invoice = @invoice
       if @tax.save!

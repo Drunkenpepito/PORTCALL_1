@@ -4,7 +4,13 @@
 
 
 <h2 class = "d-flex justify-content-center green  " >INVOICE <%= @invoice.name %> </h2>
-
+  <% if @taxes != nil  %> 
+    <span class = " mh-3">
+    <% @taxes.each do |tax| %>
+      <%= link_to tax.name.upcase ,edit_tax_path(tax), class: "btn1" %>
+    <% end %>
+    </span>
+  <% end %>
 
 <!--   MENU 2   -->
 

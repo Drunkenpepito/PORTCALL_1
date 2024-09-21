@@ -1,0 +1,15 @@
+
+<%# UPDATE TAX or FEE %>
+<%= turbo_stream.update "order_#{@order.id}_tax#{@tax.id}" do %>
+  <%= render "orders/tax_order" , tax:@tax, order: @order %>
+<%end%>
+
+<%# UPDATE TAX IN INVOICE PRICE%>
+<%= turbo_stream.update "invoice_price_#{@order.id}" do %>
+  <%= render "orders/invoice_price" ,  order: @order %>
+<% end %>
+
+<%# UPDATE FEE IN BUDGET PRICE%>
+<%= turbo_stream.update "budget_price_#{@order.id}" do %>
+  <%= render "orders/budget_price" ,  order: @order %>
+<% end %>

@@ -40,6 +40,7 @@ class InvoicesController < ApplicationController
     def show 
       @invoice = Invoice.includes(:orders).find(params[:id])
       @orders = @invoice.orders.select{ |s| s.is_root? }
+      @taxes = @invoice.taxes
 
     end
   

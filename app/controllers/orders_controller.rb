@@ -52,6 +52,7 @@ class OrdersController < ApplicationController
     def show 
       @order = Order.includes(:order_variables).find(params[:id])
       @orders = @order.children 
+     
     end
   
     def calculate
@@ -77,17 +78,17 @@ class OrdersController < ApplicationController
         format.html {redirect_to order_path(@order)}
         format.turbo_stream
       end
-  end
+    end
 
-  def unlink_tax_order
-      @tax = Taxfind(params[:id])
+    def unlink_tax_order
+      @tax = Tax.find(params[:id])
       @order = Order.find(params[:order_id])
       @tax.orders.delete(@order)
       respond_to do |format|
         format.html {redirect_to order_path(@order)}
         format.turbo_stream
       end
-  end
+    end
 
     private
     

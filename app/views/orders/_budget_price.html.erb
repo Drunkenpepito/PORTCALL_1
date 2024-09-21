@@ -1,0 +1,4 @@
+
+<%= turbo_frame_tag "budget_price_#{order.id}" do %>
+    <%= (order.calculate * ( 1 + order.taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4) %>
+<% end %>
