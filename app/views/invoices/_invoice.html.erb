@@ -13,8 +13,8 @@
             <% end %>
           </span>
       </th>
-      <td class="text-center"><%= link_to invoice.description, invoice_path(invoice), class:"btn m-auto " %></td>
-      <td><%= link_to invoice.description, invoice_path(invoice), class:"btn  m-auto" %></td>
+      <td class="text-center "><%= render "invoice_price", invoice:invoice %></td>
+      <td><%= link_to invoice.description, invoice_path(invoice), class:" green m-auto" %></td>
       <td class="text-center"><%= link_to "✏️ Edit ",edit_invoice_path(invoice),class: "btn1 m-auto " %></td>
       <td><%= button_to "❌ Delete",invoice_path(invoice),method: :delete,class: "btn1 m-auto" %></td>
     </tr>

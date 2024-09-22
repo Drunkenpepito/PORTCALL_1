@@ -21,6 +21,7 @@ class OrdersController < ApplicationController
       @order.name = @service.name
       @order.service = @service
       @order.invoice = @invoice
+   
       if @order.save!
         # get_variables(@service,@order) if @service.variables != []
         orderize(@service, @order)
@@ -31,11 +32,13 @@ class OrdersController < ApplicationController
     end
   
     def destroy
-      @order.destroy
-      respond_to do |format|
-        format.html { redirect_to order_path(@order) }
-        format.turbo_stream
-      end
+      @order.destroy!
+      
+      # respond_to do |format|
+        # format.html { 
+        redirect_to invoice_path(@order.invoice) 
+        # format.turbo_stream
+      # end
     end
 
     def edit
@@ -108,7 +111,7 @@ class OrdersController < ApplicationController
         o.parent = order
         o.invoice = order.invoice
         o.save!
-        # get_variables(s,o) if s.variables != []
+        # get_variables(s,o) if s.variables != [] --> done with after_create Order
         orderize(s,o)
       end
     end

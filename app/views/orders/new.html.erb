@@ -1,6 +1,6 @@
-<%= turbo_frame_tag "#{@invoice.id}_new_order" do%>
+<%# <%= turbo_frame_tag "#{@invoice.id}_new_order" do%> 
   <%= simple_form_for [@invoice, @order] do |f|%>
     <%= f.association :service, collection: @services, label_method: :name, value_method: :id, include_blank: false %>
     <%= f.button :submit %>
   <% end %>
-<% end %>
+<%# <% end %> 

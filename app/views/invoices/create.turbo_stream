@@ -1,0 +1,6 @@
+
+<%= turbo_stream.update "invoice" do %>
+  <%= render "invoices/index", invoice: @invoice %>
+<%end%>
+
+
