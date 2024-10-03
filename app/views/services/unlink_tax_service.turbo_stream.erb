@@ -1,0 +1,3 @@
+<%= turbo_stream.update "service_#{@service.id}_tax#{@tax.id}" do %>
+  <%= render "services/tax_service" , tax:@tax, service: @service %>
+<%end%>

@@ -1,11 +1,13 @@
 <ul >
    <% services.each do |service, children| %>
-
-      <li>
+      <li class="">
         <%= link_to_unless_current service.name, service_path(service),
-        class: "  #{ 'white' if service.ancestry != nil } " %>
-        <span><%= service.calculate %></span>
-
+        class: "  #{ 'blue fw-light' if service.ancestry != nil } " %>
+       <% if service.calculate.is_a? Numeric %> 
+        <span class="green fw-lighter fs-6 " > ✔︎  </span>
+      <% else %>
+        <span class="text-danger fw-lighter fs-6 " > 𝘅  </span>
+      <% end %>
       </li>
         <%= render 'sub_menu_services', services: children if children.present? %>
   <% end %>

@@ -4,7 +4,9 @@ class Order < ApplicationRecord
   belongs_to :invoice
   has_many :order_variables, -> { order(position: :asc) }, dependent: :destroy
   after_create :create_order_variables
+  # after_create :create_taxes
   validates :name, presence: true
+  has_and_belongs_to_many :taxes
 
 
   def create_order_variables
@@ -17,8 +19,15 @@ class Order < ApplicationRecord
     end
   end
 
-  def update_family_values
-    
+
+
+  def create_taxes
+    service.tax_regimes.each do |tax|
+      Tax.create(order: self, name: tax.name,
+                             percentage: tax.percentage,
+                             isfee: tax.isfee
+                             )
+    end
   end
 
   def calculate
@@ -43,6 +52,22 @@ class Order < ApplicationRecord
       end.join(" ")  
     else
       self.children.map(&:calculate).join('+')
+    end
+  end
+
+  def budget_price
+    if !self.has_children? && self.calculate != nil
+      (self.calculate * ( 1 + self.taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)
+    else
+      self.children.sum(&:budget_price)
+    end
+  end
+
+  def invoice_price
+    if !self.has_children?  && self.calculate != nil
+    ((self.calculate * ( 1 + self.taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)* ( 1 + self.taxes.where(isfee:false).sum(&:percentage)*0.01)).round(4) 
+    else
+      self.children.sum(&:invoice_price)
     end
   end
 

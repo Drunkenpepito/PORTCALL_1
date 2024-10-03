@@ -1,0 +1,20 @@
+<div class="container rounded-4 border border-5e border-dark  bg-dark">
+  <%= simple_form_for [@invoice, @tax] do |f|%>
+    <h5 class="d-flex m-auto ">
+    <%= f.input :isfee, 
+            as: :select, 
+            collection: [['FEE',true],['TAX',false]], 
+            include_blank: false, 
+            label: false,
+            input_html: { autofocus: true ,class:"form1"}
+    %>
+    </h5>
+    <div class="d-flex container justify-content-center text-light p-3 ">
+        <div class="d-flex container p-3 text-center">
+          <%= f.input :name , input_html: { autofocus: true ,class:"form1"}%>
+          <%= f.input :percentage, input_html: { autofocus: true ,class:"form1"} %>
+        </div>
+    <%= f.button :submit , class:"green"%>
+  </div>
+  <% end %>
+</div>

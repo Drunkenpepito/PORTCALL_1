@@ -95,6 +95,32 @@ class ServicesController < ApplicationController
         @resultat = @service.calculate 
     end
 
+    def link_tax_service
+        # je veux faire une action reactive en modifiant une data de la DB
+        # Stimulus n'est pas le meilleur choix 
+        # Bouton --> Action controller --> Turbo frame pour atualiser DOM parait la meilleure option dans ce cas
+        # l'action necessaire est: ajouter un element de la table de jointure tax_services
+        # on ecrit la route qui nous amene les params id tax et id service 
+        # Il reste la methode d'ecriture du record dans la table de jointure:
+        @tax = TaxRegime.find(params[:id])
+        @service = Service.find(params[:service_id])
+        @tax.services << @service
+        respond_to do |format|
+          format.html {redirect_to service_path(@service)}
+          format.turbo_stream
+        end
+    end
+
+    def unlink_tax_service
+        @tax = TaxRegime.find(params[:id])
+        @service = Service.find(params[:service_id])
+        @tax.services.delete(@service)
+        respond_to do |format|
+          format.html {redirect_to service_path(@service)}
+          format.turbo_stream
+        end
+    end
+
     private
     
     def set_service

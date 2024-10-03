@@ -5,6 +5,8 @@ class Service < ApplicationRecord
     has_many :variables , -> { order(position: :asc) }, dependent: :destroy
     validates :name, presence: true
     has_many :orders
+    has_and_belongs_to_many :tax_regimes
+
 
   def calculate
  

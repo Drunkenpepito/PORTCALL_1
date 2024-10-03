@@ -13,7 +13,12 @@ body {
     text-decoration: none;
 }
 .blue{
-    color:#09507A
+    color:#09507A;
+    text-decoration: none;
+}
+.green {
+  color:#069f5a;
+  text-decoration: none;
 }
 
 .formula{
@@ -24,6 +29,10 @@ body {
     text-decoration: none;
 }
 
+.legend{
+  font-size: 12px;
+  color:#09507A;
+}
 .large{
 width: 100%;
 }
@@ -34,7 +43,7 @@ width: 100%;
 
 .btn1 {
   background-color: #FFFFFF;
-  border: 1px solid #222222;
+  border: 1px solid #09507A;
   border-radius: 8px;
   box-sizing: border-box;
   color: #09507A;
@@ -77,19 +86,19 @@ width: 100%;
 
 .btn2 {
   background-color: #FFFFFF;
-  border: 1px solid rgb(180, 124, 21);
+  border: 1px solid #09507A;
   border-radius: 8px;
   box-sizing: border-box;
   color: #09507A;
   cursor: pointer;
   display: inline-block;
   font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
-  line-height: 20px;
+  line-height: 10px;
   margin: 0;
   outline: none;
-  padding: 8px 14px;
+  padding: 3px 6px;
   position: relative;
   text-align: center;
   text-decoration: none;

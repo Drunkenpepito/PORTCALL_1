@@ -21,6 +21,7 @@ class OrdersController < ApplicationController
       @order.name = @service.name
       @order.service = @service
       @order.invoice = @invoice
+   
       if @order.save!
         # get_variables(@service,@order) if @service.variables != []
         orderize(@service, @order)
@@ -31,11 +32,13 @@ class OrdersController < ApplicationController
     end
   
     def destroy
-      @order.destroy
-      respond_to do |format|
-        format.html { redirect_to order_path(@order) }
-        format.turbo_stream
-      end
+      @order.destroy!
+      
+      # respond_to do |format|
+        # format.html { 
+        redirect_to invoice_path(@order.invoice) 
+        # format.turbo_stream
+      # end
     end
 
     def edit
@@ -52,6 +55,7 @@ class OrdersController < ApplicationController
     def show 
       @order = Order.includes(:order_variables).find(params[:id])
       @orders = @order.children 
+     
     end
   
     def calculate
@@ -67,6 +71,26 @@ class OrdersController < ApplicationController
     def calculate
       @order = Order.find(params[:id])
       @resultat =   @order.calculate
+    end
+
+    def link_tax_order
+      @tax = Tax.find(params[:id])
+      @order = Order.find(params[:order_id])
+      @tax.orders << @order
+      respond_to do |format|
+        format.html {redirect_to order_path(@order)}
+        format.turbo_stream
+      end
+    end
+
+    def unlink_tax_order
+      @tax = Tax.find(params[:id])
+      @order = Order.find(params[:order_id])
+      @tax.orders.delete(@order)
+      respond_to do |format|
+        format.html {redirect_to order_path(@order)}
+        format.turbo_stream
+      end
     end
 
     private
@@ -87,10 +111,14 @@ class OrdersController < ApplicationController
         o.parent = order
         o.invoice = order.invoice
         o.save!
-        # get_variables(s,o) if s.variables != []
+        # get_variables(s,o) if s.variables != [] --> done with after_create Order
         orderize(s,o)
       end
     end
+
+    # def budget_price(order)
+    #   @budget_price = (order.calculate * ( 1 + order.taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)
+    # end
 
     def get_variables(service,order)
       service.variables.each do |v|

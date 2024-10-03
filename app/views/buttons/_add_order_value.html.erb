@@ -1,0 +1,16 @@
+<%= simple_form_for [order,variable], html: { data: { controller: "reset-form", action: "turbo:submit-end->reset-form#resetForm" } } do |f| %>
+<div class="d-none ">
+  <%= f.input :operator %>
+  <%= f.input :role %>
+</div>
+  <%= f.input :name, label: false, input_html: {placeholder: "Variable name" ,class:"m-2 text-success bg-dark border border-dark p-2 rounded "} %>
+  <%= f.input :value, label: false, input_html: {placeholder: "default value",class:"m-2 text-success bg-dark border border-dark p-2 rounded"} %>
+  <%= f.input :fixed %>
+  <%= button_tag :submit, class: "btn1 m-3" do  %>
+      <div class="ingredient-card">
+        <div class="">
+          ADD
+        </div>
+      </div>
+  <% end %>
+<% end %>

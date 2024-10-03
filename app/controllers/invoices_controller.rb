@@ -11,11 +11,22 @@ class InvoicesController < ApplicationController
   
     def create
       @invoice = Invoice.new(invoice_params)
+
       if @invoice.save!
-        respond_to do |format|
-          format.html { redirect_to invoice_path(@invoice) }
-          # format.turbo_stream
+        @invoice.contract.tax_regimes.each do |tax| 
+          t = Tax.new( 
+            name: tax.name,
+            percentage: tax.percentage,
+            isfee: tax.isfee,
+            invoice_id: @invoice.id
+          )
+          t.save!
         end
+        # respond_to do |format|
+          # format.html { 
+            redirect_to invoices_path
+          # format.turbo_stream
+        # end
       else
         render :new
       end
@@ -40,10 +51,135 @@ class InvoicesController < ApplicationController
     def show 
       @invoice = Invoice.includes(:orders).find(params[:id])
       @orders = @invoice.orders.select{ |s| s.is_root? }
+      @taxes = @invoice.taxes
 
     end
   
- 
+
+
+    def store
+      require "csv"
+      
+      # Store invoices
+      @count_invoices = 0
+      filepath = "app/assets/db_invoices.csv"
+      CSV.open(filepath, "wb") do |csv|
+        Invoice.all.each do |i|
+          if i.description != nil
+            csv << ["#{i.name}","#{i.description.gsub("\r\n", '-----')}","#{i.created_at}","#{i.updated_at}"] 
+          else  
+            csv << ["#{i.name}","#{i.description}","#{i.created_at}","#{i.updated_at}"] 
+          end
+          @count_invoices += 1
+        end
+      end
+      InvoiceMailer.db_backup.deliver_later
+
+    end
+
+                                                        # # Store tasks
+                                                        # @count_tasks = 0
+                                                        # filepath = "app/assets/db_tasks.csv"
+                                                        # CSV.open(filepath, "wb") do |csv|
+                                                        #   Task.all.each do |t|
+                                                        #     if t.description != nil
+                                                        #       csv << ["#{t.name}","#{t.description.gsub("\n", '-----')}".gsub(/'\'/,'---'),"#{t.status}","#{t.completed}","#{t.completed_at}","#{t.position}","#{t.project.name}","#{t.created_at}","#{t.updated_at}","#{t.priority}"] 
+                                                        #     else
+                                                        #       csv << ["#{t.name}","#{t.description}".gsub(/'\'/,'---'),"#{t.status}","#{t.completed}","#{t.completed_at}","#{t.position}","#{t.project.name}","#{t.created_at}","#{t.updated_at}","#{t.priority}"] 
+                                                        #     end
+                                                        #     @count_tasks += 1
+                                                        #   end
+                                                        # end
+                                                        
+                                                        # # Store orders
+                                                        # @count_orders = 0
+                                                        # filepath = "app/assets/db_orders.csv"
+                                                        # CSV.open(filepath, "wb") do |csv|
+                                                        #   Order.all.each do |o|
+                                                        #     csv << ["#{o.name}","#{o.budget}","#{o.project.name}","#{o.created_at}","#{o.updated_at}","#{o.position}"] 
+                                                        #     @count_orders += 1
+                                                        #   end
+                                                        # end
+                                                        
+                                                        # # Store cost_lines
+                                                        # @count_cost_lines = 0
+                                                        # filepath = "app/assets/db_cost_lines.csv"
+                                                        # CSV.open(filepath, "wb") do |csv|
+                                                        #   CostLine.all.each do |cl|
+                                                        #     csv << ["#{cl.name}","#{cl.description}","#{cl.unit}","#{cl.quantity}","#{cl.price}","#{cl.total}","#{cl.created_at}","#{cl.updated_at}","#{cl.project.name}"] 
+                                                        #     @count_cost_lines += 1
+                                                        #   end
+                                                        # end
+
+                                                        # # Store sourcing status
+                                                        # @count_todo_projects = 0
+                                                        # filepath = "app/assets/db_sourcing.csv"
+                                                        # CSV.open(filepath, "wb") do |csv|
+                                                        #   csv << ["PROJECT", "NDA", "SC" , "PT", "CW", "CONTRACT" , "BUDGET", "PO", "COMMENT"]
+                                                        #   Project.all.each do |p|
+                                                        #     csv << [
+                                                        #       "#{p.name}",
+                                                        #       "#{p.NDA_complete}",
+                                                        #       "#{p.supplier_connect_complete}",
+                                                        #       "#{p.payment_terms_complete}",
+                                                        #       "#{p.complyworks_complete}",
+                                                        #       "#{p.contract_complete}",
+                                                        #       "#{p.cost_complete}",
+                                                        #       p.orders != nil && p.orders.count == 1  ? "#{p.orders.first.name}":"#{p.orders.map(&:name)}",
+                                                        #       "#{p.todo}"
+                                                        #     ] 
+                                                        #     @count_todo_projects += 1
+                                                        #   end
+                                                        # end
+
+                                                        # # Store suppliers
+                                                        # @count_suppliers = 0
+                                                        # filepath = "app/assets/db_suppliers.csv"
+                                                        # CSV.open(filepath, "wb") do |csv|
+                                                        #   csv << ["SUPPLIER", "CONTACT", "NDA", "SC", "CW", "MSA", "ISM", "SERVICE", "REGION", "COMMENT"]
+                                                        #   Supplier.all.each do |s|
+                                                        #     csv << [
+                                                        #       "#{s.name}",
+                                                        #       "#{s.contact}",
+                                                        #       "#{s.nda}",
+                                                        #       "#{s.sc}",
+                                                        #       "#{s.cw}",
+                                                        #       "#{s.msa}",
+                                                        #       "#{s.ism}",
+                                                        #       "#{s.commodity}",
+                                                        #       "#{s.region}",
+                                                        #       "#{s.comment_onboarding}",
+                                                        #     ] 
+                                                        #     @count_suppliers += 1
+                                                        #   end
+                                                        # end
+
+                                                        # # Store invoices
+                                                        # @count_invoices = 0
+                                                        # filepath = "app/assets/db_invoices.csv"
+                                                        # CSV.open(filepath, "wb") do |csv|
+                                                        #   #csv << ["INVOICE", "DATE", "DESCRIPTION", "GR", "ARCHIVED", "TOTAL", "PROJECT"] it prevents db:seed to work correctly 
+                                                        #   Invoice.all.each do |i|
+                                                        #     csv << [
+                                                        #       "#{i.number}",
+                                                        #       "#{i.date}",
+                                                        #       "#{i.description}",
+                                                        #       "#{i.goods_receipt}",
+                                                        #       "#{i.archived}",
+                                                        #       "#{i.total}",
+                                                        #       "#{i.project.name}",
+                                                        #     ] 
+                                                        #     @count_invoices += 1
+                                                        #   end
+                                                        # end
+                                                        
+      
+  
+
+
+
+
+
     private
 
     def set_invoice

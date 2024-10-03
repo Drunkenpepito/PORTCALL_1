@@ -9,67 +9,89 @@
 <%= link_to "New service",service_new_child_service_path(@service),class: "btn btn-outline-primary" %>
 
 
-<main class="container white">
+
 
     <!--   PATH    -->
 
-                              <span class="d-flex justify-content-start align-items-center m-3">
-                                <%= @service.contract.name + "/"%>
+                              <span class="d-flex justify-content-start align-items-center m-3 bg-dark text-light p-2 rounded-pill">
+                                <%= link_to @service.contract.name.upcase , contract_path(@service.contract) %>
+                                 &nbsp<%=  "/" %>&nbsp
                                 <% if @service.ancestors.map(&:name) != [] %> 
-                                  <%  @service.ancestors.map(&:name).each do |s|%>
-                                  <%= s + "/" %>
+                                  <%  @service.ancestors.each do |s|%>
+                                    <%= link_to s.name.upcase, service_path(s)%>
+                                    &nbsp<%=  "/" %>&nbsp
                                   <% end %>
-                                <span class="text-danger"> &nbsp;<%=@service.name %></span>
+                                <span class="text-light h4"> &nbsp;<%=@service.name.upcase %></span>
                                 <%= link_to "✏️",edit_service_path(@service),class: "m-2" %>
                                 <% else %>
-                              <%= @service.name %> 
+                              <span class="text-light h4"><%=@service.name.upcase %></span>
                               <%= link_to "✏️",edit_service_path(@service),class: "m-2" %>
                                 <% end %>
                               </span>
 
     <!--   SERVICE FAMILY    -->
 
-    <table class="table table-hover">
+    <table class="table table-primary table-striped table-hover <%='d-none' if @service.has_children? == false %>">
+
+      
       <thead>
-        <tr>
-          <th scope="col">Service</th>
-          <th scope="col">Budget Price</th>
-          <th scope="col">Fee 5%</th>
-          <th scope="col">VAT 20%</th>
-          <th scope="col">Invoice Price</th>
+        <tr class="text-center table  h6 ">
+          <th class="text-start fs-6" scope="col">SERVICE</th>
+          <% @service.contract.tax_regimes.where(isfee:true).each do |tax| %>
+            <th scope="col"> <%= tax.name.upcase %> </th>
+          <% end %>
+          <th class="" scope="col">BUDGET PRICE</th>
+          <% @service.contract.tax_regimes.where(isfee:false).each do |tax| %>
+            <th class=""  scope="col"> <%= tax.name.upcase %> </th>
+          <% end %>
+          <th class="text_center" scope="col">INVOICE PRICE</th>
         </tr>
       </thead>
+
+
       <tbody>
         <% @services.each do |service| %>
-          <tr>
-            <td><%= service.name  %> </td>
-            <td><%= service.calculate %></td>
-            <td><%= (service.calculate * 0.05).round(2) %></td>
-            <td><%= ((service.calculate * 0.05).round(2) * 0.2).round(2) %></td>
-            <td><%= (service.calculate +  (service.calculate * 0.05) + ((service.calculate * 0.05) * 0.2).round(2)).round(2)%></td>
-
-          </tr>
+          <tr class="text-center">
+                 <td class="text-start h5" ><%= link_to service.name, service_path(service), class:"blue" %> </td>
+            <%# FEES %>
+                  <% service.contract.tax_regimes.where(isfee:true).each do |tax| %>
+                    <% if service.calculate.is_a? Numeric %> 
+                      <td><%= render "tax_service", service:service, tax:tax  %></td>
+                    <% else %>
+                      <td>❌</td>
+                    <% end %>
+                  <% end %>
+            <%# BUDGET PRICE %>
+                  <% if service.calculate.is_a? Numeric %> 
+                    <td class="text-center"><%= service.calculate %></td>
+                  <% else %>
+                    <td>❌</td>
+                  <% end %>
+            <%# TAXES %>
+                  <% if service.calculate.is_a? Numeric %> 
+                    <% @service.contract.tax_regimes.where(isfee:false).each do |tax| %>
+                      <td><%= render "tax_service", service:service, tax:tax  %></td>
+                    <% end %>
+                  <% else %>
+                    <td>❌</td>
+                  <% end %>
+            <%# INVOICE PRICE   %>
+                  <% if service.calculate.is_a? Numeric %> 
+                    <td class="fw-bold"><%= service.calculate * ( 1 + service.tax_regimes.where(isfee:false).sum(&:percentage)*0.01).round(4) %><td>
+                  <% else %>
+                    <td>❌</td>
+                  <% end %>
+</tr>
         <% end %>
       </tbody>
+
     </table>
-                              <div class="ingredient-card">
-                                    <ul class="white">
-                                      <% @services.each do |service| %>
-                                          <li class= "d-flex"><%= link_to service.name, service_path(service), class:"white " %>
-                                            <%# <% if @resultat%> 
-                                              <span><%= service.calculate %></span>
-                                            <%# <% else 
-                                              <span><%= link_to @resultat, service_path(service), class:"text-danger p-2" </span>
-                                            <% end %> 
-                                          </li>
-                                          <%= render 'sub_menu_services', services: service.descendants.arrange %>
-                                      <% end %>
-                                    </ul>
-                              </div>
-      
-    <div class="container rounded-4 border border-5e border-dark">
+
+
+    <div class="container rounded-4 border border-5e border-dark <%='d-none' if @service.has_children?%>">
 
       <!--   FORMULA = VARIABLE LIST    -->
+
                                 <h2 class = "calculator_card"></h2>
 
                                 <%= turbo_frame_tag "variable_list" do %>
@@ -117,7 +139,6 @@
               <% end %>
             </div>
 
-</main>
 
 
 

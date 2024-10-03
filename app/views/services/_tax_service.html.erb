@@ -1,0 +1,10 @@
+              <%= turbo_frame_tag "service_#{service.id}_tax#{tax.id}" do %>
+                <% if tax.services.include?(service)%>
+                <div class ="d-flex justify-content-center">
+                  <span class="d-flex  align-items-center"><%= (service.calculate * tax.percentage * 0.01).round(2) %></span>
+                  <span class="text-warning "><%= button_to "𝘅" , service_unlink_tax_path(service, tax), method: :post , class: "btn btn-sm"%></span>
+                </div>
+                <% else %>
+                  <%= button_to "﹢" , service_link_tax_path(service, tax), method: :post , class: "rounded-circle  m-auto"%>
+                <% end %>
+              <% end %>
