@@ -1,0 +1,8 @@
+<%= turbo_frame_tag "not_approved_invoice_#{invoice.id}" do %>
+    <%= simple_form_for invoice, url: goodreceipt_invoice_path(invoice) , method: :patch do |f| %>
+        <%= f.input :purchase_order_id, label: false, input_html: { class:"d-none", value: @purchase_order.id } %>
+        <%= button_tag :submit , class: "btn1" do %>
+            <%= invoice.name %> 
+        <% end %>
+    <% end %>
+<% end %>

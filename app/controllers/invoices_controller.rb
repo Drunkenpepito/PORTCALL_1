@@ -1,6 +1,6 @@
 class InvoicesController < ApplicationController
-  before_action :set_invoice, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_invoice, only: [:show, :edit, :update, :destroy, :goodreceipt]
+ 
     def index
       @invoices = Invoice.all
     end
@@ -11,7 +11,6 @@ class InvoicesController < ApplicationController
   
     def create
       @invoice = Invoice.new(invoice_params)
-
       if @invoice.save!
         @invoice.contract.tax_regimes.each do |tax| 
           t = Tax.new( 
@@ -42,6 +41,8 @@ class InvoicesController < ApplicationController
       render :edit, status: :unprocessable_entity
       end
     end
+
+    
   
     def destroy
       @invoice.destroy
@@ -52,7 +53,6 @@ class InvoicesController < ApplicationController
       @invoice = Invoice.includes(:orders).find(params[:id])
       @orders = @invoice.orders.select{ |s| s.is_root? }
       @taxes = @invoice.taxes
-
     end
   
 
@@ -76,6 +76,64 @@ class InvoicesController < ApplicationController
       InvoiceMailer.db_backup.deliver_later
 
     end
+
+    def goodreceipt
+      # On a mis un boutton fomulaire au lieu de simplement faire une route qui apporte le invoice id and purchase order
+      # du coup, on a deja fait l'associataion du Purchase order_id a l'invoice
+      if @invoice.update(invoice_params)
+        @purchase_order = PurchaseOrder.find(params[:invoice][:purchase_order_id])
+        @invoices = @purchase_order.invoices
+        @orders =[]
+        @po_invoiced = 0
+        @po_budgeted = 0
+        @invoices.each do |i|
+          i.orders.each do|o|
+            if o.is_root?
+              @orders << o 
+              @po_invoiced += o.invoice_price
+              @po_budgeted += o.budget_price
+            end
+          end
+        end
+        @services_id = @orders.map(&:service_id)
+        @services = Service.where(id:@services_id)
+        respond_to do |format|
+          format.html { redirect_to purchase_order_path(@invoice.purchase_order) }
+          format.turbo_stream
+        end
+      else
+        render :show
+      end
+    end
+
+    def unlink
+      @invoice = Invoice.find(params[:id])
+      @purchase_order = @invoice.purchase_order
+      if @invoice.update( purchase_order_id: nil)
+        
+        @invoices = @purchase_order.invoices
+        @orders =[]
+        @po_invoiced = 0
+        @po_budgeted = 0
+        @invoices.each do |i|
+          i.orders.each do|o|
+            if o.is_root?
+              @orders << o 
+              @po_invoiced += o.invoice_price
+              @po_budgeted += o.budget_price
+            end
+          end
+        end
+        @services_id = @orders.map(&:service_id)
+        @services = Service.where(id:@services_id)
+        respond_to do |format|
+          format.html { redirect_to purchase_order_path(@purchase_order) }
+          format.turbo_stream
+        end
+      end
+    end
+
+
 
                                                         # # Store tasks
                                                         # @count_tasks = 0
@@ -187,7 +245,7 @@ class InvoicesController < ApplicationController
     end
   
     def invoice_params
-      params.require(:invoice).permit(:name, :description, :contract_id)
+      params.require(:invoice).permit(:name, :description, :contract_id, :purchase_order_id)
     end
 
   

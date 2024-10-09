@@ -1,0 +1,11 @@
+<tr>
+    <th >
+        <%= turbo_frame_tag "po_invoice_#{invoice.id}" do %>
+            <div class="d-flex justify-content-between" >
+                <%= button_tag invoice.name.upcase, class:" btn1" %>
+                <div class= "m-auto green"><%= invoice.price %></div>
+                <%= button_to '🔴' , unlink_invoice_path(invoice), method: :patch,  class: "btn p-auto" %>
+            </div> 
+        <% end %>
+        </th>
+</tr>

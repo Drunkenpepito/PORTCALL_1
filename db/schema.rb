@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_20_203530) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_29_083524) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,7 +33,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_20_203530) do
     t.string "name"
     t.string "description"
     t.bigint "contract_id"
+    t.bigint "purchase_order_id"
     t.index ["contract_id"], name: "index_invoices_on_contract_id"
+    t.index ["purchase_order_id"], name: "index_invoices_on_purchase_order_id"
   end
 
   create_table "order_variables", force: :cascade do |t|
@@ -130,6 +132,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_20_203530) do
   end
 
   add_foreign_key "invoices", "contracts"
+  add_foreign_key "invoices", "purchase_orders"
   add_foreign_key "order_variables", "orders"
   add_foreign_key "orders", "invoices"
   add_foreign_key "orders", "services"

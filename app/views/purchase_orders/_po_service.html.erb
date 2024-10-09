@@ -1,0 +1,10 @@
+<tr>
+    <th scope="row">
+        <div class="blue" >
+            <%= turbo_frame_tag "po_service_#{service.id}" do %>
+                <%= service.name.upcase %>
+                <%= render "/purchase_orders/total_service", service: service %>
+            <% end %>
+        </div>
+    </th>
+</tr>

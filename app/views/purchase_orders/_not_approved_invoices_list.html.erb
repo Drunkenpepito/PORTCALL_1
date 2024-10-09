@@ -1,0 +1,15 @@
+<%= turbo_frame_tag "not_approved_invoices_list" do %>
+  <table class="table table-light  table-bordered table-hover">
+    <tbody>
+      <% if  @nopo_invoices != [] && @nopo_invoices != nil%>
+        <% @nopo_invoices.each do |invoice| %>
+          <tr>
+            <th scope="row ">
+              <%= render 'not_approved_invoice', invoice: invoice %>
+            </th>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

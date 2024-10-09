@@ -52,6 +52,9 @@ class Order < ApplicationRecord
       end.join(" ")  
     else
       self.children.map(&:calculate).join('+')
+      # cette fromule est a changer car le calculate des children est 
+      #basé sur l'ancienne formula. Il faut relancer les calculate sur chaque ordre du path dans le sens enfant --> parent
+      #pour avoir le bon calculate  
     end
   end
 

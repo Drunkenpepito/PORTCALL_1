@@ -1,6 +1,10 @@
-<span class="d-flex justify-content-around p-3">
-    <%= link_to purchase_order.name, purchase_order_path(purchase_order), class:"btn btn-outline-dark" %>
-    <%= link_to purchase_order.description, purchase_order_path(purchase_order), class:"btn " %>
-    <%= link_to "Edit",edit_purchase_order_path(purchase_order),class: "btn btn-outline-primary" %></div>           
-    <%= button_to "Delete",purchase_order_path(purchase_order),method: :delete,class: "btn1" %>
-</span>
+
+    <tr>
+      <th scope="row ">
+        <%= link_to purchase_order.name, purchase_order_path(purchase_order), class:"btn1" %>
+      </th>
+
+      <td><%= link_to purchase_order.description, purchase_order_path(purchase_order), class:"btn text-light " %></td>
+      <td class="text-center"><%= link_to "Edit",edit_purchase_order_path(purchase_order),class: "btn1" %></div></td>
+      <td><%= button_to "Delete",purchase_order_path(purchase_order),method: :delete,class: "btn1" %></td>
+    </tr>
