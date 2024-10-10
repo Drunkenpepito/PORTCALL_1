@@ -25,6 +25,8 @@ class OrdersController < ApplicationController
       if @order.save!
         # get_variables(@service,@order) if @service.variables != []
         orderize(@service, @order)
+        # @order.parent.formula = @order.children.map(&:calculate).join('+') if @order.parent
+
         redirect_to invoice_path(@invoice) 
       else
         render :new
@@ -58,10 +60,6 @@ class OrdersController < ApplicationController
      
     end
   
-    def calculate
-      @order = Order.find(params[:id])
-      @resultat = @order.calculate
-    end
 
     def index
       @orders = Order.all

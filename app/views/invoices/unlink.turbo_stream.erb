@@ -1,0 +1,15 @@
+<%= turbo_stream.append "not_approved_invoices_list"  do %>
+  <%= render "purchase_orders/not_approved_invoice", invoice: @invoice %>  
+<%end%>
+
+<%= turbo_stream.remove "po_invoice_#{@invoice.id}"  do %>
+  <%= render "purchase_orders/po_invoices_list", invoices: @invoices %>
+<%end%>
+
+<%= turbo_stream.update "po_services_list" do %>
+   <%= render "purchase_orders/po_services_list", services: @services %>
+<%end%> 
+
+<%= turbo_stream.update "po_budgeted_#{@purchase_order.id}" do %>
+   <%= render "purchase_orders/po_budgeted", purchase_order: @purchase_order %>
+<%end%> 

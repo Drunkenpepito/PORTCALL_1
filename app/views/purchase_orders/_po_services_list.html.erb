@@ -1,0 +1,14 @@
+   
+      <%= turbo_frame_tag "po_services_list" do %>
+        <table class="table table-light table-striped table-bordered table-hover">
+          <tbody>
+            <% if services != []  && services != nil %>
+              <% services.each do |service| %>
+                  <%= render "purchase_orders/po_service", service: service %>
+              <% end %>
+            <% else %>
+              <div class= " h6 text-center text-primary  ">NO SERVICES </div>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>

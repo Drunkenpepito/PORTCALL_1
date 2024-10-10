@@ -1,0 +1,14 @@
+   
+<%= turbo_frame_tag "po_invoices_list" do %>
+  <table class="table table-light  table-bordered table-hover">
+    <tbody>
+        <% if invoices != []  && invoices != nil %>
+          <% invoices.each do |invoice| %>
+            <%= render 'po_invoice', invoice: invoice %>       
+          <% end %>
+        <% else %>
+          <div class= " h6 text-center text-primary  ">NO INVOICES </div>
+        <% end %>
+    </tbody>
+  </table>
+<% end %>

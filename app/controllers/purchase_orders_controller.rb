@@ -1,5 +1,6 @@
 class PurchaseOrdersController < ApplicationController
   
+
     def index
       @purchase_orders = PurchaseOrder.all
     end
@@ -13,8 +14,8 @@ class PurchaseOrdersController < ApplicationController
       @purchase_order = PurchaseOrder.new(purchase_order_params)
       if @purchase_order.save!
         respond_to do |format|
-          format.html { redirect_to purchase_order_path(@purchase_order) }
-          format.turbo_stream
+          format.html { redirect_to purchase_orders_path }
+          # format.turbo_stream
         end
       else
         render :new
@@ -31,12 +32,30 @@ class PurchaseOrdersController < ApplicationController
     end
     
     def show 
-      @contracts = Contract.all
       @purchase_order = PurchaseOrder.find(params[:id])
-      @service = Service.new
+      @invoices = @purchase_order.invoices
+      @nopo_invoices = Invoice.where(purchase_order_id: nil)
+      @orders = [] 
+      @po_invoiced = 0
+      @po_budgeted = 0
+      @invoices.each do |i|
+        i.orders.each do|o|
+            if o.is_root?
+              @orders << o 
+              @po_invoiced += o.invoice_price
+              @po_budgeted += o.budget_price
+            end
+        end
+      end
+      @services_id = @orders.map(&:service_id)
+      @services = Service.where(id:@services_id)
     end
-  
- 
+
+  def reset_calculate
+    
+  end
+   
+
     private
   
     def purchase_order_params

@@ -19,12 +19,15 @@ end
    
   def edit
     @order_variable = OrderVariable.find(params[:id])
+    @order = @order_variable.order
   end
 
   def update
     @order_variable = OrderVariable.find(params[:id])
+    @order = @order_variable.order
     if @order_variable.update(order_variable_params)
-        redirect_to order_path( @order_variable.order), notice: "Variable was successfully updated."
+      # @order.path.reverse.each { |o|  o.calculate }
+      redirect_to order_path( @order_variable.order), notice: "Variable was successfully updated."
     else
         render :edit, status: :unprocessable_entity
     end

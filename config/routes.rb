@@ -56,15 +56,13 @@ Rails.application.routes.draw do
       get :calculate 
     end
     resources :order_variables, only: [:new, :create]
-      post "taxes/:id/link_tax_order", to:"orders#link_tax_order", as: :link_tax
-      post "taxes/:id/unlink_tax_order", to:"orders#unlink_tax_order", as: :unlink_tax
+    post "taxes/:id/link_tax_order", to:"orders#link_tax_order", as: :link_tax
+    post "taxes/:id/unlink_tax_order", to:"orders#unlink_tax_order", as: :unlink_tax
 
   end
 
 
 
-
-  
   resources :order_variables, only: [:show, :index,  :destroy , :edit, :update,] do
     member do
       patch :move 
@@ -75,12 +73,20 @@ Rails.application.routes.draw do
   resources :invoices do
     resources :orders, only: [:new, :create, :index]
     resources :taxes, only: [:new, :create,]
+    
+    member do 
+      patch 'unlink'
+    end
+
     collection do 
       get 'store'
     end
+
+    member do
+      patch 'goodreceipt'
+    end
+    
   end
   resources :taxes , only: [:show, :index,  :destroy , :edit, :update,]
-  resources :purchase_orders
-
-
+  resources :purchase_orders 
 end
