@@ -28,3 +28,36 @@ a{
 };
 
 }
+
+.underligned{
+  letter-spacing: 2px;
+  color: white;
+}
+
+.nodeco{
+  text-decoration: none !important;
+}
+.underligned:hover {
+  color: lightblue;
+  border-bottom: 10px solid lightblue;
+}
+.underlignedred {
+  border-bottom: 10px solid red;
+
+}
+.underlignedblue {
+  border-bottom: 10px solid blue;
+}
+.underlignedgreen {
+  border-bottom: 10px solid green;
+}
+.underlignedwhite {
+  border-bottom: 10px solid white;
+}
+.underlignedorange {
+  border-bottom: 10px solid orange;
+}
+.underlignedgrey {
+  border-bottom: 10px solid grey;
+}
+

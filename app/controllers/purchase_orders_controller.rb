@@ -21,6 +21,18 @@ class PurchaseOrdersController < ApplicationController
         render :new
       end
     end
+    def edit
+      @purchase_order = PurchaseOrder.find(params[:id])
+    end
+
+    def update
+      @purchase_order = PurchaseOrder.find(params[:id])
+      if @purchase_order.update(purchase_order_params)
+      redirect_to purchase_order_path(@purchase_order), notice: "PO was successfully updated."
+      else
+      render :edit, status: :unprocessable_entity
+      end
+  end
   
     def destroy
       @purchase_order = PurchaseOrder.find(params[:id])
@@ -59,7 +71,7 @@ class PurchaseOrdersController < ApplicationController
     private
   
     def purchase_order_params
-      params.require(:purchase_order).permit(:name, :description)
+      params.require(:purchase_order).permit(:name, :description, :budget)
     end
 
   

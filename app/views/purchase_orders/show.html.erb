@@ -6,38 +6,51 @@
 </div>
 
 <div class ="container border border-3 p-3 m-auto ">
+
   <h2 class = "d-flex justify-content-center blue " >PO <%= @purchase_order.name %> </h2>
   <h6 class = "d-flex justify-content-center blue " ><%= @purchase_order.description %> </h6>
-  <h3 class = "d-flex justify-content-center green" >
-    <%= render 'po_budgeted', purchase_order: @purchase_order %>
-  </h3>
+
+  <h4 class = "d-flex justify-content-center " >
+      <span class="p-2 blue"> BUDGET </span> 
+      <span class="p-2 blue"> <%= number_with_delimiter(@purchase_order.budget, delimiter:' ') %> </span> 
+      <span class="p-2 blue"> - </span> 
+      <span class="p-2 blue "><%= render 'po_budgeted', purchase_order: @purchase_order %></span>
+      <span class="p-2 blue"> = </span> 
+      <span class="p-2 blue"> <%= number_with_delimiter(@purchase_order.budget -= @po_budgeted.round(0) , delimiter:' ')%> </span> 
+  </h4>
+
+
 </div>
 
-<div class ="container m-3">
 
-  <div class="row">
 
+<div class =  " container col-10 p-2">
+  <%# INVOICES NOT APPROVED %>
+  <h6 class= "text-secondary m-3 text-center "> INVOICES TO BE APPROVED  </h6>
+  <span class="test-end"><%= render 'not_approved_invoices_list'%></div></span>
+</div>
+  <div class="d-flex justify-content-around">
     <%# PO SERVICES LIST %>
-    <div class =  "col-4 text-start p-auto"> 
-      <h6 class= "text-light rounded text-center border bg-success"> SERVICES APPROVED </h6>
-      <%= render 'po_services_list', services: @services %>
+    <div class =  " col-6  border border-3 m-3 p-3 "> 
+      <div class="m-2">   
+        <%  if @services!= [] %>
+          <h6 class= "blue  text-center m-3">
+             SERVICES 
+            <span class="p-2 blue"><%= render 'po_budgeted', purchase_order: @purchase_order %></span>
+          </h6>
+        <% end %>
+          <%= render 'po_services_list', services: @services %>
+      </div>
+      <%# PO INVOICE LIST %>
+      <div class="m-2">
+        <%  if @po_invoiced != 0 %> 
+          <h6 class= " green text-center">
+            INVOICES
+            <span class="p-2 green"><%= render 'po_invoiced', purchase_order: @purchase_order %></span>
+          </h6>
+        <% end %>
+        <%= render 'po_invoices_list', invoices: @invoices %>
+      </div>
     </div>
-
-    <div class =  "col text-start p-auto border"> 
-    </div>
-
-    <%# PO INVOICE LIST %>
-    <div class =  "col-3 text-start p-auto"> 
-      <h6 class= "text-light rounded text-center border bg-success"> INVOICES APPROVED </h6>
-      <%= render 'po_invoices_list', invoices: @invoices %>
-    </div>
-
-    <%# INVOICES NOT APPROVED %>
-    <div class =  "col-3 text-start  p-auto">
-      <h6 class= "text-light rounded text-center bg-danger border"> INVOICES TO BE APPROVED  </h6>
-      <%= render 'not_approved_invoices_list'%>
-    </div>
-
   </div>
 
-</div>
