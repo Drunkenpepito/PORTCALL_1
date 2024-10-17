@@ -1,10 +1,7 @@
-<tr>
-    <th scope="row">
-        <div class="blue" >
-            <%= turbo_frame_tag "po_service_#{service.id}" do %>
-                <%= service.name.upcase %>
-                <%= render "/purchase_orders/total_service", service: service %>
-            <% end %>
-        </div>
-    </th>
-</tr>
+
+        <%= turbo_frame_tag "po_service_#{service.id}" do %>
+            <div class=" m-2 d-flex justify-content-between blue border border-3 p-2" >
+                <span><%= service.name.upcase %></span>
+                <span><%= render "/purchase_orders/total_service", service: service %></span>
+            </div>
+        <% end %>

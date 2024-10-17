@@ -1,12 +1,15 @@
 
-<%= simple_form_for purchase_order, html: { class: "contract form " } do |f| %>
+<%= simple_form_for purchase_order, html: { class: "" } do |f| %>
+  
   <% if purchase_order.errors.any? %>
     <div class="error-message">
       <%= purchase_order.errors.full_messages.to_sentence.capitalize %>
     </div>
   <% end %>
 
-  <%= f.input :name, input_html: { autofocus: true ,class:"form1"} %>
-  <%= f.input :description, input_html: { autofocus: true ,class:"form1"} %>
-  <%= f.submit class: "btn1" %>
+  <%= f.input :name, placeholder: "NAME", input_html: { autofocus: true ,class:"form1"} %>
+  <%= f.input :description, placeholder: "DESCRIPTION", input_html: { autofocus: true ,class:"form1"} %>
+  <%= f.input :budget, placeholder: "BUDGET", input_html: { autofocus: true ,class:"form1"} %>
+    <%= f.submit class: " btn1 p-3" %>
+
 <% end %>
