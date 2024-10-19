@@ -29,9 +29,73 @@
                                 <% end %>
                               </span>
 
+
+
+
+    <div class="container rounded-4 border border-5e border-dark  bg-dark <%='d-none' if @order.has_children?%>">
+
+
+      <!--   order_variable LIST    -->
+                              
+                                <h2 class = "calculator_card "></h2>
+                                <%= turbo_frame_tag "order_variable_list" do %>
+                                  <% if  @order.order_variables.empty? %>
+                                    <h4>NO FORMULA</h4>
+                                  <% else %>
+                                    <%= render "order_variables/order_variable_list", order: @order , class:"calculator-card p-3"%>
+                                  <% end %>
+                                <% end %>
+
+        <!--   FORMULA ELEMENTS   -->
+                    
+
+                                <div class="d-flex bg-dark">
+
+                                  <%# <h2>ADD OPERATOR</h2> %>
+                                  <div class="operateur-add me-5 p-2">
+                                    <%= render 'buttons/order_operators' %>
+                                  </div>
+
+                                  <%# <h2>ADD VARIABLE</h2> %>
+                                  <div class="value-add p-2 bg-dark">
+                                      <%= render 'buttons/add_order_value', order: @order,
+                                      variable: OrderVariable.new( operator:false ,fixed: false,role: "value") %>
+                                  </div>
+
+                                    <%# RESULT %>
+                                  <div class="ingredient-card">
+                                      <%= render 'orders/resultat', order: @order   %>
+                                  </div>
+
+                                </div>
+
+    </div>
+
+
+    <%# DESCRIPTION %>
+    <div class="d-flex justify-content-center m-2 text-dark">
+      <% if @order.description != nil %>
+        <%= @order.description %>
+      <% end %>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!--   order FAMILY    -->
-    <table class="table table-success table-striped table-hover  <%='d-none' if @order.has_children? == false %>">
-      
+    <table class="table table-success table-striped table-hover  ">
+      <%# <%='d-none' if @order.has_children? == false %> 
       <thead>
         <tr class="text-center table h6 ">
           <th class="text-start fs-6" scope="col">SERVICE</th>
@@ -81,14 +145,15 @@
                   <% end %>
 </tr>
         <% end %>
+        <%# ORDER TOTAL lINE %>
                 <tr class="table-dark ">
-                    <td></td>
+                    <td><%= @order.name.upcase %></td>
                   <% @order.invoice.taxes.where(isfee:true).each do |tax| %>
-                    <td></td>
+                    <td><%= render "tax_order", order:@order, tax:tax  %></td>
                   <% end %>
                     <td class="text-center blue fs-4"> <%= render "budget_prices", order:@order %> </td>
                   <% @order.invoice.taxes.where(isfee:false).each do |tax| %>
-                    <td></td>
+                    <td><%= render "tax_order", order:@order, tax:tax  %></td>
                   <% end %>
                     <td class="text-center text-success fs-4"><%= render "invoice_prices", order:@order %></td>
                 </tr>
@@ -98,51 +163,5 @@
 
 
       
-    <div class="container rounded-4 border border-5e border-dark  bg-dark <%='d-none' if @order.has_children?%>">
-
-
-      <!--   order_variable LIST    -->
-                              
-                                <h2 class = "calculator_card "></h2>
-                                <%= turbo_frame_tag "order_variable_list" do %>
-                                  <% if  @order.order_variables.empty? %>
-                                    <h4>NO FORMULA</h4>
-                                  <% else %>
-                                    <%= render "order_variables/order_variable_list", order: @order , class:"calculator-card p-3"%>
-                                  <% end %>
-                                <% end %>
-
-        <!--   FORMULA ELEMENTS   -->
-                    
-
-                                <div class="d-flex bg-dark">
-
-                                  <%# <h2>ADD OPERATOR</h2> %>
-                                  <div class="operateur-add me-5 p-2">
-                                    <%= render 'buttons/order_operators' %>
-                                  </div>
-
-                                  <%# <h2>ADD VARIABLE</h2> %>
-                                  <div class="value-add p-2 bg-dark">
-                                      <%= render 'buttons/add_order_value', order: @order,
-                                      variable: OrderVariable.new( operator:false ,fixed: false,role: "value") %>
-                                  </div>
-
-                                    <%# RESULT %>
-                                  <div class="ingredient-card">
-                                      <%= render 'orders/resultat', order: @order   %>
-                                  </div>
-
-                                </div>
-
-    </div>
-
-
-            <%# DESCRIPTION %>
-            <div class="d-flex justify-content-center m-2 text-dark">
-              <% if @order.description != nil %>
-                <%= @order.description %>
-              <% end %>
-            </div>
 
 </main>

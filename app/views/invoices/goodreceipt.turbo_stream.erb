@@ -18,4 +18,8 @@
    <%= render "purchase_orders/po_invoiced", purchase_order: @purchase_order %>
 <%end%> 
 
+<%= turbo_stream.update "budget_#{@purchase_order.id}" do %>
+   <%= render "purchase_orders/budget", purchase_order: @purchase_order %>
+<%end%> 
+
 

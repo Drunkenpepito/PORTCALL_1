@@ -1,4 +1,8 @@
 
 <%= turbo_frame_tag "budget_prices_#{order.id}" do %>
-    <%= order.children.sum(&:budget_price) %>
+    <% if order.children != []%>
+        <%= order.children.sum(&:budget_price) %>
+    <% else %>
+        <%= render "budget_price", order:@order %>
+    <% end %>
 <% end %>

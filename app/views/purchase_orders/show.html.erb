@@ -12,11 +12,13 @@
 
   <h4 class = "d-flex justify-content-center " >
       <span class="p-2 blue"> BUDGET </span> 
-      <span class="p-2 blue"> <%= number_with_delimiter(@purchase_order.budget, delimiter:' ') %> </span> 
-      <span class="p-2 blue"> - </span> 
-      <span class="p-2 blue "><%= render 'po_budgeted', purchase_order: @purchase_order %></span>
-      <span class="p-2 blue"> = </span> 
-      <span class="p-2 blue"> <%= number_with_delimiter(@purchase_order.budget -= @po_budgeted.round(0) , delimiter:' ')%> </span> 
+      <% if @purchase_order.budget != nil %>
+        <span class="p-2 blue"> <%= number_with_delimiter(@purchase_order.budget, delimiter:' ') %> </span> 
+        <span class="p-2 blue"> - </span> 
+        <span class="p-2 blue "><%= render 'po_budgeted', purchase_order: @purchase_order %></span>
+        <span class="p-2 blue"> = </span> 
+        <span class="p-2 blue "><%= render 'budget', purchase_order: @purchase_order %></span>
+      <% end %>
   </h4>
 
 
@@ -24,7 +26,7 @@
 
 
 
-<div class =  " container col-10 p-2">
+<div class =  " container col-10 p-2 border-bottom">
   <%# INVOICES NOT APPROVED %>
   <h6 class= "text-secondary m-3 text-center "> INVOICES TO BE APPROVED  </h6>
   <span class="test-end"><%= render 'not_approved_invoices_list'%></div></span>

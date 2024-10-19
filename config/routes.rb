@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
 
   root to:"contracts#index"
   get "up" => "rails/health#show", as: :rails_health_check
@@ -73,7 +74,7 @@ Rails.application.routes.draw do
   resources :invoices do
     resources :orders, only: [:new, :create, :index]
     resources :taxes, only: [:new, :create,]
-    
+    get "excel_invoice", to: "invoices#excel_invoice" , as:"excel_invoice"
     member do 
       patch 'unlink'
     end
@@ -89,4 +90,6 @@ Rails.application.routes.draw do
   end
   resources :taxes , only: [:show, :index,  :destroy , :edit, :update,]
   resources :purchase_orders 
+    get "excel_po", to: "purchase_orders#excel_po" , as:"excel_po"
+
 end

@@ -63,15 +63,32 @@ class PurchaseOrdersController < ApplicationController
       @services = Service.where(id:@services_id)
     end
 
-  def reset_calculate
-    
-  end
+  def excel_po
+    @purchase_orders = PurchaseOrder.includes(invoices: :orders).all
+    p = Xlsx.po(@purchase_orders)
    
+    respond_to do |format|
+      format.xlsx { send_xls_file(p) }
+    end
+  end
+
+  def excel_invoice
+    raise
+    @invoice 
+  end
 
     private
   
     def purchase_order_params
       params.require(:purchase_order).permit(:name, :description, :budget)
+    end
+
+    def send_xls_file(package)
+      temp_file = Tempfile.new("temp.xlsx") 
+      package.serialize(temp_file.path)
+      send_file temp_file,
+           filename: "PO_#{Time.zone.today}.xlsx",
+           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" 
     end
 
   

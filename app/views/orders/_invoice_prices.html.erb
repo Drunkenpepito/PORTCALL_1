@@ -1,3 +1,7 @@
 <%= turbo_frame_tag "invoice_prices_#{order.id}" do %>
-    <%= order.children.sum(&:invoice_price) %>
+    <% if order.children != [] %>
+        <%= order.children.sum(&:invoice_price) %>
+    <% else %>
+        <%= render "invoice_price", order:@order %>
+    <% end %>
 <% end %>
