@@ -1,6 +1,13 @@
-<%# <%= turbo_frame_tag "#{@invoice.id}_new_order" do%> 
+<div class="container rounded-4 border border-5  bg-light"> 
   <%= simple_form_for [@invoice, @order] do |f|%>
-    <%= f.association :service, collection: @services, label_method: :name, value_method: :id, include_blank: false %>
-    <%= f.button :submit %>
+      <div class="d-flex container justify-content-center text-light p-3 ">
+        <div class="d-flex container p-3 text-center blue">
+          <%= f.association :service, collection: @services, label: 'Service from Contract' , value_method: :id, include_blank: false,input_html: { autofocus: true ,class:" form1"} %>
+          <%= f.button :submit %>
+        </div>
+      </div>
   <% end %>
-<%# <% end %> 
+</div>
+
+
+

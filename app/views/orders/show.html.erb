@@ -5,7 +5,7 @@
 <% else %>
   <%= link_to sanitize("&larr; Back"), invoice_path( @order.invoice) , class:"btn1"%>
 <% end %>
-<%= link_to "New cutom order",'#',class: "btn1" %>
+<%= link_to "Other Service",newchildorder_order_path(@order),class: "btn1" %>
 
 
 <div class = "d-flex justify-content-center h3 " > <%=  link_to @order.invoice.name.upcase, invoice_path(@order.invoice) , class:"green"%></div>

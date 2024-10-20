@@ -1,3 +1,5 @@
-<%= turbo_frame_tag "price_#{invoice.id}" , class:"btn text-light border border-secondary rounded btn-success " do %>
-    <%= invoice.price.to_i%>
+<%= turbo_frame_tag "price_#{invoice.id}" , class:"  h5 " do %>
+    <div class="blue">
+        <%= invoice.price.to_i%>
+   </div> 
 <% end %>

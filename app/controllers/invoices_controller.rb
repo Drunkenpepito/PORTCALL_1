@@ -31,6 +31,8 @@ class InvoicesController < ApplicationController
       end
     end
 
+    
+
     def edit
     end
 

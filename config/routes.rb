@@ -52,15 +52,21 @@ Rails.application.routes.draw do
 
 
 
-  resources :orders do
+  resources :orders do # les cas nex et create order ne sont utilises que pour les orders qui ont un service dans un contrat
     member do
       get :calculate 
+      get :newchildorder # cas ou on veut creer un order ad hoc qui a un parent
+      post "orders/:id/newchildorder", to:"orders#createchildorder", as: :createchildorder
     end
     resources :order_variables, only: [:new, :create]
     post "taxes/:id/link_tax_order", to:"orders#link_tax_order", as: :link_tax
     post "taxes/:id/unlink_tax_order", to:"orders#unlink_tax_order", as: :unlink_tax
-
+    
   end
+  get "invoices/:id/neworder", to:"orders#neworderadhoc", as: :neworderadhoc # cas ou on veut creer un masterorder ad hoc qui n'a pas de parent
+  post "invoices/:id/neworder", to:"orders#createorderadhoc", as: :createorderadhoc
+
+
 
 
 
