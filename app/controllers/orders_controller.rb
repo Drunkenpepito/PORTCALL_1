@@ -13,7 +13,60 @@ class OrdersController < ApplicationController
       @contract = @invoice.contract
       @services = @contract.services.select{|s| s.is_root? == true}
     end
+
+    def neworderadhoc
+      @order= Order.new
+      @invoice =Invoice.find(params[:id])
+    end
+
+
+    def createorderadhoc
+      @order = Order.new(order_params)
+      @order.invoice = Invoice.find(params[:id])
+      @order.name = params[:order][:name]
+      @order.description = params[:order][:description]
+      @contract = @order.invoice.contract
+      if Service.where(contract_id:@contract.id, name:"Service not in Contract").exists?
+        @service = Service.where(contract_id:@contract.id, name:"Service not in Contract").first
+      else
+        @service = Service.create!(contract_id: @contract.id, name:"Service not in Contract", ancestry:"/", description:"this is the service model for all ad hoc orders created after invoice receipt") 
+      end
+        @order.service = @service
+      if @order.save!
+        redirect_to invoice_path(@order.invoice) 
+      else
+        render :neworderadhoc
+      end
+    end
   
+
+    def newchildorder
+      @order= Order.new
+      @order.parent= Order.find(params[:id])
+      @order.invoice =  @order.parent.invoice
+    end
+
+    def createchildorder
+      @order = Order.new(order_params)
+      # @order.invoice = Invoice.find(params[:id])
+      # @order.name = params[:order][:name]
+      # @order.description = params[:order][:description]
+      @order.invoice = @order.parent.invoice
+      @contract = @order.parent.invoice.contract
+      if Service.where(contract_id:@contract.id, name:"Service not in Contract").exists?
+        @service = Service.where(contract_id:@contract.id, name:"Service not in Contract").first
+      else
+        @service = Service.create!(contract_id: @contract.id, name:"Service not in Contract", ancestry:"/", description:"this is the service model for all ad hoc orders created after invoice receipt") 
+      end
+        @order.service = @service
+      if @order.save!
+        redirect_to invoice_path(@order.invoice) 
+      else
+        render :neworderadhoc
+      end
+    end
+
+
     def create
       @service = Service.find(params[:order][:service_id])
       @invoice = Invoice.find(params[:invoice_id])
@@ -23,10 +76,7 @@ class OrdersController < ApplicationController
       @order.invoice = @invoice
    
       if @order.save!
-        # get_variables(@service,@order) if @service.variables != []
         orderize(@service, @order)
-        # @order.parent.formula = @order.children.map(&:calculate).join('+') if @order.parent
-
         redirect_to invoice_path(@invoice) 
       else
         render :new
@@ -34,13 +84,8 @@ class OrdersController < ApplicationController
     end
   
     def destroy
-      @order.destroy!
-      
-      # respond_to do |format|
-        # format.html { 
+      @order.destroy!    
         redirect_to invoice_path(@order.invoice) 
-        # format.turbo_stream
-      # end
     end
 
     def edit

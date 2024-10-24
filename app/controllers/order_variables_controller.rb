@@ -27,7 +27,11 @@ end
     @order = @order_variable.order
     if @order_variable.update(order_variable_params)
       # @order.path.reverse.each { |o|  o.calculate }
-      redirect_to order_path( @order_variable.order), notice: "Variable was successfully updated."
+      respond_to do |format|
+        format.html { redirect_to order_path(@order_variable.order) }
+        format.turbo_stream
+      end
+      # redirect_to order_path( @order_variable.order), notice: "Variable was successfully updated."
     else
         render :edit, status: :unprocessable_entity
     end
@@ -50,6 +54,6 @@ end
   private
 
   def order_variable_params
-    params.require(:order_variable).permit(:name, :value, :operator, :fixed, :position)
+    params.require(:order_variable).permit(:name, :value, :operator, :fixed, :position, :role)
   end
 end

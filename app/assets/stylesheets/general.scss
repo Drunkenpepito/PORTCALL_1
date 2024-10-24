@@ -109,6 +109,32 @@ width: 100%;
   width: auto;
 }
 
+.btn3 {
+  background-color: rgb(209, 166, 149);
+  border: 1px solid white;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: whitesmoke;
+  cursor: pointer;
+  display:inline-block;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 10px;
+  margin: auto;
+  outline: none;
+  padding: 10px 10px;
+  // position: relative;
+  text-align: center;
+  align-items: center;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
+  user-select: none;
+  -webkit-user-select: none;
+  width: auto;
+}
+
 .flex {
     display: flex;
     flex-wrap: nowrap;

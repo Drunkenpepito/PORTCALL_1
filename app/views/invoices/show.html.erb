@@ -1,8 +1,10 @@
 <%= link_to sanitize("&larr; Back to Invoices"), invoices_path, class:"btn1" %>
-<%= link_to sanitize("✚ Service"), new_invoice_order_path(@invoice), class:"btn1" %>
+<%= link_to sanitize("✚ Contract Service"), new_invoice_order_path(@invoice), class:"btn1" %>
+<%= link_to sanitize("✚ Other Service"), neworderadhoc_path(@invoice), class:'btn1' %>
 <%= link_to sanitize("✚ Tax"), new_invoice_tax_path(@invoice), class:"btn1" %>
-<%= link_to sanitize("▷Excel"), new_invoice_tax_path(@invoice), class:"btn1" %>
-
+ <%= link_to invoice_excel_invoice_path(@invoice,format: :xlsx), class:"btn" do%>
+        <%= image_tag 'excel.jpeg', width: 30, height: 30 %>
+    <% end %>
 
 <div class= "container d-flex justify-content-center m-3">
   <h2 class = "d-flex justify-content-center green  me-3" >INVOICE <%= @invoice.name %> </h2>

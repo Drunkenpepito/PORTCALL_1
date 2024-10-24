@@ -6,7 +6,7 @@
   <%= render "purchase_orders/po_invoices_list", invoices: @invoices %>
 <%end%>
 
-<%= turbo_stream.update "po_services_list" do %>
+<%= turbo_stream.replace "po_services_list" do %>
    <%= render "purchase_orders/po_services_list", services: @services %>
 <%end%> 
 
@@ -16,4 +16,8 @@
 
 <%= turbo_stream.update "po_invoiced_#{@purchase_order.id}" do %>
    <%= render "purchase_orders/po_invoiced", purchase_order: @purchase_order %>
+<%end%> 
+
+<%= turbo_stream.update "budget_#{@purchase_order.id}" do %>
+   <%= render "purchase_orders/budget", purchase_order: @purchase_order %>
 <%end%> 

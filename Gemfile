@@ -25,6 +25,8 @@ gem "font-awesome-sass", "~> 6.1"
 gem "sassc-rails"
 gem "acts_as_list"
 gem "pry-byebug"
+gem 'caxlsx'
+gem 'caxlsx_rails'
 
 
 group :development, :test do

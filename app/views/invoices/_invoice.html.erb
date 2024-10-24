@@ -3,18 +3,22 @@
     <tr>
       <th scope="row ">
         <%= link_to invoice.name.upcase, invoice_path(invoice), class:" m-auto btn1 " %>
-          <span class="col-m-auto">
-            <% if invoice.taxes != []  %> 
-              <span class = " ">
-                <% invoice.taxes .each do |tax| %>
-                <%= link_to tax.name.upcase ,edit_tax_path(tax), class: "btn2" %>
-                <% end %>
-              </span>
+      </th>
+
+      <td class="text-center "><%= render "invoice_price", invoice:invoice %></td>
+      <td><%= link_to invoice.description, invoice_path(invoice), class:" blue m-auto" %></td>
+      <td class=" text-center">
+        <div class="btn3"><%= invoice.purchase_order.description if invoice.purchase_order %></div>
+      </td>
+      <td class="col-m-auto">
+        <% if invoice.taxes != []  %> 
+          <span class = " ">
+            <% invoice.taxes .each do |tax| %>
+            <%= link_to tax.name.upcase ,edit_tax_path(tax), class: "btn2" %>
             <% end %>
           </span>
-      </th>
-      <td class="text-center "><%= render "invoice_price", invoice:invoice %></td>
-      <td><%= link_to invoice.description, invoice_path(invoice), class:" green m-auto" %></td>
+        <% end %>
+      </td>
       <td class="text-center"><%= link_to "✏️ Edit ",edit_invoice_path(invoice),class: "btn1 m-auto " %></td>
       <td><%= button_to "❌ Delete",invoice_path(invoice),method: :delete,class: "btn1 m-auto" %></td>
     </tr>
