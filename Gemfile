@@ -27,6 +27,7 @@ gem "acts_as_list"
 gem "pry-byebug"
 gem 'caxlsx'
 gem 'caxlsx_rails'
+gem 'ransack'
 
 
 group :development, :test do

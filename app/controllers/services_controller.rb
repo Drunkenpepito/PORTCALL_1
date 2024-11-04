@@ -1,6 +1,6 @@
 class ServicesController < ApplicationController
 
-    before_action :set_service, only: [:show, :edit, :update, :destroy, :calculate]
+    before_action :set_service, only: [:show, :update, :calculate]
     # before_action :show_totals, only: [:show]
     
     def index
@@ -33,7 +33,7 @@ class ServicesController < ApplicationController
     end
     
     def create
-        # the idea is to hae only one create for master service or for service with mother
+        # the idea is to have only one create for master service or for service with mother
         # @contract = Contract.find(params[:service][:contract_id])
 
         if params[:service_id]  # CASE SERVICE WITH PARENT
@@ -58,17 +58,23 @@ class ServicesController < ApplicationController
     end
     
     def edit
+        @service = Service.find(params[:id])
+        @contract = @service.contract
+        @services = @contract.services
     end
     
     def update
-        if @service.update(service_params)
-        redirect_to service_path(@service), notice: "Service was successfully updated."
+        @service.parent= Service.find(params[:service][:parent]) if params[:service][:parent]
+        
+        if @service.update!(service_params)
+            redirect_to service_path(@service), notice: "Service was successfully updated."
         else
-        render :edit, status: :unprocessable_entity
+            render :edit, status: :unprocessable_entity
         end
     end
     
     def destroy
+        @service = Service.find(params[:id])
         @service.destroy
         redirect_to services_path, notice: "Service was successfully destroyed."
     end
@@ -89,6 +95,24 @@ class ServicesController < ApplicationController
 
     def copy_service
         @contracts = Contract.all
+        @service = Service.find(params[:service_id])
+    end
+
+    def paste_service
+        @service_ref = Service.find(params[:service_id])
+        @parent = Service.find(params[:parent])
+        @service = @service_ref.dup
+        @service.parent = @parent
+        if @service.save!
+            if @service_ref.has_children?
+                create_children(@service_ref,@service) 
+            else
+                get_variables(@service_ref,@service) if @service_ref.variables != [] 
+            end
+            redirect_to service_path(@parent), notice: "Service was successfully created."
+        else
+            render :copy_service, status: :unprocessable_entity, notice: "Something went wrong..."
+        end
     end
 
     def calculate
@@ -121,13 +145,54 @@ class ServicesController < ApplicationController
         end
     end
 
+    def move
+        @service = Service.find(params[:id])
+        @service.parent = Service.find( position:params[:position].to_i)
+        raise# ici il faut droper le drag le service.parent
+        head :no_content # renvoie le http code 204 server OK et no content to send back
+    end
+
     private
     
+    def create_children(model,service)
+        model.children.each do |m|
+            s = Service.new
+            s.name = m.name
+            s.parent = service
+            s.contract = service.contract
+            s.description = m.description
+            s.agency_fee = m.agency_fee
+            s.value = m.value
+            s.save!
+            if m.variables != [] 
+                get_variables(m,s) 
+            end
+            if m.has_children?
+                create_children(m,s) 
+            end
+          end
+    end
+
+    def get_variables(service_ref,service)
+        service_ref.variables.each do |v|
+          var = Variable.new
+          var.service_id = service.id
+          var.name = v.name
+          var.position = v.position
+          var.operator = v.operator
+          var.fixed = v.fixed
+          var.value = v.value
+          var.role = v.role
+          var.save!
+          # binding.pry
+        end
+      end
+
     def set_service
         @service = Service.find(params[:id])
     end
     
     def service_params
-        params.require(:service).permit(:name, :ancestry, :description, :value)
+        params.require(:service).permit(:name, :ancestry, :description, :value, :parent, :agency_fee)
     end
 end

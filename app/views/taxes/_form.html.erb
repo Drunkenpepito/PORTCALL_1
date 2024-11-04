@@ -11,10 +11,11 @@
     </h5>
     <div class="d-flex container justify-content-center text-light p-3 ">
         <div class="d-flex container p-3 text-center blue">
-          <%= f.input :name , input_html: { autofocus: true ,class:"form1"}%>
-          <%= f.input :percentage, input_html: { autofocus: true ,class:"form1"} %>
+          <%= f.input :name ,label: false, placeholder: "Name",  input_html: { autofocus: true ,class:"form1"}%>
+          <%= f.input :percentage,label: false, placeholder: "Value in %", input_html: { autofocus: true ,class:"form1"} %>
         </div>
-    <%= f.button :submit , class:"btn "%>
+    
+    <div class= "btn1 m-auto"><%= f.button :submit , class: "m-auto"%></div>
   </div>
   <% end %>
 </div>

@@ -6,6 +6,9 @@ class Service < ApplicationRecord
     validates :name, presence: true
     has_many :orders
     has_and_belongs_to_many :tax_regimes
+    # acts_as_list scope: :contract 
+
+
 
 
   def calculate
@@ -40,6 +43,7 @@ class Service < ApplicationRecord
       self.children.map(&:calculate).join('+')
     end
   end
+
 
   # def total_if_no_fomula
   #   self.descendants.reverse.each { |s| s.has_children? && s.formula == "" && s.children.map(&:calculate).all?{ |c| c != nil}? s.value = s.children.sum(&:calculate) && s.save : s.value = 0  }

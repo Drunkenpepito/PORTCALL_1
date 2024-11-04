@@ -1,12 +1,9 @@
 <%= link_to sanitize("&larr; Back to contracts"), contracts_path, class:"btn1" %>
 
-<main class="container white">
-
-  <div class="header">
+<main class="container white" >
+  <div class="header" >
     <h1>Services for <%= @contract.name %></h1>
     <%= link_to "New service",new_contract_service_path(@contract),class: "btn1" %>
   </div>
-  
   <%= render @services %>
-
 </main>

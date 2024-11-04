@@ -2,7 +2,12 @@ class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy, :goodreceipt]
  
     def index
-      @invoices = Invoice.all
+      if params[:search] != nil
+        @supplier = Supplier.find(params[:search][:supplier_id])
+        @invoices = Invoice.supplier(@supplier)
+      else
+        @invoices = Invoice.all 
+      end
     end
       
     def new
@@ -82,6 +87,7 @@ class InvoicesController < ApplicationController
     def goodreceipt
       # On a mis un boutton fomulaire au lieu de simplement faire une route qui apporte le invoice id and purchase order
       # du coup, on a deja fait l'associataion du Purchase order_id a l'invoice
+     
       if @invoice.update(invoice_params)
         @purchase_order = PurchaseOrder.find(params[:invoice][:purchase_order_id])
         @invoices = @purchase_order.invoices

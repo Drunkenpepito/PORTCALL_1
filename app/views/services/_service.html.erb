@@ -1,12 +1,9 @@
-<div class="service flex ">
-  
-  <div>
-    <%= link_to service.name, service_path, class:"red" %>
+<%= turbo_frame_tag service, data: { url: "/services/#{service.id}/move" } do %>
+  <div class="service flex ">
+    <div>
+      <%= link_to service.name, service_path, class:"red" %>
+    </div>
+    <div> <%= button_to "Delete",service_path,method: :delete,class: "btn1" %></div>
+    <div><%= link_to "Edit",edit_service_path,class: "btn1" %></div>           
   </div>
-
-  <%# <span class="service__actions "> %>
-  <div> <%= button_to "Delete",service_path,method: :delete,class: "btn1" %></div>
-  <div><%= link_to "Edit",edit_service_path,class: "btn1" %></div>           
-  <%# </span> %>
-
-</div>
+<% end %>

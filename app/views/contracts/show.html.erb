@@ -17,11 +17,11 @@
 <!--   MENU   -->
 
 <table class="table table-primary table-striped table-bordered table-hover">
-  <tbody>
+  <tbody >
   <% @services.each do |service| %>
     <tr>
       <th scope="row">
-        <li class= 'blue' data-controller="toggle-family"><%= link_to service.name.upcase, service_path(service), class:" h4  " %>
+        <li class= 'blue' data-controller="toggle-family"  ><%= link_to service.name.upcase, service_path(service), class:" h4  " %>
             <span class="h6 " >
             <% if  service.calculate.is_a? Numeric %>
               <%= link_to "✔️", service_path(service), class:"green" %> 
@@ -32,7 +32,7 @@
             <button class="btn " data-action="click->toggle-family#toggle">
               ▽ 
             </button>
-            <span data-toggle-family-target="family" class="d-none">
+            <span data-toggle-family-target="family" class="d-non">
               <%= render 'sub_menu_services', services: service.descendants.arrange %>
             </span>
         </li>

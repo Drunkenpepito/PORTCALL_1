@@ -61,6 +61,7 @@ class PurchaseOrdersController < ApplicationController
       end
       @services_id = @orders.map(&:service_id)
       @services = Service.where(id:@services_id)
+
     end
 
   def excel_po
