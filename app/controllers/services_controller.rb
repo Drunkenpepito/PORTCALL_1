@@ -2,7 +2,7 @@ class ServicesController < ApplicationController
 
     before_action :set_service, only: [:show, :update, :calculate]
     # before_action :show_totals, only: [:show]
-    
+
     def index
         @services = Service.all
         @contract = Contract.find(params[:contract_id])
@@ -10,18 +10,18 @@ class ServicesController < ApplicationController
 
     def show
         @service = Service.includes(:variables).find(params[:id])
-        @services = @service.children 
+        @services = @service.children
     end
-    
+
     def new
-        # 2 CAS : 
+        # 2 CAS :
         # Cas 1: on cree un MASTERSERVICE de la vue Contract index
         #           dans ce case on cree le service root
         # Cas 2: on cree un SERVICE enfant de la vue Service show du service.parent
-        #           dans ce case le service parent est @service 
+        #           dans ce case le service parent est @service
         # NO! there is no 2 cases any more as data is now materialized_path2 rather than materialized_path
-        
-        # if params[:service_id] 
+
+        # if params[:service_id]
         #     @service = Service.find(params[:service_id]).children.new
         # else
         @contract = Contract.find(params[:contract_id])
@@ -31,7 +31,7 @@ class ServicesController < ApplicationController
         # @contract = Contract.find(params[:contract_id])
         # @service.contract = @contract
     end
-    
+
     def create
         # the idea is to have only one create for master service or for service with mother
         # @contract = Contract.find(params[:service][:contract_id])
@@ -56,23 +56,23 @@ class ServicesController < ApplicationController
             end
         end
     end
-    
+
     def edit
         @service = Service.find(params[:id])
         @contract = @service.contract
         @services = @contract.services
     end
-    
+
     def update
         @service.parent= Service.find(params[:service][:parent]) if params[:service][:parent]
-        
+
         if @service.update!(service_params)
             redirect_to service_path(@service), notice: "Service was successfully updated."
         else
             render :edit, status: :unprocessable_entity
         end
     end
-    
+
     def destroy
         @service = Service.find(params[:id])
         @service.destroy
@@ -81,10 +81,24 @@ class ServicesController < ApplicationController
 
     def new_child # NOT USED
         @service = Service.find(params[:service_id])
-        @new_child = @service.dup 
+        @new_child = @service.dup
         # copy new instance with exact same data but no id as not save yet
-        # allow to transfer params of service in the form 
+        # allow to transfer params of service in the form
         @new_child.parent = @service
+    end
+
+    def change_ancestry
+      binding.pry
+      # ne marche si le service est un enfant de lui meme => si ses futures parents sont déjà ses enfants
+      og_service = Service.find(params[:service][:id])
+      new_parent_service = Service.find(params[:parent_id])
+      # og_service.update!(ancestry: "/") #destroy ancestry
+      # og id= 1
+      # parent = /2/1./
+      og_service.ancestry = '/'
+      og_service.parent = new_parent_service
+      og_service.save!
+      redirect_to contract_path(og_service.contract), notice: "Service was successfully moved."
     end
 
     def new_master_service
@@ -105,9 +119,9 @@ class ServicesController < ApplicationController
         @service.parent = @parent
         if @service.save!
             if @service_ref.has_children?
-                create_children(@service_ref,@service) 
+                create_children(@service_ref,@service)
             else
-                get_variables(@service_ref,@service) if @service_ref.variables != [] 
+                get_variables(@service_ref,@service) if @service_ref.variables != []
             end
             redirect_to service_path(@parent), notice: "Service was successfully created."
         else
@@ -116,15 +130,15 @@ class ServicesController < ApplicationController
     end
 
     def calculate
-        @resultat = @service.calculate 
+        @resultat = @service.calculate
     end
 
     def link_tax_service
         # je veux faire une action reactive en modifiant une data de la DB
-        # Stimulus n'est pas le meilleur choix 
+        # Stimulus n'est pas le meilleur choix
         # Bouton --> Action controller --> Turbo frame pour atualiser DOM parait la meilleure option dans ce cas
         # l'action necessaire est: ajouter un element de la table de jointure tax_services
-        # on ecrit la route qui nous amene les params id tax et id service 
+        # on ecrit la route qui nous amene les params id tax et id service
         # Il reste la methode d'ecriture du record dans la table de jointure:
         @tax = TaxRegime.find(params[:id])
         @service = Service.find(params[:service_id])
@@ -153,7 +167,7 @@ class ServicesController < ApplicationController
     end
 
     private
-    
+
     def create_children(model,service)
         model.children.each do |m|
             s = Service.new
@@ -164,11 +178,11 @@ class ServicesController < ApplicationController
             s.agency_fee = m.agency_fee
             s.value = m.value
             s.save!
-            if m.variables != [] 
-                get_variables(m,s) 
+            if m.variables != []
+                get_variables(m,s)
             end
             if m.has_children?
-                create_children(m,s) 
+                create_children(m,s)
             end
           end
     end
@@ -191,7 +205,7 @@ class ServicesController < ApplicationController
     def set_service
         @service = Service.find(params[:id])
     end
-    
+
     def service_params
         params.require(:service).permit(:name, :ancestry, :description, :value, :parent, :agency_fee)
     end

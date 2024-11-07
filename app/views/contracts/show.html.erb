@@ -5,7 +5,7 @@
 
 <div class= "container d-flex justify-content-center m-3">
   <h2 class = " blue m-auto" >CONTRACT <%= @contract.name %> </h2>
-  <% if @tax_regimes != nil  %> 
+  <% if @tax_regimes != nil  %>
     <span class = " mh-3">
     <% @tax_regimes.each do |tax| %>
       <%= link_to tax.name.upcase ,edit_tax_regime_path(tax), class: "btn1" %>
@@ -16,24 +16,27 @@
 
 <!--   MENU   -->
 
-<table class="table table-primary table-striped table-bordered table-hover">
+<table class="table table-primary table-striped table-bordered table-hover" data-controller="dragparent">
   <tbody >
   <% @services.each do |service| %>
     <tr>
       <th scope="row">
-        <li class= 'blue' data-controller="toggle-family"  ><%= link_to service.name.upcase, service_path(service), class:" h4  " %>
+        <li class= 'blue' data-controller="toggle-family"  >
+          <%= link_to service.name.upcase, service_path(service), class:" h4  ",
+          id:service.id, draggable: true %>
             <span class="h6 " >
             <% if  service.calculate.is_a? Numeric %>
-              <%= link_to "✔️", service_path(service), class:"green" %> 
+              <%= link_to "✔️", service_path(service), class:"green" %>
             <% else %>
               ❌
             <% end %>
-            </span> 
+            </span>
             <button class="btn " data-action="click->toggle-family#toggle">
-              ▽ 
+              ▽
             </button>
-            <span data-toggle-family-target="family" class="d-non">
-              <%= render 'sub_menu_services', services: service.descendants.arrange %>
+            <span data-toggle-family-target="family" class="d-none"  >
+                <%= render 'sub_menu_services', services: service.descendants.arrange %>
+              </div>
             </span>
         </li>
       </th>
@@ -41,5 +44,3 @@
   <% end %>
   </tbody>
 </table>
-
-

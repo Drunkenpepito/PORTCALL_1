@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 ruby "3.1.2"
+gem "nokogiri", "1.16.7"
 gem "rails", "~> 7.1.2"
 gem "sprockets-rails"
 gem "pg", "~> 1.1"
