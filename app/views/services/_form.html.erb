@@ -7,7 +7,7 @@
       <%= service.errors.full_messages.to_sentence.capitalize %>
     </div>
   <% end %>
-  <%= f.input :name, input_html: { autofocus: true ,class:"form1"} %>
+  <%= f.input :name, placeholder: "Service Name", input_html: { autofocus: true ,class:"form1"} %>
   <%= f.hidden_field :contract_id %>
   <%= f.submit class: "btn1" %>
 <% end %>

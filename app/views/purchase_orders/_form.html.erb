@@ -1,15 +1,19 @@
 
-<%= simple_form_for purchase_order, html: { class: "" } do |f| %>
-  
-  <% if purchase_order.errors.any? %>
-    <div class="error-message">
-      <%= purchase_order.errors.full_messages.to_sentence.capitalize %>
+
+<div class=" rounded-4 border border-5 bg-light m-3 p-3">
+  <%= simple_form_for purchase_order, html: { class: "d-flex flex-column" } do |f| %>
+    
+    <% if purchase_order.errors.any? %>
+      <div class="error-message">
+        <%= purchase_order.errors.full_messages.to_sentence.capitalize %>
+      </div>
+    <% end %>
+    <div class="container d-flex">
+      <%= f.input :name, placeholder: "NAME", input_html: { autofocus: true ,class:"form1"} %>
+      <%= f.input :description, placeholder: "DESCRIPTION", input_html: { autofocus: true ,class:"form1"} %>
+      <%= f.input :budget, placeholder: "BUDGET", input_html: { autofocus: true ,class:"form1"} %>
     </div>
+    <div class= " btn1 m-auto text-center "><%= f.submit class: " m-auto btn" %></div>
+
   <% end %>
-
-  <%= f.input :name, placeholder: "NAME", input_html: { autofocus: true ,class:"form1"} %>
-  <%= f.input :description, placeholder: "DESCRIPTION", input_html: { autofocus: true ,class:"form1"} %>
-  <%= f.input :budget, placeholder: "BUDGET", input_html: { autofocus: true ,class:"form1"} %>
-    <%= f.submit class: " btn1 p-3" %>
-
-<% end %>
+</div>

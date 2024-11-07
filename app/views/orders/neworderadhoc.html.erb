@@ -1,14 +1,16 @@
 
-<%= simple_form_for [@invoice,@order], method: :post, url: createorderadhoc_path(@invoice), html: { class: "service form p-auto" } do |f| %>
-    <% if @order.errors.any? %>
-        <div class="error-message">
-        <%= @order.errors.full_messages.to_sentence.capitalize %>
-        </div>
+<div class="d-flex rounded-4 border border-5  bg-light m-3">
+    <%= simple_form_for [@invoice,@order], method: :post, url: createorderadhoc_path(@invoice), html: { class: "service form p-auto" } do |f| %>
+        <% if @order.errors.any? %>
+            <div class="error-message">
+            <%= @order.errors.full_messages.to_sentence.capitalize %>
+            </div>
+        <% end %>
+            <div class="m-auto"><%= f.input :name, label: false, placeholder: "Name", input_html: { autofocus: true ,value: "",class:"form1 p-auto"} %></div>
+            <div class="m-auto"><%= f.input :description,label: false, placeholder: "Description", input_html: { autofocus: true ,value: "",class:"form1 container p-auto"} %></div>
+            <%= f.hidden_field :ancestry, input_html: {value: "/" }  %>
+            <%# <%= f.hidden_field :service_id, input_html: {value: nil}  %> 
+            <%= f.hidden_field :invoice_id, input_html: {value: @invoice.id}  %>
+            <div class="m-auto"><%= f.submit class: "p-auto btn1" %></div>
     <% end %>
-        <div class="m-auto"><%= f.input :name, label: false, placeholder: "Name", input_html: { autofocus: true ,value: "",class:"form1 p-auto"} %></div>
-        <div class="m-auto"><%= f.input :description,label: false, placeholder: "Description", input_html: { autofocus: true ,value: "",class:"form1 container p-auto"} %></div>
-        <%= f.hidden_field :ancestry, input_html: {value: "/" }  %>
-        <%# <%= f.hidden_field :service_id, input_html: {value: nil}  %> 
-        <%= f.hidden_field :invoice_id, input_html: {value: @invoice.id}  %>
-        <div class="m-auto"><%= f.submit class: "p-auto btn1" %></div>
-<% end %>
+</div>

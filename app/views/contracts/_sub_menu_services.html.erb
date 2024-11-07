@@ -1,4 +1,5 @@
-<ul >
+
+<ul data-controller="drag-to-parent">
    <% services.each do |service, children| %>
       <li class="">
         <%= link_to_unless_current service.name, service_path(service),

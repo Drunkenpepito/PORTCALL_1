@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get "show_master_services" , to: "services#show_master_services" , as: "show_master_services" 
                 # CAS UNIQUE MASTERSERVICE - que pour masterservices
       resources :tax_regimes, only: [:new, :create,]
+      resources :suppliers, only: [:new, :create,]
   end
   resources :tax_regimes , only: [:show, :index,  :destroy , :edit, :update,]
 
@@ -28,13 +29,15 @@ Rails.application.routes.draw do
                 # ON UTILISE PAS LE NEW
                 # CAS 2 ( CAS GENERAL) - pour creer un service , on a un parent
     get "copy_service", to: "services#copy_service", as:"copy_service"
+    post :paste_service
+
     member do
       get :calculate # permet de calculer le prix d'un service
+      patch :move 
     end
     resources :variables, only: [:new, :create,]
     post "tax_regimes/:id/link_tax_service", to:"services#link_tax_service", as: :link_tax
     post "tax_regimes/:id/unlink_tax_service", to:"services#unlink_tax_service", as: :unlink_tax
-
   end
 
   
@@ -56,7 +59,7 @@ Rails.application.routes.draw do
     member do
       get :calculate 
       get :newchildorder # cas ou on veut creer un order ad hoc qui a un parent
-      post "orders/:id/newchildorder", to:"orders#createchildorder", as: :createchildorder
+      post "orders/:id/createchildorder", to:"orders#createchildorder", as: :createchildorder
     end
     resources :order_variables, only: [:new, :create]
     post "taxes/:id/link_tax_order", to:"orders#link_tax_order", as: :link_tax
@@ -98,4 +101,5 @@ Rails.application.routes.draw do
   resources :purchase_orders 
     get "excel_po", to: "purchase_orders#excel_po" , as:"excel_po"
 
+  resources :projects, only: [:index ]
 end

@@ -6,6 +6,9 @@ class Invoice < ApplicationRecord
   belongs_to :purchase_order, optional: true # allows us to remove value back to nil
 
 
+  scope :with_supplier, ->(supplier) { where( supplier:) }
+
+
 def price
   p =0
   self.orders.each do |o|

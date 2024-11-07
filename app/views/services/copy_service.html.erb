@@ -2,7 +2,27 @@
   <div class="header">
     <h1>Contracts</h1>
   </div>
-  
-  <%= render @contracts %>
-  
+
+    <% @contracts.each do |contract| %>
+      <span  data-controller="toggle-family">
+        <div class ="btn1 m-auto "data-action="click->toggle-family#toggle"><%= contract.name.upcase%></div>
+      
+        <table class="table table-primary table-striped table-bordered table-hover d-none" data-toggle-family-target="family">
+          <tbody >
+            <tr >
+              <th scope="row">
+                <% contract.services.select{|s| s.is_root?}.each do |service| %>
+                    <li class= 'blue' >
+                      <%= button_to service.name, service_paste_service_path( parent: @service, service_id:service.id), method: :post %>
+                      <span >
+                        <%= render 'sub_menu_services_2', services: service.descendants.arrange %>
+                      </span>
+                    </li>
+                <% end %>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </span>
+    <% end %>
 </main>

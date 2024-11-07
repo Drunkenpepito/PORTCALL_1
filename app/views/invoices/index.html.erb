@@ -1,10 +1,19 @@
 
-
-<div class=" blue p-3 ">
+<div class=" d-flex align-items-center blue p-3 ">
   <span class="p-auto fs-2  border-bottom border-4 border-success ">INVOICES
     <%= link_to "✚ New",new_invoice_path,class: "btn1 " %> 
   </span>
 </div>
+
+<!--
+  <span>
+    <%= simple_form_for :supplier, url: invoices_path, method: :get do |f| %>
+      <%= f.input :supplier_id,label: false,   collection: Supplier.all %>
+      <%= f.submit class: "btn1" %>
+    <% end %>
+  </span>
+
+-->
 
 <table class="table table-success table-striped  table-hover border border-light">
   <tbody>

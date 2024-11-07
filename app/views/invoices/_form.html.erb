@@ -1,16 +1,18 @@
 
-<%= simple_form_for invoice, html: { class: "contract form " } do |f| %>
-  <% if invoice.errors.any? %>
-    <div class="error-message">
-      <%= invoice.errors.full_messages.to_sentence.capitalize %>
+<div class="d-flex rounded-4 border border-5  bg-light m-3">
+  <%= simple_form_for invoice, html: { class: "contract form " } do |f| %>
+    <% if invoice.errors.any? %>
+      <div class="error-message">
+        <%= invoice.errors.full_messages.to_sentence.capitalize %>
+      </div>
+    <% end %>
+    <div class= "form1 m-auto">
+      <%= f.association :contract, label: false, value_method: :id, include_blank: false %>
     </div>
+    <%= f.input :name, placeholder: "Name", input_html: { autofocus: true ,class:"form1"} %>
+    <%= f.input :description, placeholder: "Description",  input_html: { autofocus: true ,class:"form1"} %>
+
+
+    <%= f.submit class: "btn1 m-auto" %>
   <% end %>
-
-  <%= f.input :name, input_html: { autofocus: true ,class:"form1"} %>
-  <%= f.input :description, input_html: { autofocus: true ,class:"form1"} %>
-  <div>
-    <%= f.association :contract, label_method: :name, value_method: :id, include_blank: false %>
-  </div>
-
-  <%= f.submit class: "btn1" %>
-<% end %>
+</div>

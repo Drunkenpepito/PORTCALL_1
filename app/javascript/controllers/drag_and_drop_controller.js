@@ -9,7 +9,7 @@ export default class extends Controller {
     // creation des elements drag and dropable ICI tous les enfants du controller
     // AKA les turbo_frames de variables
     console.log('drag & drop controller connected')
-    console.log(this.element.dataset)
+    // console.log(this.element.dataset)
     this.sortable = Sortable.create(this.element,{
     onEnd: this.end.bind(this) //callback sur l'event onEnd qui se déclenche
     // lorsqu'un élément a été déplacé
@@ -21,10 +21,10 @@ export default class extends Controller {
 // pas clair : demander a Benoit
   end(event){
     const url = event.item.dataset.url
-    // console.log(event)
-    // console.log(event.item)
-    // console.log(event.item.dataset)
-    console.log(event.item.dataset.url)
+     console.log(event)
+    //  console.log(event.item)
+    //  console.log(event.item.dataset)
+    // console.log(event.item.dataset.url)
     // generate the url based on service_ingredient id from turbo_frame_id
     patch(url, {
       body: JSON.stringify({ position: event.newIndex + 1 })

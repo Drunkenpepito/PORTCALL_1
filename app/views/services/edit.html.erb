@@ -11,6 +11,8 @@
   <%# <div class="container"> %>
     <%= f.input :description,label: false, placeholder: "Service description",  input_html: { autofocus: true ,class:"form1 m-2"} %>
     <%= f.input :agency_fee,  input_html: { autofocus: true ,class:"m-2"} %>
+    <%= f.select :parent ,@services.order(:name).collect{ |s| [s.name, s.id]} , hint: 'Parent Service'%>
+
 
   <%# </div> %>
 

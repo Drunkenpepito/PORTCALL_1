@@ -9,7 +9,6 @@
 
   <h2 class = "d-flex justify-content-center blue " >PO <%= @purchase_order.name %> </h2>
   <h6 class = "d-flex justify-content-center blue " ><%= @purchase_order.description %> </h6>
-
   <h4 class = "d-flex justify-content-center " >
       <span class="p-2 blue"> BUDGET </span> 
       <% if @purchase_order.budget != nil %>
@@ -18,6 +17,7 @@
         <span class="p-2 blue "><%= render 'po_budgeted', purchase_order: @purchase_order %></span>
         <span class="p-2 blue"> = </span> 
         <span class="p-2 blue "><%= render 'budget', purchase_order: @purchase_order %></span>
+
       <% end %>
   </h4>
 
@@ -38,7 +38,7 @@
         <%  if @services!= [] %>
           <h6 class= "blue  text-center m-3">
              SERVICES 
-            <span class="p-2 blue"><%= render 'po_budgeted', purchase_order: @purchase_order %></span>
+            <span class="p-2 blue"><%= render 'po_budgeted_twin', purchase_order: @purchase_order %></span>
           </h6>
         <% end %>
           <%= render 'po_services_list', services: @services %>

@@ -1,0 +1,49 @@
+
+<div class= "text-center m-4  ">
+    
+    <%= search_form_for @q do |f| %>
+    <%=  f.search_field :name_cont %> 
+    <%=  f.submit :"🔎" %> 
+    <% end %>
+
+
+</div>
+<div class="container">
+    <div class="row">   
+        <% @projects.each do |project|%>    
+            <div class="col-md-4">
+                <h4 class="text-center blue "><strong><%= project.name %> </strong></h4>
+                <hr>
+                <div class="profile-card-4 text-center">
+                <div class="img img-responsive">
+                    <%=image_tag('marineops.jpeg')%>
+                </div>
+
+                    <div class="profile-content">
+                        <div class="profile-name">John Doe
+                            <p>@johndoedesigner</p>
+                        </div>
+                        <div class="profile-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.</div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="profile-overview">
+                                    <p>BUDGET</p>
+                                    <h4>1300</h4></div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="profile-overview">
+                                    <p>SUPPLIER</p>
+                                    <h4>250</h4></div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="profile-overview">
+                                    <p>TASKS</p>
+                                    <h4>168</h4></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
