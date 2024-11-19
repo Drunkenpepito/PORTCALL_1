@@ -3,7 +3,7 @@ class InvoicesController < ApplicationController
  
     def index
       if params[:search] != nil
-        @supplier = Supplier.find(params[:search][:supplier_id])
+        # @supplier = Supplier.find(params[:search][:supplier_id])
         @invoices = Invoice.supplier(@supplier)
       else
         @invoices = Invoice.all 
