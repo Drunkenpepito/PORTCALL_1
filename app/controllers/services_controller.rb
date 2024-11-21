@@ -103,6 +103,7 @@ class ServicesController < ApplicationController
         @parent = Service.find(params[:parent])
         @service = @service_ref.dup
         @service.parent = @parent
+        
         if @service.save!
             if @service_ref.has_children?
                 create_children(@service_ref,@service) 
@@ -152,10 +153,27 @@ class ServicesController < ApplicationController
         head :no_content # renvoie le http code 204 server OK et no content to send back
     end
 
+    def change_ancestry
+        # ne marche si le service est un enfant de lui meme => si ses futures parents sont déjà ses enfants
+        @og_service = Service.find(params[:id])
+        @new_parent_service = Service.find(params[:parent_id])
+        @og_service.parent = @new_parent_service
+        if @og_service.save!
+            request.format = :turbo_stream
+             respond_to do |format|
+                format.turbo_stream
+                format.html {redirect_to contract_path(@og_service.contract), notice: "Service was successfully moved."}
+             end
+        end
+    end
+  # og_service.update!(ancestry: "/") #destroy ancestry
+        # og id= 1
+        # parent = /2/1./
+        # og_service.ancestry = '/'
     private
     
     def create_children(model,service)
-        model.children.each do |m|
+        model.children.reject{ |id| id == service.id }.each do |m|
             s = Service.new
             s.name = m.name
             s.parent = service
@@ -168,9 +186,10 @@ class ServicesController < ApplicationController
                 get_variables(m,s) 
             end
             if m.has_children?
-                create_children(m,s) 
+                binding.pry
+                create_children(m,s) # m.children.map(&:id).reject{ |id| id == s.id }
             end
-          end
+        end
     end
 
     def get_variables(service_ref,service)

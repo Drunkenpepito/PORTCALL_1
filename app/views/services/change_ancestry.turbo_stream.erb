@@ -1,0 +1,12 @@
+
+
+<%= turbo_stream.remove "service_#{@og_service.id}" do %> 
+    <%= render "contracts/root_service" , service: @og_service %>
+<%end%> 
+
+<%= turbo_stream.replace "service_#{@new_parent_service.id}" do %> 
+    <%= render "contracts/root_service" , service: @new_parent_service, class: 'blue' %>
+<%end%> 
+
+
+

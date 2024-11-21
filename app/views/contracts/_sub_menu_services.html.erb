@@ -1,15 +1,24 @@
 
-<ul data-controller="drag-to-parent">
+<ul>
    <% services.each do |service, children| %>
-      <li class="">
-        <%= link_to_unless_current service.name, service_path(service),
-        class: "  #{ 'blue fw-light' if service.ancestry != nil } " %>
-       <% if service.calculate.is_a? Numeric %> 
-        <span class="green fw-lighter fs-6 " > ✔︎  </span>
-      <% else %>
-        <span class="text-danger fw-lighter fs-6 " > 𝘅  </span>
-      <% end %>
-      </li>
+
+      <%= turbo_frame_tag "service_#{service.id}" do %>
+        <li draggable="true" id=<%=service.id %> data: {turbo_stream: true}>
+
+          <%= link_to_unless_current service.name, service_path(service),
+          class: "  #{ 'blue fw-light' if service.ancestry != nil }", id:service.id %>
+          <% if service.calculate.is_a? Numeric %> 
+            <span class="green " > ✔︎  </span>
+          <% else %>
+            <span class="text-danger  " > 𝘅  </span>
+          <% end %>
+  
+        </li>
         <%= render 'sub_menu_services', services: children if children.present? %>
+      <% end %>
+
   <% end %>
 </ul>
+
+
+
