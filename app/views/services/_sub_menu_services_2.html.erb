@@ -2,7 +2,7 @@
    <% services.each do |service, children| %>
 
       <li>
-        <%= button_to service.name, service_paste_service_path, method: :post , class: "  #{ 'white' if service.ancestry != nil } " %>
+        <%= button_to service.name, service_paste_service_path, method: :post , class: "  #{ 'red' if service.ancestry != nil } " %>
       </li>
         <%= render 'sub_menu_services_2', services: children if children.present? %>
   <% end %>
