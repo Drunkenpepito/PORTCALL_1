@@ -1,57 +1,58 @@
+<style> body { background-color: #0d2850; } </style>
 
-<%= link_to sanitize("&larr; Contracts"), contracts_path, class:"btn btn-secondary" %>
+<%= link_to sanitize("&larr; Contracts"), contracts_path, class:"btn btn-secondary border border-3", style:"border-radius: 8px;" %>
 <% if @service.is_root? == false  %> 
-  <%= link_to sanitize("&larr; Back"), service_path( @service.parent) , class:"btn btn-secondary"%>
+  <%= link_to sanitize("&larr; Back"), service_path( @service.parent) , class:"btn btn-secondary border border-3", style:"border-radius: 8px;"%>
 <% else %>
-  <%= link_to sanitize("&larr; Back"), contract_path( @service.contract) , class:"btn btn-secondary"%>
+  <%= link_to sanitize("&larr; Back"), contract_path( @service.contract) , class:"btn btn-secondary border border-3", style:"border-radius: 8px;"%>
 <% end %>
-<%= link_to sanitize("Copy Service from ..."), service_copy_service_path(@service), class:"btn btn-outline-warning" %>
-<%= link_to "New service",service_new_child_service_path(@service),class: "btn btn-outline-primary" %>
+<%= link_to sanitize("Copy service"), service_copy_service_path(@service), class:"btn btn-warning border border-3 text-secondary", style:"border-radius: 8px;"%>
+<%= link_to "New service",service_new_child_service_path(@service),class: "btn btn-success border border-3 text-secondary", style:"border-radius: 8px;"%>
 
 
-
+<div class= "container row m-auto">
 
     <!--   PATH    -->
 
-                              <span class="d-flex justify-content-start align-items-center m-3 bg-dark text-light p-2 rounded-pill">
-                                <%= link_to @service.contract.name.upcase , contract_path(@service.contract) %>
+                              <span class="d-flex justify-content-start align-items-center m-3 text-light p-2 rounded-pill" style="background-color:#0d2850">
+                                <%= link_to @service.contract.name.upcase , contract_path(@service.contract), class:"grey" %>
                                  &nbsp<%=  "/" %>&nbsp
                                 <% if @service.ancestors.map(&:name) != [] %> 
                                   <%  @service.ancestors.each do |s|%>
-                                    <%= link_to s.name.upcase, service_path(s)%>
+                                    <%= link_to s.name.upcase, service_path(s), class:"grey"%>
                                     &nbsp<%=  "/" %>&nbsp
                                   <% end %>
-                                <span class="text-light h4"> &nbsp;<%=@service.name.upcase %></span>
-                                <%= link_to "✏️",edit_service_path(@service),class: "m-2" %>
+                                  <span class="text-light h4"> &nbsp;<%=@service.name.upcase %></span>
+                                  <%= link_to "✏️",edit_service_path(@service),class: "m-2" %>
                                 <% else %>
-                              <span class="text-light h4"><%=@service.name.upcase %></span>
-                              <%= link_to "✏️",edit_service_path(@service),class: "m-2" %>
+                                  <span class="text-light h4"><%=@service.name.upcase %></span>
+                                  <%= link_to "✏️",edit_service_path(@service),class: "m-2" %>
                                 <% end %>
                               </span>
 
-    <!--   SERVICE FAMILY    -->
-
-    <table class="table table-primary table-striped table-hover <%='d-none' if @service.has_children? == false %>">
+<!--   SERVICE FAMILY IS DISPLAYED ONLY IF CHILDREN %> -->
+  <% if @service.has_children?  %>
+    <table class="table table-striped table-hover border border-secondary border-3 m-auto p-auto<%='d-none' if !@service.has_children? %>">
 
       
       <thead>
-        <tr class="text-center table  h6 ">
-          <th class="text-start fs-6" scope="col">SERVICE</th>
+        <tr class="text-center table-dark  ">
+          <th class="text-start fs-6 text-secondary" scope="col">SERVICE</th>
           <% @service.contract.tax_regimes.where(isfee:true).each do |tax| %>
-            <th scope="col"> <%= tax.name.upcase %> </th>
+            <th class="text-secondary" scope="col"> <%= tax.name.upcase %> </th>
           <% end %>
-          <th class="" scope="col">BUDGET PRICE</th>
+          <th class="text-secondary" scope="col">BUDGET PRICE</th>
           <% @service.contract.tax_regimes.where(isfee:false).each do |tax| %>
-            <th class=""  scope="col"> <%= tax.name.upcase %> </th>
+            <th class="text-secondary"  scope="col"> <%= tax.name.upcase %> </th>
           <% end %>
-          <th class="text_center" scope="col">INVOICE PRICE</th>
+          <th class="text_center text-secondary" scope="col">INVOICE PRICE</th>
         </tr>
       </thead>
 
 
       <tbody>
         <% @services.each do |service| %>
-          <tr class="text-center">
+          <tr class="">
                  <td class="text-start h5" ><%= link_to service.name, service_path(service), class:"blue" %> </td>
             <%# FEES %>
                   <% service.contract.tax_regimes.where(isfee:true).each do |tax| %>
@@ -63,7 +64,7 @@
                   <% end %>
             <%# BUDGET PRICE %>
                   <% if service.calculate.is_a? Numeric %> 
-                    <td class="text-center"><%= service.calculate %></td>
+                    <td class="text-center"><%= render "budget_price", service:service %>
                   <% else %>
                     <td>❌</td>
                   <% end %>
@@ -77,22 +78,39 @@
                   <% end %>
             <%# INVOICE PRICE   %>
                   <% if service.calculate.is_a? Numeric %> 
-                    <td class="fw-bold"><%= service.calculate * ( 1 + service.tax_regimes.where(isfee:false).sum(&:percentage)*0.01).round(4) %><td>
+                    <td class="text-center "><%= render "invoice_price", service:service %>
                   <% else %>
                     <td>❌</td>
                   <% end %>
-</tr>
+          </tr>
         <% end %>
+            <%# SERVICE TOTAL lINE %>
+          
+        <tr class=" table-dark text-center  ">
+          <td class="text-center blue fs-4"><%= @service.name.upcase %></td>
+          <td></td>
+          <td class="text-center blue fs-4"> <%= render "budget_prices", service:@service %> </td>
+          <td></td>
+          <td class="text-center text-success fs-4"><%= render "invoice_prices", service:@service %></td>
+        </tr>
+
       </tbody>
 
     </table>
+  <% end %>
 
 
-    <div class="container rounded-4 border border-5e border-dark <%='d-none' if @service.has_children?%>">
+
+<%# CALCULATOR IS DISPLAYED ONLY IF CHILDREN %>
+  <% if !@service.has_children?  %>
+    <div class="container rounded-4 border border-5 bg-dark <%='d-none' if @service.has_children?%>">
 
       <!--   FORMULA = VARIABLE LIST    -->
 
-                                <h2 class = "calculator_card"></h2>
+                                
+                                <div class= "d-flex justify-content-center">
+                                  <span  class="text-success fs-4 text-center"> <%= render "budget_prices", service:@service %> </span>
+                                </div>
 
                                 <%= turbo_frame_tag "variable_list" do %>
                                   <% if  @service.variables.empty? %>
@@ -106,25 +124,17 @@
                                 <div class="d-flex ">
 
                                   <%# <h2>ADD OPERATOR</h2> %>
-                                  <div class="operateur-add me-5 p-2">
+                                  <div class="operateur-add me-5 m-3 p-2">
                                     <%= render 'buttons/operators' %>
                                   </div>
 
                                   <%# <h2>ADD VARIABLE</h2> %>
-                                  <div class="value-add p-2">
-                                    <div class="d-flex ">
+                                  <div class=" m-auto">
+                                    <div class="d-flex align-items-center ">
                                       <%= render 'buttons/add_value', service: @service,
                                       variable: Variable.new( operator:false ,fixed: false,role: "value") %>
                                     </div>
                                   </div>
-
-                                    <%# RESULT %>
-                                  <div class="ingredient-card">
-                                    <div class=" btn btn-primary p-0 border border-5 border-dark">
-                                      <%= render 'services/resultat', service: @service%> 
-                                    </div>
-                                  </div>
-
 
 
                                 </div>
@@ -132,14 +142,14 @@
     </div>
 
 
-            <%# DESCRIPTION %>
-            <div class="d-flex justify-content-center m-2 text-dark">
-              <% if @service.description != nil %>
-                <%= @service.description %>
-              <% end %>
-            </div>
+    <%# DESCRIPTION %>
+    <div class="d-flex justify-content-center m-2 text-secondary">
+      <% if @service.description != nil %>
+        <%= @service.description %>
+      <% end %>
+    </div>
+
+  <% end %>
 
 
-
-
-
+</div>

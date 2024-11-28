@@ -1,14 +1,18 @@
 
+<style> body { background-color: #124020; } </style>
+
+
 <div class=" d-flex align-items-center blue p-3 ">
-  <span class="p-auto fs-2  border-bottom border-4 border-success ">INVOICES
-    <%= link_to "✚ New",new_invoice_path,class: "btn1 " %> 
+  <span class="m-auto fs-2 white ">INVOICES
+    <%= link_to "✚",new_invoice_path,class: "btn1 rounded-circle", style:"vertical-align: middle;"  %> 
   </span>
 </div>
 
 
-
-<table class="table table-success table-striped  table-hover border border-light">
-  <tbody>
-    <%= render @invoices %>
-  </tbody>
-</table>
+<div class ="d-flex justify-content-center">
+  <table class="table table-striped  table-hover border border-light">
+    <tbody>
+      <%= render @invoices %>
+    </tbody>
+  </table>
+</div>

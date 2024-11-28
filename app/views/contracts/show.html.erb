@@ -1,14 +1,17 @@
+
+<style> body { background-color: #0d2850; } </style>
+
 <%= link_to sanitize("&larr; Back to contracts"), contracts_path, class:"btn1" %>
 <%= link_to sanitize("✚ Service"), contract_new_master_service_path(@contract), class:"btn1" %>
 <%= link_to sanitize("✚ Tax"), new_contract_tax_regime_path(@contract), class:"btn1" %>
 
 
-<div class= "container d-flex justify-content-center m-3">
-  <h2 class = " blue m-auto" >CONTRACT <%= @contract.name %> </h2>
+<div class= "container row text-center m-3">
+  <h2 class = " blue m-auto border-bottom " >CONTRACT <%= @contract.name %> </h2>
   <% if @tax_regimes != nil  %> 
     <span class = " mh-3">
     <% @tax_regimes.each do |tax| %>
-      <%= link_to tax.name.upcase ,edit_tax_regime_path(tax), class: "btn1"  %>
+      <%= link_to tax.name.upcase ,edit_tax_regime_path(tax), class: "text-secondary text-start btn"  %>
     <% end %>
     </span>
   <% end %>
@@ -16,7 +19,7 @@
 
 <!--   MENU   -->
 
-<table class="table  table-striped table-bordered table-hover" data-controller="dragparent">
+<table class="table table-striped table-bordered table-hover border border-light" data-controller="dragparent">
   <tbody >
     <%= render 'services_list', services: @services %>
   </tbody>

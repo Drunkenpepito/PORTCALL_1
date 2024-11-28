@@ -3,7 +3,7 @@
 
       <li>
         <%= link_to_unless_current service.name, service_path(service),
-        class: "  #{ 'white' if service.ancestry != nil } " %>
+        class: "  #{ 'green' if service.ancestry != nil } " %>
         <%# <% if service.calculate%> 
           <span><%= service.calculate %></span>
                 <%# <% else 

@@ -1,20 +1,23 @@
+<style> body { background-color: #0d2850; } </style>
 
-<div class=" blue p-3 ">
-  <span class="p-auto fs-2  border-bottom border-4 border-primary ">CONTRACTS
-  <%= link_to "✚",new_contract_path,class: "btn1 " %> 
+<div class=" d-flex align-items-center blue p-3 ">
+  <span class="m-auto white fs-2 ">CONTRACTS
+  <%= link_to "✚", new_contract_path, class: "btn1 rounded-circle", style:"vertical-align: middle;" %> 
   </span>
 </div>
-<table class="table table-primary table-striped table-bordered table-hover border border-light">
 
-  <tbody>
-    <% if @contracts != nil %>
-      <%= render @contracts %>
-    <% else %>
-      NO CONTRACT HAS BEEN CREATED YET 
-    <% end %>
-  </tbody>
-</table>
+<div class ="d-flex justify-content-center">
+  <table class="table  table table-bordered table-hover border border-light">
 
+    <tbody>
+      <% if @contracts != nil %>
+        <%= render @contracts %>
+      <% else %>
+        NO CONTRACT HAS BEEN CREATED YET 
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 
 

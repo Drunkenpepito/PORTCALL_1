@@ -1,9 +1,7 @@
-  <% services.each do |service| %>
-    <tr>
-      <th scope="row">
-          <%= turbo_frame_tag "service_list#{service.id}" do %>
-              <%= render 'root_service', service: service %>
-          <% end %>
-      </th>
-    </tr>
-  <% end %>
+<% services.each do |service| %>
+  <tr >
+    <th style="background-color:#0d2850; !important"scope="row" >
+        <%= render 'root_service', service: service  %>
+    </th>
+  </tr>
+<% end %>

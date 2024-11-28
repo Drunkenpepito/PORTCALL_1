@@ -1,22 +1,16 @@
-
-<ul>
-   <% services.each do |service, children| %>
-
-      <%= turbo_frame_tag "service_#{service.id}" do %>
-        <li draggable="true" id=<%=service.id %> data: {turbo_stream: true}>
-
-          <%= link_to_unless_current service.name, service_path(service),
-          class: "  #{ 'blue fw-light' if service.ancestry != nil }", id:service.id %>
-          <% if service.calculate.is_a? Numeric %> 
-            <span class="green " > ✔︎  </span>
-          <% else %>
-            <span class="text-danger  " > 𝘅  </span>
-          <% end %>
-  
-        </li>
-        <%= render 'sub_menu_services', services: children if children.present? %>
-      <% end %>
-
+<ul class="custom-font">
+  <% services.each do |service, children| %>
+    <%= turbo_frame_tag "service_#{service.id}", target: "_top" do %>
+      <li draggable="true" id=<%= service.id %>>
+        <%= link_to_unless_current service.name, service_path(service), class: "#{ 'grey' if service.ancestry != nil }", id: service.id %>
+        <% if service.calculate.is_a? Numeric %>
+          <span class="green">✔︎</span>
+        <% else %>
+          <span class="text-danger">𝘅</span>
+        <% end %>
+      </li>
+      <%= render 'contracts/sub_menu_services', services: children if children.present? %>
+    <% end %>
   <% end %>
 </ul>
 

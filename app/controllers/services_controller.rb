@@ -64,7 +64,7 @@ class ServicesController < ApplicationController
     end
     
     def update
-        @service.parent= Service.find(params[:service][:parent]) if params[:service][:parent]
+        # @service.parent= Service.find(params[:service][:parent]) if params[:service][:parent]
         
         if @service.update!(service_params)
             redirect_to service_path(@service), notice: "Service was successfully updated."
@@ -135,6 +135,8 @@ class ServicesController < ApplicationController
           format.turbo_stream
         end
     end
+
+    
 
     def unlink_tax_service
         @tax = TaxRegime.find(params[:id])
@@ -212,6 +214,6 @@ class ServicesController < ApplicationController
     end
     
     def service_params
-        params.require(:service).permit(:name, :ancestry, :description, :value, :parent, :agency_fee)
+        params.require(:service).permit(:name, :ancestry, :description, :value, :agency_fee)
     end
 end

@@ -1,0 +1,8 @@
+<%= turbo_frame_tag "invoice_prices_service#{service.id}" do %>
+    <% if service.has_children? %>
+        <%= service.children.sum(&:invoice_price) %>
+    <% else %>
+        <%= render "services/invoice_price", service:@service %>
+    <% end %>
+    €
+<% end %>

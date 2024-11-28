@@ -1,17 +1,18 @@
-<li class= 'h6' data-controller="toggle-family"  ><%= link_to service.name, service_path(service), class:"blue", draggable:true ,id:service.id%>   
-    <span class=" " >
-    <% if  service.calculate.is_a? Numeric %>
-        <%= link_to "✔️", service_path(service), class:"green" %> 
-    <% else %>
-        ❌
-    <% end %>
-    </span> 
-
-    <button class="btn" data-action="click->toggle-family#toggle">▽</button>
-
-    <span data-toggle-family-target="family" class="">
+<%= turbo_frame_tag "service_#{service.id}" , target: "_top" do %>
+    <li data-controller="toggle-family"  ><%= link_to service.name, service_path(service), class:" fw-light white", draggable:true , id:service.id%>   
         
-        <%= render 'sub_menu_services', services: service.descendants.arrange %>
-           
-    </span>
-</li>
+        <% if  service.calculate.is_a? Numeric %>
+            <%= link_to "✔", service_path(service), class:"green" %>
+        <% else %>
+            ❌
+        <% end %>
+
+       <span class= "red"> <button class="btn text-secondary red" data-action="click->toggle-family#toggle">▽</button></span>
+
+        <span data-toggle-family-target="family" class="">
+            
+            <%= render 'contracts/sub_menu_services', services: service.descendants.arrange %>
+            
+        </span>
+    </li>
+<% end %>

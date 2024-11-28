@@ -1,3 +1,34 @@
-<%= turbo_stream.update "service_#{@service.id}_tax#{@tax.id}" do %>
+<%# <%= turbo_stream.update "service_#{@service.id}_tax#{@tax.id}" do 
+    "services/tax_service" , tax:@tax, service: @service 
+<%end%> 
+
+
+<%# UPDATE TAX or FEE %>
+<%= turbo_stream.update "service_#{@service.id}_tax_#{@tax.id}" do %>
   <%= render "services/tax_service" , tax:@tax, service: @service %>
 <%end%>
+
+<%# UPDATE TAX IN INVOICE PRICE%>
+<%= turbo_stream.update "invoice_price_service#{@service.id}" do %>
+  <%= render "services/invoice_price" ,  service: @service %>
+<% end %>
+
+<%# UPDATE FEE IN BUDGET PRICE%>
+<%= turbo_stream.update "budget_price_service_#{@service.id}" do %>
+  <%= render "services/budget_price" ,  service: @service %>
+<% end %>
+
+<%# UPDATE TOTAL BUDGET PRICE%>
+<% if @service.parent %>
+  <%= turbo_stream.update "budget_prices_service#{@service.parent.id}" do %>
+    <%= render "services/budget_prices" ,  service: @service.parent %>
+  <% end %>
+<% end %>
+
+<%# UPDATE TOTAL INVOICE PRICE%>
+<% if @service.parent %>
+  <%= turbo_stream.update "invoice_prices_service#{@service.parent.id}" do %>
+    <%= render "services/invoice_prices" ,  service: @service.parent %>
+  <% end %>
+<% end %>
+
