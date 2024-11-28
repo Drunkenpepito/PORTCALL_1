@@ -1,6 +1,6 @@
 
-    <tr>
-      <th scope="row"><%= link_to contract.name.upcase, contract_path(contract), class:"btn1 m-auto " %></th>
-      <td class="text-center"><%= link_to "✏️ Edit",edit_contract_path(contract),class: "btn1 m-auto " %></td>
-      <td><%= button_to "❌ Delete",contract_path(contract),method: :delete,class: "btn1 m-auto " %></td>
+    <tr class ="p-auto">
+      <th style="vertical-align: middle; !important"> <%= link_to contract.name.upcase, contract_path(contract), class:" blue " %></th>
+      <td style="background-color:#0d2850;",class="text-center"><%= link_to "✏️",edit_contract_path(contract),class: " btn white m-auto " %></td>
+      <td style="background-color:#0d2850;"><%= button_to "❌",contract_path(contract),method: :delete,class: "btn white m-auto " %></td>
     </tr>

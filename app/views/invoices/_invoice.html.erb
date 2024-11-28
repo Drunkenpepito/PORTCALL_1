@@ -1,24 +1,24 @@
 
 
-    <tr>
-      <th scope="row ">
-        <%= link_to invoice.name.upcase, invoice_path(invoice), class:" m-auto btn1 " %>
+    <tr class="p-auto">
+      <th scope="row " style="background-color: #124020;vertical-align: middle;">
+        <%= link_to invoice.name.upcase, invoice_path(invoice), class:" m-auto white p-auto " %>
       </th>
 
-      <td class="text-center "><%= render "invoice_price", invoice:invoice %></td>
-      <td><%= link_to invoice.description, invoice_path(invoice), class:" blue m-auto" %></td>
-      <td class=" text-center">
-        <div class="btn3"><%= invoice.purchase_order.description if invoice.purchase_order %></div>
+      <td style="background-color: #124020;vertical-align: middle;" class="text-center p-auto"><%= render "invoice_price", invoice:invoice %></td>
+      <td style="background-color: #124020;vertical-align: middle;"><%= link_to invoice.description, invoice_path(invoice), class:" text-secondary p-auto" %></td>
+      <td class=" text-center " style="background-color: #124020;vertical-align: middle;">
+        <div class="white"><%= invoice.purchase_order.description if invoice.purchase_order %></div>
       </td>
-      <td class="col-m-auto">
-        <% if invoice.taxes != []  %> 
+      <td style="background-color: #124020;" class="col-m-auto ">
+        <%# <% if invoice.taxes != []  
           <span class = " ">
-            <% invoice.taxes .each do |tax| %>
-            <%= link_to tax.name.upcase ,edit_tax_path(tax), class: "btn2" %>
-            <% end %>
+            <% invoice.taxes .each do |tax| 
+            <%= link_to tax.name.upcase ,edit_tax_path(tax), class: "btn2" 
+            <% end 
           </span>
-        <% end %>
+        <% end %> 
       </td>
-      <td class="text-center"><%= link_to "✏️ Edit ",edit_invoice_path(invoice),class: "btn1 m-auto " %></td>
-      <td><%= button_to "❌ Delete",invoice_path(invoice),method: :delete,class: "btn1 m-auto" %></td>
+      <td style="background-color: #124020;" class="text-center "><%= link_to "✏️",edit_invoice_path(invoice),class: "btn white m-auto " %></td>
+      <td style="background-color: #124020;"><%= button_to "❌",invoice_path(invoice),method: :delete,class: "btn white m-auto" %></td>
     </tr>

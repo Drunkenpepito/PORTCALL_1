@@ -44,6 +44,21 @@ class Service < ApplicationRecord
     end
   end
 
+  def budget_price
+    if !self.has_children? && self.calculate != nil
+      (self.calculate * ( 1 + self.tax_regimes.where(isfee:true).sum(&:percentage)*0.01)).round(4)
+    else
+      self.children.sum(&:budget_price)
+    end
+  end
+
+  def invoice_price
+    if !self.has_children?  && self.calculate != nil
+    ((self.calculate * ( 1 + self.tax_regimes.where(isfee:true).sum(&:percentage)*0.01)).round(4)* ( 1 + self.tax_regimes.where(isfee:false).sum(&:percentage)*0.01)).round(4) 
+    else
+      self.children.sum(&:invoice_price)
+    end
+  end
 
   # def total_if_no_fomula
   #   self.descendants.reverse.each { |s| s.has_children? && s.formula == "" && s.children.map(&:calculate).all?{ |c| c != nil}? s.value = s.children.sum(&:calculate) && s.save : s.value = 0  }
