@@ -8,7 +8,7 @@
     <% end %>
 
     <%= f.input :name, placeholder: "Name",input_html: { autofocus: true ,class:"form1"} %>
-    <%= f.input :supplier_id, collection: Supplier.all ,input_html: { autofocus: true ,class:"form1"} %>
+    <%# <%= f.input :supplier_id, collection: Supplier.all ,input_html: { autofocus: true ,class:"form1"} %> 
     <%= f.submit class: "btn1" %>
   <% end %>
 </div>
