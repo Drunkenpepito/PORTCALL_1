@@ -2,6 +2,8 @@
     <% if order.children != [] %>
         <%= order.children.sum(&:invoice_price) %>
     <% else %>
-        <%= render "orders/invoice_price", order:@order %>
+        <% if order.calculate.is_a? Numeric  %>
+            <%= render "orders/invoice_price", order:@order %>
+        <% end %>
     <% end %>
 <% end %>
