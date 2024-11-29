@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "service_#{service.id}" , target: "_top" do %>
-    <li data-controller="toggle-family"  ><%= link_to service.name, service_path(service), class:" fw-light white", draggable:true , id:service.id%>   
+    <li data-controller="toggle-family"  ><%= link_to service.name, service_path(service) , class:" fw-light white", draggable:true , id:service.id%>   
         
         <% if  service.calculate.is_a? Numeric %>
             <%= link_to "✔", service_path(service), class:"green" %>
