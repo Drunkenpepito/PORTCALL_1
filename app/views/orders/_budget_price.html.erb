@@ -1,4 +1,4 @@
 
 <%= turbo_frame_tag "budget_price_#{order.id}" do %>
-    <%= order.budget_price %>
+    <%= order.budget_price if order.calculate.is_a? Numeric %>
 <% end %>
