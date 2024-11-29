@@ -75,8 +75,9 @@ class ServicesController < ApplicationController
     
     def destroy
         @service = Service.find(params[:id])
+        @contract = @service.contract
         @service.destroy
-        redirect_to services_path, notice: "Service was successfully destroyed."
+        redirect_to contract_path(@contract),  notice: "Service was successfully destroyed."
     end
 
     def new_child # NOT USED
@@ -103,6 +104,7 @@ class ServicesController < ApplicationController
         @parent = Service.find(params[:parent])
         @service = @service_ref.dup
         @service.parent = @parent
+        @service.contract = @parent.contract
         
         if @service.save!
             if @service_ref.has_children?
@@ -188,7 +190,6 @@ class ServicesController < ApplicationController
                 get_variables(m,s) 
             end
             if m.has_children?
-                binding.pry
                 create_children(m,s) # m.children.map(&:id).reject{ |id| id == s.id }
             end
         end

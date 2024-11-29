@@ -1,15 +1,13 @@
 
 <%# FORM FOR NEW MASTERSERVICE %>
-
-<%= simple_form_for service, html: { class: "service form " } do |f| %>
-  <% if service.errors.any? %>
-    <div class="error-message">
-      <%= service.errors.full_messages.to_sentence.capitalize %>
-    </div>
+  <%= simple_form_for service, html: { class: " " } do |f| %>
+    <% if service.errors.any? %>
+      <div class="error-message">
+        <%= service.errors.full_messages.to_sentence.capitalize %>
+      </div>
+    <% end %>
+    <%= f.input :name,label:false,  placeholder: "Service Name", input_html: { autofocus: true ,class:"form1"} %>
+    <%= f.hidden_field :contract_id %>
+    <%= f.submit class: "btn1" %>
   <% end %>
-  <%= f.input :name, placeholder: "Service Name", input_html: { autofocus: true ,class:"form1"} %>
-  <%= f.hidden_field :contract_id %>
-  <%= f.submit class: "btn1" %>
-<% end %>
-
 <%# <%= f.input :ancestry, input_html: { autofocus: true ,class:"form1"} %> 

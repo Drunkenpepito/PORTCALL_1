@@ -1,5 +1,6 @@
-<%# <%= turbo_frame_tag @variable do %> 
-  <%= render 'tax_regimes/form', tax_regime: @tax_regime %>
-  <div> <%= button_to "Delete",tax_regime_path,method: :delete,class: "btn1" %></div>
 
-<%# <% end %> 
+<style> body { background-color: #0d2850; } </style>
+
+  <%= render 'tax_regimes/form', tax_regime: @tax_regime %>
+  <div class="d-flex justify-content-center m-3"> <%= button_to "Delete",tax_regime_path,method: :delete,class: "btn btn-outline-danger" %></div>
+

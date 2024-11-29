@@ -1,7 +1,8 @@
 <%# <%= turbo_frame_tag "#{@contract.id}_new_tax_regime" do%> 
+<style> body { background-color: #0d2850; } </style>
 
 
-<div class="container rounded-4 border border-5  bg-light">
+<div class="container rounded-4 border border-5  bg-blue">
   <%= simple_form_for [@contract, @tax_regime]  do |f|%>
     <h5 class="d-flex m-auto blue">
       <%= f.input :isfee, 
@@ -13,14 +14,14 @@
       %>
     </h5>
 
-    <div class="d-flex align-items-center container p-3  ">
+    <div class="d-flex align-items-center container m-2  ">
       <%= f.input :name , input_html: { autofocus: true ,class:"form1"} , label: false, placeholder: "Name"%>
       <%= f.input :percentage, input_html: { autofocus: true ,class:"form1"}, label: false, placeholder: "Description" %>
       <span class="btn1 p-0"><%= f.button :submit %></span>
     </div>
   <% end %>
 
-  <div class="container text-left">
+  <div class="container text-center p-2">
     <span class= "blue">FEE increases Budget price - </span>
     <span class= "blue">TAX only increases invoice price </span>
   </div>
