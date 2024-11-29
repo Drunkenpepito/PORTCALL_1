@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_28_212005) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_29_185019) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,8 +18,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_28_212005) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "supplier_id"
-    t.index ["supplier_id"], name: "index_contracts_on_supplier_id"
   end
 
   create_table "formulas", force: :cascade do |t|
@@ -173,7 +171,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_28_212005) do
     t.index ["service_id"], name: "index_variables_on_service_id"
   end
 
-  add_foreign_key "contracts", "suppliers"
   add_foreign_key "invoices", "contracts"
   add_foreign_key "invoices", "purchase_orders"
   add_foreign_key "order_variables", "orders"
