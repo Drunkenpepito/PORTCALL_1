@@ -53,7 +53,7 @@
       <tbody>
         <% @services.each do |service| %>
           <tr class="">
-                 <td class="text-start h5" ><%= link_to service.name, service_path(service), class:"blue" %> </td>
+              <td class="text-start h5" ><%= link_to service.name, service_path(service), class:"blue" %> </td>
             <%# FEES %>
                   <% service.contract.tax_regimes.where(isfee:true).each do |tax| %>
                     <% if service.calculate.is_a? Numeric %> 
@@ -84,8 +84,8 @@
                   <% end %>
           </tr>
         <% end %>
-            <%# SERVICE TOTAL lINE %>
-          
+
+      <%# SERVICE TOTAL lINE %>
         <tr class=" table-dark text-center  ">
           <td class="text-center blue fs-4"><%= @service.name.upcase %></td>
           <% @service.contract.tax_regimes.where(isfee:true).each do |fee| %>

@@ -10,9 +10,10 @@ class Invoice < ApplicationRecord
 
 
 def price
-  p =0
+  # ATTENTION DANGEREUX , IL VA AFFCHER UNE VALEUR DE PRICE MEME SI UN ORDER N'A PAS DE INVOICE PRICE 
+  p = 0
   self.orders.each do |o|
-    p += o.invoice_price if o.is_root?
+    p += o.invoice_price if o.is_root? && o.invoice_price != nil
   end
   p
 end
@@ -20,7 +21,7 @@ end
 def budget
   p =0
   self.orders.each do |o|
-    p += o.budget_price if o.is_root?
+    p += o.budget_price if o.is_root? && o.invoice_price != nil
   end
   p
 end

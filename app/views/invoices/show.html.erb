@@ -10,19 +10,18 @@
 
 <div class= "container d-flex m-auto justify-content-center m-3">
   <h2 class = "d-flex green me-3" >INVOICE <%= @invoice.name %> </h2>
-  <% if @invoice.taxes != []  %> 
-    <span class = " mh-3">
-    <% @taxes.each do |tax| %>
-      <%= link_to tax.name.upcase ,edit_tax_path(tax), class: "btn text-secondary" %>
-    <% end %>
-    </span>
-  <% end %>
+  <h2 style="background-color: #124020;" class="text-center "><%= link_to "✏️",edit_invoice_path(@invoice),class: "btn white m-auto " %></h2>
+
 </div>
 <h6 class = "d-flex justify-content-center white m-3" ><%= @invoice.description %> </h6>
-
+<% if @invoice.purchase_order %> 
+  <div class = "d-flex justify-content-center white m-3" >
+    <h6 class = " white btn btn-warning m-3 border " >PO <%= link_to @invoice.purchase_order.name, purchase_order_path(@invoice.purchase_order) %> </h6>
+  </div>
+<% end %>
 <!--   MENU 2   -->
 <div class=" d-flex align-items-center justify-content-center blue p-3 ">
-  <table class="table table-success table-striped  table-hover border border-primary border-5">
+  <table class="table table-success table-striped  table-hover border border-secondary border-5">
     <tbody>
       <% if @orders != nil %>
           <% @orders.each do |order| %>

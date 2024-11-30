@@ -3,4 +3,4 @@
          <%# <% invoice.orders.sort_by(&:ancestry).reverse!.each { |order| order.formula.save!} %>  
         <% @total += Order.where(service_id:service.id, invoice_id:invoice.id).sum(&:budget_price) %>
     <% end %>
-<%= @total %>
+<%= number_with_delimiter(@total.round(0), delimiter:' ') %>

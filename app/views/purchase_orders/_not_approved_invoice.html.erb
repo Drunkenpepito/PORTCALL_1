@@ -2,7 +2,7 @@
     <div class="m-2 btn " >
         <%= simple_form_for invoice, url: goodreceipt_invoice_path(invoice) , method: :patch do |f| %>
             <%= f.input :purchase_order_id, label: false, input_html: { class:"d-none", value: @purchase_order.id } %>
-                <%= button_tag :submit , class: "btn btn-outline-secondary align-items-center border-3 p-2"  do %>
+                <%= button_tag :submit , class: "btn btn-dark align-items-center border-light border-3 p-2"  do %>
                     <%= invoice.name %> 
                     <span class="text-success p-2 "> ✔︎</span>
                 <% end %>

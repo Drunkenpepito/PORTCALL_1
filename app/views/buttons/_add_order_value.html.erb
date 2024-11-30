@@ -5,7 +5,7 @@
 </div>
   <%= f.input :name, label: false, input_html: {placeholder: "Variable name" ,class:"m-2 text-success bg-dark border border-dark p-2 rounded "} %>
   <%= f.input :value, label: false, input_html: {placeholder: "default value",class:"m-2 text-success bg-dark border border-dark p-2 rounded"} %>
-  <%= f.input :fixed %>
+  <span class= "text-secondary bg-dark m-2 p-2"><%= f.input :fixed %></span>
   <%= button_tag :submit, class: "btn1 m-3" do  %>
       <div class="ingredient-card">
         <div class="">

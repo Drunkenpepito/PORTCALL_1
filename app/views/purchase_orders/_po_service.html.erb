@@ -1,7 +1,7 @@
 
         <%= turbo_frame_tag "po_service_#{service.id}" do %>
-            <div class=" m-2 d-flex justify-content-between blue border border-3 p-2" >
-                <span><%= service.name.upcase %></span>
-                <span><%= render "/purchase_orders/total_service", service: service %></span>
+            <div class="  d-flex justify-content-between text-secondary" >
+                <span class= "text-secondary p-1"><%= service.name.upcase %></span>
+                <span class="p-1"><%= render "/purchase_orders/total_service", service: service %></span>
             </div>
         <% end %>

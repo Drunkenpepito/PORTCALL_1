@@ -1,4 +1,8 @@
-<div class="container rounded-4 border border-5  bg-light">
+
+
+<style> body { background-color: #124020; } </style>
+
+<div class="container rounded-4  bg-green">
     <%= simple_form_for @order, method: :post, url: createchildorder_order_path(@order.parent), html: { class: "service form p-auto" } do |f| %>
         <% if @order.errors.any? %>
             <div class="error-message">

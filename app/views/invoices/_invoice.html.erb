@@ -11,13 +11,7 @@
         <div class="white"><%= invoice.purchase_order.description if invoice.purchase_order %></div>
       </td>
       <td style="background-color: #124020;" class="col-m-auto ">
-        <%# <% if invoice.taxes != []  
-          <span class = " ">
-            <% invoice.taxes .each do |tax| 
-            <%= link_to tax.name.upcase ,edit_tax_path(tax), class: "btn2" 
-            <% end 
-          </span>
-        <% end %> 
+    
       </td>
       <td style="background-color: #124020;" class="text-center "><%= link_to "✏️",edit_invoice_path(invoice),class: "btn white m-auto " %></td>
       <td style="background-color: #124020;"><%= button_to "❌",invoice_path(invoice),method: :delete,class: "btn white m-auto" %></td>
