@@ -1,7 +1,7 @@
 <% services.each do |service| %>
   <% if service.name != "Service not in Contract" %> 
     <tr >
-      <th style="background-color:#0d2850; !important"scope="row" >
+      <th style="background-color:#0d2850;" class= "text-secondary" scope="row" >
           <%= render 'root_service', service: service %>
       </th>
     </tr>
