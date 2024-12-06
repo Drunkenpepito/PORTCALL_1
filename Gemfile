@@ -17,7 +17,7 @@ gem "nokogiri", "1.16.7"
 # gem "bcrypt", "~> 3.1.7"
 gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
 gem "bootsnap", require: false
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 gem 'simple_form'
 gem "bootstrap", "~> 5.2"
 gem "devise"
@@ -29,10 +29,11 @@ gem "pry-byebug"
 gem 'caxlsx'
 gem 'caxlsx_rails'
 gem 'ransack'
-
+gem 'httparty' # helps to make http requests
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
+  gem 'dotenv'
 end
 
 group :development do
