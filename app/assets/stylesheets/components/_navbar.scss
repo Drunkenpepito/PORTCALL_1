@@ -1,0 +1,14 @@
+.navbar {
+  color: white;
+}
+.indexes-link {
+  color: white;
+  // border: thin solid white;
+  text-decoration: underline;
+  font-size: 1rem;
+  &:hover {
+    // transform: scale(1.1);
+    color: darkgrey;
+    // border: thin solid darkgrey;
+  }
+}

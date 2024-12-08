@@ -2,34 +2,35 @@
 <nav class="navbar  navbar-expand-lg  ">
   <div class="container-fluid">
     <a class="navbar-brand" href="logo_flat.jpeg"></a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+
     <div class="collapse navbar-collapse " id="navbarSupportedContent" >
       <ul class="navbar-nav me-auto mb-2 mb-lg-0  ">
-        
 
-        <li class="nav-item  grey  m-2">
-          <%= link_to 'SUPPLIERS', '#', class:"grey " %>
+
+        <li class="nav-item    m-2">
+          <%= link_to 'SUPPLIERS', suppliers_path, class:" " %>
         </li>
 
         <li class="nav-item   m-2 ">
-          <%= link_to 'CONTRACTS', contracts_path, class:" grey" %>
-        </li>
-        
-        <li class="nav-item   m-2">
-          <%= link_to 'INVOICES', invoices_path , class:"grey" %>
+          <%= link_to 'CONTRACTS', contracts_path, class:" " %>
         </li>
 
         <li class="nav-item   m-2">
-          <%= link_to 'PO', purchase_orders_path, class:"grey " %>
+          <%= link_to 'INVOICES', invoices_path , class:"" %>
         </li>
 
         <li class="nav-item   m-2">
-          <%= link_to 'PROJECTS', projects_path, class:"grey" %>
+          <%= link_to 'PO', purchase_orders_path, class:" " %>
         </li>
-      
+
+        <li class="nav-item   m-2">
+          <%= link_to 'PROJECTS', projects_path, class:"" %>
+        </li>
+
       </ul>
     <span class= " m-0 text-sm" id= "banner-typed-text" style=" width:350px;"> </span>
     </div>

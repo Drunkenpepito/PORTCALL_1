@@ -4,9 +4,9 @@ Rails.application.routes.draw do
   root to:"contracts#index"
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :suppliers, only: [] do
-    member do
-      patch :update_suppliers_list
+  resources :suppliers, only: [:index] do
+    collection do
+      patch :update_list
     end
   end
 
