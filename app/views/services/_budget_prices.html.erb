@@ -3,7 +3,9 @@
     <% if service.has_children? %>
         <%= service.children.sum(&:budget_price) %>
     <% else %>
-        <%= render "services/budget_price", service:service %>
+        <% if service.calculate.is_a? Numeric  %>
+            <%= render "services/budget_price", service:service %>
+        <% end %>
     <% end %>
     €
 <% end %>

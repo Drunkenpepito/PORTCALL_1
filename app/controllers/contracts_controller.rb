@@ -43,7 +43,11 @@ class ContractsController < ApplicationController
     end
     
     def destroy
-        @contract.destroy
+        if @contract.services.each {|s| s.orders.any? }
+            alert = "Contract has services with orders, cannot be deleted"
+        else
+            @contract.destroy
+        end
         redirect_to contracts_path, notice: "Contract was successfully destroyed."
     end
 

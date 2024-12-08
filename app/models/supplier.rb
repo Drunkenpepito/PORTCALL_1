@@ -1,4 +1,5 @@
 class Supplier < ApplicationRecord
+
   before_validation :set_cw
   has_many :contracts
   has_rich_text :description

@@ -75,8 +75,9 @@ class ServicesController < ApplicationController
     
     def destroy
         @service = Service.find(params[:id])
+        @contract = @service.contract
         @service.destroy
-        redirect_to services_path, notice: "Service was successfully destroyed."
+        redirect_to contract_path(@contract),  notice: "Service was successfully destroyed."
     end
 
     def new_child # NOT USED
@@ -103,6 +104,7 @@ class ServicesController < ApplicationController
         @parent = Service.find(params[:parent])
         @service = @service_ref.dup
         @service.parent = @parent
+        @service.contract = @parent.contract
         
         if @service.save!
             if @service_ref.has_children?
@@ -156,10 +158,14 @@ class ServicesController < ApplicationController
     end
 
     def change_ancestry
-        # ne marche si le service est un enfant de lui meme => si ses futures parents sont déjà ses enfants
-        @og_service = Service.find(params[:id])
+        
+        @og_service = Service.find(params[:id])        
         @new_parent_service = Service.find(params[:parent_id])
-        @og_service.parent = @new_parent_service
+        if params[:parent_id] == "123"
+            @og_service.ancestry = @og_service.root.ancestry
+        else
+            @og_service.parent = @new_parent_service
+        end
         if @og_service.save!
             request.format = :turbo_stream
              respond_to do |format|
@@ -188,7 +194,6 @@ class ServicesController < ApplicationController
                 get_variables(m,s) 
             end
             if m.has_children?
-                binding.pry
                 create_children(m,s) # m.children.map(&:id).reject{ |id| id == s.id }
             end
         end

@@ -1,4 +1,4 @@
-  <div class="d-flex justify-content-center  flex-row ">
+  <div class="d-flex justify-content-center border border-3 bg-secondary flex-row ">
     <% if  @nopo_invoices != [] && @nopo_invoices != nil%>
       <%= turbo_frame_tag "not_approved_invoices_list" do %>
         <% @nopo_invoices.each do |invoice| %>

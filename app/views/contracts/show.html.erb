@@ -6,8 +6,8 @@
 <%= link_to sanitize("✚ Tax"), new_contract_tax_regime_path(@contract), class:"btn1" %>
 
 
-<div class= "container row text-center m-3">
-  <h2 class = " blue m-auto border-bottom " >CONTRACT <%= @contract.name %> </h2>
+<div class= "d-flex text-center m-3">
+  <h2 class = " text-secondary m-auto  " >CONTRACT <%= @contract.name %> </h2>
   <% if @tax_regimes != nil  %> 
     <span class = " mh-3">
     <% @tax_regimes.each do |tax| %>
@@ -18,11 +18,16 @@
 </div>
 
 <!--   MENU   -->
-
-<table class="table table-striped table-bordered table-hover border border-light" data-controller="dragparent">
-  <tbody >
-    <%= render 'services_list', services: @services %>
-  </tbody>
-</table>
-
+<div class= "d-flex justify-content-center m-3">
+  <table class="table table-bordered table-hover border border-light" data-controller="dragparent">
+      <thead  >
+      <tr class="text-center "  >
+        <th  id="123" class="text-center fs-6 text-secondary " scope="col" draggable = "true" >SERVICES</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render 'services_list', services: @services %>
+    </tbody>
+  </table>
+</div>
 

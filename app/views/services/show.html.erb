@@ -12,7 +12,7 @@
 
 <div class= "container row m-auto">
 
-    <!--   PATH    -->
+<!--   PATH    -->
 
                               <span class="d-flex justify-content-start align-items-center m-3 text-light p-2 rounded-pill" style="background-color:#0d2850">
                                 <%= link_to @service.contract.name.upcase , contract_path(@service.contract), class:"grey" %>
@@ -53,7 +53,7 @@
       <tbody>
         <% @services.each do |service| %>
           <tr class="">
-                 <td class="text-start h5" ><%= link_to service.name, service_path(service), class:"blue" %> </td>
+              <td class="text-start h5" ><%= link_to service.name, service_path(service), class:"blue" %> </td>
             <%# FEES %>
                   <% service.contract.tax_regimes.where(isfee:true).each do |tax| %>
                     <% if service.calculate.is_a? Numeric %> 
@@ -84,13 +84,17 @@
                   <% end %>
           </tr>
         <% end %>
-            <%# SERVICE TOTAL lINE %>
-          
+
+      <%# SERVICE TOTAL lINE %>
         <tr class=" table-dark text-center  ">
           <td class="text-center blue fs-4"><%= @service.name.upcase %></td>
-          <td></td>
+          <% @service.contract.tax_regimes.where(isfee:true).each do |fee| %>
+            <td></td>
+          <% end %>
           <td class="text-center blue fs-4"> <%= render "budget_prices", service:@service %> </td>
-          <td></td>
+          <% @service.contract.tax_regimes.where(isfee:false).each do |tax| %>
+            <td></td>
+          <% end %>
           <td class="text-center text-success fs-4"><%= render "invoice_prices", service:@service %></td>
         </tr>
 
@@ -101,7 +105,7 @@
 
 
 
-<%# CALCULATOR IS DISPLAYED ONLY IF CHILDREN %>
+<!--   CALCULATOR IS DISPLAYED ONLY IF CHILDREN -->
   <% if !@service.has_children?  %>
     <div class="container rounded-4 border border-5 bg-dark <%='d-none' if @service.has_children?%>">
 

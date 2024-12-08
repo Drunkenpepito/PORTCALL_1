@@ -7,7 +7,6 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-#
 
 puts "Destroying all records"
 
@@ -99,4 +98,4 @@ puts "#{root.name}"
 
   child5 = Service.create(contract: contract1, name: "Agency Fee Port Call SOV", description: "", parent:root )
     var51 = Variable.create(service: child5, name: "Negotiated Lumpsum (€) ", value: "800", position:1, operator: false, fixed: false )
-  puts "  #{child5.name}  : #{var51.name} "
+  puts "  #{child5.name}  : #{var51.name} "=======

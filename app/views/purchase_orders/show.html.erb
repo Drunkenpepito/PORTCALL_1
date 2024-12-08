@@ -1,58 +1,63 @@
- 
+ <style> body { background-color: #5c0707; } </style>
 
+<%# PO DETAILS %>
 
-<div class=" blue p-3 ">
-  <%= link_to sanitize("&larr; Back to POs"), purchase_orders_path, class:"btn1" %>
-</div>
+  <div class=" blue p-3 ">
+    <%= link_to sanitize("&larr; Back to POs"), purchase_orders_path, class:"btn1" %>
+  </div>
 
-<div class ="container border border-3 p-3 m-auto ">
+  <div class ="container p-3 m-auto ">
 
-  <h2 class = "d-flex justify-content-center blue " >PO <%= @purchase_order.name %> </h2>
-  <h6 class = "d-flex justify-content-center blue " ><%= @purchase_order.description %> </h6>
-  <h4 class = "d-flex justify-content-center " >
-      <span class="p-2 blue"> BUDGET </span> 
-      <% if @purchase_order.budget != nil %>
-        <span class="p-2 blue"> <%= number_with_delimiter(@purchase_order.budget, delimiter:' ') %> </span> 
-        <span class="p-2 blue"> - </span> 
-        <span class="p-2 blue "><%= render 'po_budgeted', purchase_order: @purchase_order %></span>
-        <span class="p-2 blue"> = </span> 
-        <span class="p-2 blue "><%= render 'budget', purchase_order: @purchase_order %></span>
-
-      <% end %>
-  </h4>
-
-
-</div>
-
-
-
-<div class =  " container col-10 p-2 border-bottom">
-  <%# INVOICES NOT APPROVED %>
-  <h6 class= "text-secondary m-3 text-center "> INVOICES TO BE APPROVED  </h6>
-  <span class="test-end"><%= render 'not_approved_invoices_list'%></div></span>
-</div>
-  <div class="d-flex justify-content-around">
-    <%# PO SERVICES LIST %>
-    <div class =  " col-6  border border-3 m-3 p-3 "> 
-      <div class="m-2">   
+    <h3 class = "d-flex justify-content-center white " >PO <%= @purchase_order.name %> </h3>
+    <h6 class = "d-flex justify-content-center white " ><%= @purchase_order.description %> </h6>
+    <h4 class = "d-flex justify-content-center " >
+        <span class="p-2 text-secondary">  </span> 
+        <% if @purchase_order.budget != nil %>
+          <span class="p-2 text-secondary"> <%= number_with_delimiter(@purchase_order.budget, delimiter:' ') %> </span> 
+          <span class="p-2 text-secondary"> - </span> 
+          <span class="p-2 text-warning "><%= render 'po_budgeted', purchase_order: @purchase_order %></span>
+          <span class="p-2 text-secondary"> = </span> 
+          <span class="p-2 text-secondary "><%= render 'budget', purchase_order: @purchase_order %></span>
+        <% end %>
+    </h4>
+    <h6 class = "d-flex justify-content-center blue " >
+      <div class="m-2 p-2 border bg-dark">   
         <%  if @services!= [] %>
-          <h6 class= "blue  text-center m-3">
-             SERVICES 
-            <span class="p-2 blue"><%= render 'po_budgeted_twin', purchase_order: @purchase_order %></span>
+          <h6 class= "white text-center m-3">
+            SPEND
+            <span class="p-2 text-warning"><%= render 'po_budgeted_twin', purchase_order: @purchase_order %></span>
           </h6>
         <% end %>
           <%= render 'po_services_list', services: @services %>
       </div>
-      <%# PO INVOICE LIST %>
-      <div class="m-2">
-        <%  if @po_invoiced != 0 %> 
-          <h6 class= " green text-center">
-            INVOICES
-            <span class="p-2 green"><%= render 'po_invoiced', purchase_order: @purchase_order %></span>
-          </h6>
-        <% end %>
-        <%= render 'po_invoices_list', invoices: @invoices %>
-      </div>
-    </div>
+    </h6>
   </div>
 
+
+<div class ="row  p-3 m-auto ">
+  <%# INVOICES NOT APPROVED %>
+    <div class= "col-3 ">
+      <div class =  " container  p-2">
+        <h4 class= "text-light m-3 text-center "> INVOICES NOT APPROVED  </h4>
+        <span class="test-end"><%= render 'not_approved_invoices_list'%></span></span>
+      </div>
+    </div>
+  <%# PO SERVICES LIST %>
+    <div class= "col-9">
+      <div class="d-flex justify-content-around">
+        <div class =  " col-6  bg-dark border border-3 m-3 p-3 "> 
+          <%# PO INVOICE LIST %>
+          <div class="m-2">
+            <%  if @po_invoiced != 0 %> 
+              <h4 class= " h3 m-2 green text-center">
+                <span class= "text-center white ">INVOICES</span>
+                <span class="p-2 green"><%= render 'po_invoiced', purchase_order: @purchase_order %></span>
+              </h4>
+            <% end %>
+            <%= render 'po_invoices_list', invoices: @invoices %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>

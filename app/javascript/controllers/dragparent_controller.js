@@ -1,4 +1,3 @@
-
 import { Controller } from "@hotwired/stimulus"
 import { patch } from "@rails/request.js"; // to help the http request
 
@@ -15,7 +14,8 @@ export default class extends Controller {
   dragstartHandler(ev) {
     // triggered when the user starts dragging an element
     // Add the target element's id to the data transfer object
-    console.log(ev.target.id)
+    // console.log(ev.target)
+
     ev.dataTransfer.setData("og_service_id", ev.target.id)
   }
 
@@ -33,15 +33,16 @@ export default class extends Controller {
     const og_service_id = ev.dataTransfer.getData("og_service_id")
     const draggedElement = document.getElementById(og_service_id)
     const targetElement = ev.target
-    // console.log(data)
-     console.log(draggedElement)
-    console.log(targetElement)
+    const targetType = targetElement.tagName.toLowerCase();
+    console.log(og_service_id)
+    console.log(draggedElement.id)
+    console.log(targetElement.id)
+    console.log(targetType)
 
     // Check if the drop target is a valid drop zone
     if (targetElement && targetElement.id && targetElement !== draggedElement) {
-      // Update the ancestry of the dragged element
-      console.log(`Dragged element ID: ${draggedElement.id}`)
-      console.log(`Dropped on element ID: ${targetElement.id}`)
+    
+
       const url = "/services/change_ancestry"
       patch(url,{
         headers: {
@@ -50,14 +51,14 @@ export default class extends Controller {
         },
         body: JSON.stringify({
           id: draggedElement.id,
-          parent_id: targetElement.id
+          parent_id: targetElement.id,
+          target_type: targetType // Add the target type to the request body
         })
       })
 
     }
   }
 }
-
 
 
 

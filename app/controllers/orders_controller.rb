@@ -74,7 +74,6 @@ class OrdersController < ApplicationController
       @order.name = @service.name
       @order.service = @service
       @order.invoice = @invoice
-   
       if @order.save!
         orderize(@service, @order)
         redirect_to invoice_path(@invoice) 
@@ -139,13 +138,21 @@ class OrdersController < ApplicationController
     private
     
     def order_params
-      params.require(:order).permit(:name, :description, :ancestry)
+      params.require(:order).permit(:name, :description, :ancestry, :service_id)
     end
 
     def set_order
       @order = Order.find(params[:id])
     end
 
+    # def copytax(contract, invoice)
+    #   @tab = []
+    #   contract.tax_regimes.each do |t|
+    #     t2 = Tax.create!(name: t.name, percentage: t.percentage, isfee: t.isfee, invoice_id:invoice.id )
+    #     @tab << [t,t2]
+    #   end
+    # end
+    
     def orderize(service,order)
       service.children.each do |s|
         o = Order.new
@@ -153,6 +160,9 @@ class OrdersController < ApplicationController
         o.service_id = s.id
         o.parent = order
         o.invoice = order.invoice
+        # @tab.each do |t|
+        #   t[1].orders << o if t[0].services << s
+        # end
         o.save!
         # get_variables(s,o) if s.variables != [] --> done with after_create Order
         orderize(s,o)
@@ -177,7 +187,6 @@ class OrdersController < ApplicationController
         # binding.pry
       end
     end
-
 
 
   

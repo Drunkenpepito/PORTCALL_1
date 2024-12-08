@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "service_#{service.id}" , target: "_top" do %>
-    <li data-controller="toggle-family"  ><%= link_to service.name, service_path(service), class:" fw-light white", draggable:true , id:service.id%>   
+    <li data-controller="toggle-family"  ><%= link_to service.name, service_path(service) , class:" fw-light grey", draggable:true , id:service.id%>   
         
         <% if  service.calculate.is_a? Numeric %>
             <%= link_to "✔", service_path(service), class:"green" %>
@@ -7,7 +7,7 @@
             ❌
         <% end %>
 
-       <span class= "red"> <button class="btn text-secondary red" data-action="click->toggle-family#toggle">▽</button></span>
+       <span class= "red"> <button class="text-danger btn" data-action="click->toggle-family#toggle">▽</button></span>
 
         <span data-toggle-family-target="family" class="">
             

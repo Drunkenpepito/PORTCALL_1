@@ -1,10 +1,23 @@
-<%= simple_form_for @invoice, html: { class: "contract form white" } do |f| %>
-  <% if @invoice.errors.any? %>
-    <div class="error-message">
-      <%= @invoice.errors.full_messages.to_sentence.capitalize %>
-    </div>
+<style> body { background-color: #124020; } </style>
+<div class ="row bg-dark text-center align-items-center  border rounded-5 m-auto p-5 ">
+<div class= "d-flex justify-content-center align-items-center">
+  <%= simple_form_for @invoice, html: { class: "contract form white" } do |f| %>
+    <% if @invoice.errors.any? %>
+      <div class="error-message">
+        <%= @invoice.errors.full_messages.to_sentence.capitalize %>
+      </div>
+    <% end %>
+    <%= f.input :name, label: false, input_html: { autofocus: true, class:"form1" } %>
+      <%= f.input :description, input_html: { autofocus: true, class:"form1" } %>
+    <%= f.submit class: "btn btn-success rounded-3 border p-2 m-2" %>
   <% end %>
 
-  <%= f.input :name, input_html: { autofocus: true, class:"form1" } %>
-  <%= f.submit class: "btn1" %>
-<% end %>
+  <% if @invoice.taxes != []  %> 
+    <span class = " m-3 border border-3  p-4">
+    <% @invoice.taxes.each do |tax| %>
+      <%= link_to tax.name.upcase ,edit_tax_path(tax), class: "btn btn-sm border border-2 btn-secondary white " %>
+    <% end %>
+    </span>
+  <% end %>
+</div>
+</div>

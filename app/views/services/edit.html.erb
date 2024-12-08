@@ -1,21 +1,25 @@
-<%= simple_form_for @service, html: { class: "card" } do |f| %>
-  <% if @service.errors.any? %>
-    <div class="error-message">
-      <%= @service.errors.full_messages.to_sentence.capitalize %>
+
+<style> body { background-color: #0d2850; } </style>
+
+<div class="container text-center rounded-4 border-secondary  border border-5 m-auto bg-blue">
+  <%= simple_form_for @service, html: { class: "" } do |f| %>
+    <% if @service.errors.any? %>
+      <div class="error-message">
+        <%= @service.errors.full_messages.to_sentence.capitalize %>
+      </div>
+    <% end %>
+      
+  <div class="d-flex justify-content-center align-items-center  ">
+    <div class=" container text-center bg-blue">
+      <%= f.input :name,label: false,  input_html: { autofocus: true, class:" form1 m-2" } %>
+    </div> 
+    <div class="container text-center bg-blue">
+      <%= f.input :description,label: false, placeholder: "Service description",  input_html: { autofocus: true ,class:"form1 m-2"} %>
     </div>
-  <% end %>
-    
-
-  <div class="d-flex"><%= f.input :name,label: false,  input_html: { autofocus: true, class:"m-2" } %>
+    <%= f.submit class: "btn1" %>
   </div>
-  <%# <div class="container"> %>
-    <%= f.input :description,label: false, placeholder: "Service description",  input_html: { autofocus: true ,class:"form1 m-2"} %>
-    <%= f.input :agency_fee,  input_html: { autofocus: true ,class:"m-2"} %>
-    <%= f.select :parent ,@services.order(:name).collect{ |s| [s.name, s.id]} , hint: 'Parent Service'%>
-
-
-  <%# </div> %>
-
-  <%= f.submit class: "btn btn-outline-primary m-2" %>
-<% end %>
-<%= button_to "❌ Delete Service", service_path(@service),method: :delete,class: "btn btn-outline-danger" %>
+  <% end %>
+</div>
+<div class= "m-3">
+  <%= button_to "❌ Delete ", service_path(@service),method: :delete,class: "btn btn-outline-danger m-auto " %>
+</div>

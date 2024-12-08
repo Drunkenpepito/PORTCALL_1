@@ -16,14 +16,17 @@ class InvoicesController < ApplicationController
   
     def create
       @invoice = Invoice.new(invoice_params)
+      @tab = []
+      @contract = Contract.find(params[:invoice][:contract_id])
       if @invoice.save!
-        @invoice.contract.tax_regimes.each do |tax| 
+        @contract.tax_regimes.each do |tax| 
           t = Tax.new( 
             name: tax.name,
             percentage: tax.percentage,
             isfee: tax.isfee,
             invoice_id: @invoice.id
           )
+          @tab << [tax,t]
           t.save!
         end
         # respond_to do |format|

@@ -3,6 +3,8 @@
     <% if order.children != []%>
         <%= order.children.sum(&:budget_price) %>
     <% else %>
-        <%= render "orders/budget_price", order:order %>
+        <% if order.calculate.is_a? Numeric  %>
+            <%= render "orders/budget_price", order:order %>
+        <% end %>
     <% end %>
 <% end %>

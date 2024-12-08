@@ -1,9 +1,13 @@
+
+<style> body { background-color: #124020; } </style>
+
+
 <div class="container rounded-4 border border-5  bg-light"> 
   <%= simple_form_for [@invoice, @order] do |f|%>
       <div class="d-flex container justify-content-center text-light p-3 ">
         <div class="d-flex container p-3 text-center blue">
-          <%= f.association :service, collection: @services, label: 'Service from Contract' , value_method: :id, include_blank: false,input_html: { autofocus: true ,class:" form1"} %>
-          <%= f.button :submit %>
+          <%= f.association :service, collection: @services.select{|s|s.name != "Service not in Contract"}, label: 'Service from Contract' , value_method: :id, include_blank: false,input_html: { autofocus: true ,class:" form1"} %>
+          <%= f.button :submit, class:'btn' %>
         </div>
       </div>
   <% end %>
