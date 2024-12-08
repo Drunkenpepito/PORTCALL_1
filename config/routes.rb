@@ -4,16 +4,20 @@ Rails.application.routes.draw do
   root to:"contracts#index"
   get "up" => "rails/health#show", as: :rails_health_check
 
-
+  resources :suppliers, only: [:index] do
+    collection do
+      patch :update_list
+    end
+  end
 
 
 
   resources :contracts do
-      get "add_master_service" , to: "services#new_master_service" , as: "new_master_service" 
+      get "add_master_service" , to: "services#new_master_service" , as: "new_master_service"
                 # CAS 1 ( CAS PARTICULIER) - pour creer un masterservice, on a besoin d'un contrat
                 # CAS UNIQUE MASTERSERVICE - que pour masterservices
                 # get "index_master_services" , to: "services#index_master_services" , as: "index_master_services" # CAS UNIQUE MASTERSERVICE - que pour masterservices
-      get "show_master_services" , to: "services#show_master_services" , as: "show_master_services" 
+      get "show_master_services" , to: "services#show_master_services" , as: "show_master_services"
                 # CAS UNIQUE MASTERSERVICE - que pour masterservices
       resources :tax_regimes, only: [:new, :create,]
       resources :suppliers, only: [:new, :create,]
@@ -24,7 +28,7 @@ Rails.application.routes.draw do
 
 
 
-  resources :services do 
+  resources :services do
     get "add_child_service", to: "services#new_child" , as:"new_child_service"
                 # ON UTILISE PAS LE NEW
                 # CAS 2 ( CAS GENERAL) - pour creer un service , on a un parent
@@ -33,7 +37,7 @@ Rails.application.routes.draw do
 
     member do
       get :calculate # permet de calculer le prix d'un service
-      patch :move 
+      patch :move
     end
 
     resources :variables, only: [:new, :create,]
@@ -45,14 +49,14 @@ Rails.application.routes.draw do
     end
   end
 
-  
+
 
 
 
 
   resources :variables , only: [:show, :index,  :destroy , :edit, :update,] do
     member do
-      patch :move 
+      patch :move
     end
   end
 
@@ -62,14 +66,14 @@ Rails.application.routes.draw do
 
   resources :orders do # les cas nex et create order ne sont utilises que pour les orders qui ont un service dans un contrat
     member do
-      get :calculate 
+      get :calculate
       get :newchildorder # cas ou on veut creer un order ad hoc qui a un parent
       post "orders/:id/createchildorder", to:"orders#createchildorder", as: :createchildorder
     end
     resources :order_variables, only: [:new, :create]
     post "taxes/:id/link_tax_order", to:"orders#link_tax_order", as: :link_tax
     post "taxes/:id/unlink_tax_order", to:"orders#unlink_tax_order", as: :unlink_tax
-    
+
   end
   get "invoices/:id/neworder", to:"orders#neworderadhoc", as: :neworderadhoc # cas ou on veut creer un masterorder ad hoc qui n'a pas de parent
   post "invoices/:id/neworder", to:"orders#createorderadhoc", as: :createorderadhoc
@@ -80,7 +84,7 @@ Rails.application.routes.draw do
 
   resources :order_variables, only: [:show, :index,  :destroy , :edit, :update,] do
     member do
-      patch :move 
+      patch :move
     end
   end
 
@@ -89,21 +93,21 @@ Rails.application.routes.draw do
     resources :orders, only: [:new, :create, :index]
     resources :taxes, only: [:new, :create,]
     get "excel_invoice", to: "invoices#excel_invoice" , as:"excel_invoice"
-    member do 
+    member do
       patch 'unlink'
     end
 
-    collection do 
+    collection do
       get 'store'
     end
 
     member do
       patch 'goodreceipt'
     end
-    
+
   end
   resources :taxes , only: [:show, :index,  :destroy , :edit, :update,]
-  resources :purchase_orders 
+  resources :purchase_orders
     get "excel_po", to: "purchase_orders#excel_po" , as:"excel_po"
 
   resources :projects, only: [:index ]

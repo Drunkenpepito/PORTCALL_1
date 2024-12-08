@@ -11,9 +11,11 @@
 // External libraries
 @import "bootstrap";
 @import "font-awesome";
+@import "actiontext";
 
 // Your CSS partials
 @import "components/index";
+@import "suppliers/index";
 // @import "pages/index";
 
 
@@ -23,4 +25,3 @@
 //   background-color: inherit !important;
 //   color: inherit !important;
 // };
-

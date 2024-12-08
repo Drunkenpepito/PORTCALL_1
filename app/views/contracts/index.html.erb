@@ -2,7 +2,7 @@
 
 <div class=" d-flex align-items-center blue p-3 ">
   <span class="m-auto white fs-2 ">CONTRACTS
-  <%= link_to "✚", new_contract_path, class: "btn1 rounded-circle", style:"vertical-align: middle;" %> 
+  <%= link_to "✚", new_contract_path, class: "btn1 rounded-circle", style:"vertical-align: middle;" %>
   </span>
 </div>
 
@@ -13,12 +13,8 @@
       <% if @contracts != nil %>
         <%= render @contracts %>
       <% else %>
-        NO CONTRACT HAS BEEN CREATED YET 
+        NO CONTRACT HAS BEEN CREATED YET
       <% end %>
     </tbody>
   </table>
 </div>
-
-
-
-

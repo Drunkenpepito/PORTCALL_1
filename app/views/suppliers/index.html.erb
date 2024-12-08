@@ -1,0 +1,7 @@
+<h1 class='titles'>  <%= link_to '<', root_path, class: "btn1" %> SUPPLIERS
+<div class="suppliers-utilities-bar">
+  <%= link_to "MAJ Supplier", update_list_suppliers_path, class: "update-supplier-btn", data:{turbo_method: :patch} %>
+</div></h1>
+
+
+<%= render @suppliers %>

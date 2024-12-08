@@ -1,0 +1,21 @@
+<div id="supplier_<%=supplier.id%>"class="supplier-card">
+  <h3 class="text-center"><%= supplier.name %></h3>
+  <div class="large" style="border: thin solid white;"></div>
+  <div class="content">
+    <div class="text-end  d-flex description">
+      <p class='--class-font supplier-card-label'>
+        Description :
+      </p>
+      <%= supplier.description %>
+    </div>
+    <div class="large" style="border: thin solid white;"></div>
+    <div class="text-end d-flex">
+      <p class='--class-font supplier-card-label'>
+        Contact Infos :
+      </p>
+      <div class="supplier-contact-info --class-font large text-start">
+        <%= supplier.contact %>
+      </div>
+    </div>
+  </div>
+</div>
