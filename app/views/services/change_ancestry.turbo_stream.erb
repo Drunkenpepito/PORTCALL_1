@@ -8,5 +8,9 @@
     <%= render "contracts/root_service" , service: @new_parent_service %>
 <%end%> 
 
-
+<%  if @type == "th" %>
+    <%= turbo_stream.append "contract_services_list#{@og_service.contract.id}" do %> 
+        <%= render "contracts/root_service" , service: @og_service %>
+    <%end%> 
+<% end %>
 

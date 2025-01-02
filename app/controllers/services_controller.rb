@@ -158,10 +158,10 @@ class ServicesController < ApplicationController
     end
 
     def change_ancestry
-        
         @og_service = Service.find(params[:id])        
         @new_parent_service = Service.find(params[:parent_id])
-        if params[:parent_id] == "123"
+        @type = params[:target_type]
+        if  @type == "th"
             @og_service.ancestry = @og_service.root.ancestry
         else
             @og_service.parent = @new_parent_service
