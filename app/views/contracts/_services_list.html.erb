@@ -1,9 +1,11 @@
-<% services.each do |service| %>
-  <% if service.name != "Service not in Contract" %> 
-    <tr >
-      <th style="background-color:#0d2850;" class= "text-secondary" scope="row" >
-          <%= render 'root_service', service: service %>
-      </th>
-    </tr>
+<%= turbo_frame_tag "contract_services_list#{@contract.id}"  do %>
+  <% services.each do |service| %>
+    <% if service.name != "Service not in Contract" %> 
+      <tr >
+        <th style="background-color:#0d2850;" class= "text-secondary" scope="row" >
+            <%= render 'root_service', service: service %>
+        </th>
+      </tr>
+    <% end %>
   <% end %>
 <% end %>
