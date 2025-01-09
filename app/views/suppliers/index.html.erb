@@ -2,6 +2,10 @@
 <div class="suppliers-utilities-bar">
   <%= link_to "MAJ Supplier", update_list_suppliers_path, class: "update-supplier-btn", data:{turbo_method: :patch} %>
 </div></h1>
-
+<%= search_form_for @q do |f| %>
+  <%= f.label :name_or_contact_cont %>
+  <%= f.search_field :name_or_contact_cont %>
+  <%= f.submit %>
+<% end %>
 
 <%= render @suppliers %>

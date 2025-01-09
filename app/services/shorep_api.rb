@@ -15,4 +15,5 @@ class ShorepApi
     response = HTTParty.get(url, headers: { 'ApiKey' => @api_key })
     JSON.parse(response.body)
   end
+
 end
