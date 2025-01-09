@@ -1,7 +1,9 @@
 class SuppliersController < ApplicationController
 
   def index
-    @suppliers = Supplier.includes(:rich_text_description).all.order(:name)
+    # Supplier.includes(:rich_text_description).all.order(:name)
+    @q = Supplier.ransack(params[:q])
+    @suppliers = @q.result(distinct: true)
   end
   def update_list
       # Fetch the suppliers list

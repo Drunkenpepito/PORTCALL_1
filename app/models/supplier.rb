@@ -1,13 +1,21 @@
 class Supplier < ApplicationRecord
 
   before_validation :set_cw
-  has_many :contracts
+  # has_many :contracts
   has_rich_text :description
 
   # validation
   # validates :description, presence: true, length: { maximum: 500 }
   # validates :contact, presence: true
   validates :cw, inclusion: { in: [true, false] }
+
+  # ALLOW attributes to be searched WITH RANSACK
+  def self.ransackable_attributes(auth_object = nil)
+    ["contact", "name"]
+  end
+  def self.ransackable_associations(auth_object = nil)
+    ["contact", "name"]
+  end
 
   def self.dl_and_update_suppliers_list
     all_suppliers = Supplier.all
@@ -44,8 +52,6 @@ class Supplier < ApplicationRecord
         # Rails.logger.info("Supplier #{supplier.name} created")
     end
   end
-
-  private
 
   def set_cw
     self.cw = false if cw.nil?
