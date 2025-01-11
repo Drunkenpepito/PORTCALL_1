@@ -23,8 +23,10 @@ class Supplier < ApplicationRecord
     loop do
       response = ShorepApi.new.get_suppliers(page_nb) # get the suppliers list from API SHOREP with page NB
       break if page_nb != 1 && page_nb > response['meta']['total_pages']
-      response['suppliers'].each do |supplier|
-        update_or_create_external_supplier(all_suppliers,supplier)
+      if response['suppliers'] != nil
+        response['suppliers'].each do |supplier|
+          update_or_create_external_supplier(all_suppliers,supplier)
+        end
       end
       page_nb += 1
     end
