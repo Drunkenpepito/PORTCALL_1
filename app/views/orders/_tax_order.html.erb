@@ -6,7 +6,11 @@
                     <span class="text-warning "><%= button_to "𝘅" , order_unlink_tax_path(order, tax), method: :post , class: "btn btn-sm"%></span>
                   </div>
                   <% else %>
-                    <%= button_to "﹢" , order_link_tax_path(order, tax), method: :post , class: "rounded-circle  m-auto"%>
+                  <%# on ne peut pas ajouter une taxe a un service dont l'un des enfants ou un ancêtre a cette taxe %>
+                    <% if !order.children.any? {|o| tax.orders.include?(o) } && !order.path.any? {|o| tax.orders.include?(o) }%>
+                      <%= button_to "﹢" , order_link_tax_path(order, tax), method: :post , class: "rounded-circle  m-auto"%>
+                    <% end %>
                   <% end %>
                 <% end %>
               <% end %>
+

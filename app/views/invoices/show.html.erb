@@ -28,7 +28,7 @@
             <tr>
               <th scope="row">
                 <li class="blue" data-controller="toggle-family"><%= link_to order.name.upcase, order_path(order), class:" h4" %>
-                  <% if  order.calculate.is_a? Numeric %>
+                  <% if  order.invoice_price.is_a? Numeric %>
                     <span><%= link_to order.invoice_price, order_path(order), class:"green" %></span>
                   <% else %>
                     ❌

@@ -1,0 +1,20 @@
+
+
+<style> body { background-color: #09507a; } </style>
+
+
+<div id="supplier_<%=@supplier.id%>"class="supplier-card border border-3 border-dark">
+  <h3 class="text-center"><%= @supplier.name %></h3>
+  <div class="large" style="border: thin solid white;"></div>
+  <div class="content">
+    <div class=" d-flex justify-content-center  description">
+        <span><%= @supplier.description %> </span>
+    </div>
+    <div class="large" style="border: thin solid white;"></div>
+    <div class="d-flex">
+      <div class="supplier-contact-info --class-font large text-start">
+        <%= @supplier.contact %>
+      </div>
+    </div>
+  </div>
+</div>

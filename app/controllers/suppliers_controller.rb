@@ -11,4 +11,17 @@ class SuppliersController < ApplicationController
       # If Start again if next page is true
       redirect_to suppliers_path, notice: "Supplier List Updated"
   end
+  def show
+    @supplier = Supplier.find(params[:id])
+  end
+
+  private
+    
+  def set_supplier
+      @supplier = Supplier.find(params[:id])
+  end
+  
+  def supplier_params
+      params.require(:supplier).permit(:name, :description, :contact)
+  end
 end

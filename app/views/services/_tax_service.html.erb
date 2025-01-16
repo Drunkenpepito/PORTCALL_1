@@ -5,6 +5,9 @@
                   <span class="text-warning "><%= button_to "𝘅" , service_unlink_tax_path(service, tax), method: :post , class: "btn btn-sm"%></span>
                 </div>
                 <% else %>
-                  <%= button_to "﹢" , service_link_tax_path(service, tax), method: :post , class: "rounded-circle border border-primary  blue m-auto"%>
+                <%# on ne peut pas ajouter une taxe a un service dont l'un des enfants ou un ancêtre a cette taxe %>
+                  <% if !service.children.any? {|s| tax.services.include?(s) } && !service.path.any? {|s| tax.services.include?(s) }%>
+                   <%= button_to "﹢" , service_link_tax_path(service, tax), method: :post , class: "rounded-circle border border-primary  blue m-auto"%>
+                  <% end %>
                 <% end %>
               <% end %>

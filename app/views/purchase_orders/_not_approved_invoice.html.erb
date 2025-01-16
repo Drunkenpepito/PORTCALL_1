@@ -4,7 +4,11 @@
             <%= f.input :purchase_order_id, label: false, input_html: { class:"d-none", value: @purchase_order.id } %>
                 <%= button_tag :submit , class: "btn btn-dark align-items-center border-light border-3 p-2"  do %>
                     <%= invoice.name %> 
-                    <span class="text-success p-2 "> ✔︎</span>
+                    <% if !invoice.orders.select{ |o| o.is_root? }.all?{|o| o.calculate.is_a? Numeric } %> 
+                        <span class="red p-2">⚠</span>     
+                    <% else %>
+                        <span class="text-success p-2 "> ✔︎</span>
+                    <% end %>
                 <% end %>
         <% end %>
     </div>

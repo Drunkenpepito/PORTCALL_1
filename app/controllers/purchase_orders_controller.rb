@@ -2,7 +2,10 @@ class PurchaseOrdersController < ApplicationController
   
 
     def index
-      @purchase_orders = PurchaseOrder.all
+      # @purchase_orders = PurchaseOrder.all
+      @q = PurchaseOrder.ransack(params[:q])
+      @purchase_orders = @q.result(distinct: true) 
+      
     end
       
     def new
@@ -61,7 +64,6 @@ class PurchaseOrdersController < ApplicationController
       end
       @services_id = @orders.map(&:service_id)
       @services = Service.where(id:@services_id)
-
     end
 
   def excel_po

@@ -8,6 +8,12 @@ class Invoice < ApplicationRecord
 
   scope :with_supplier, ->(supplier) { where( supplier:) }
 
+def self.ransackable_attributes(auth_object = nil)
+    ["name", "description"]
+end
+def self.ransackable_associations(auth_object = nil)
+  ["name", "description"]
+end
 
 def price
   # ATTENTION DANGEREUX , IL VA AFFCHER UNE VALEUR DE PRICE MEME SI UN ORDER N'A PAS DE INVOICE PRICE 

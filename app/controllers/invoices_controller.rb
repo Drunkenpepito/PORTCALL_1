@@ -2,13 +2,18 @@ class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy, :goodreceipt]
  
     def index
-      if params[:search] != nil
-        # @supplier = Supplier.find(params[:search][:supplier_id])
-        @invoices = Invoice.supplier(@supplier)
-      else
-        @invoices = Invoice.all 
-      end
+      # if params[:search] != nil
+      #   # @supplier = Supplier.find(params[:search][:supplier_id])
+      #   @invoices = Invoice.supplier(@supplier)
+      # else
+      #   @invoices = Invoice.all 
+      # end
+      @q = Invoice.ransack(params[:q])
+      @invoices = @q.result(distinct: true) 
+     
     end
+
+ 
       
     def new
       @invoice = Invoice.new
@@ -91,29 +96,37 @@ class InvoicesController < ApplicationController
       # On a mis un boutton fomulaire au lieu de simplement faire une route qui apporte le invoice id and purchase order
       # du coup, on a deja fait l'associataion du Purchase order_id a l'invoice
      
-      if @invoice.update(invoice_params)
-        @purchase_order = PurchaseOrder.find(params[:invoice][:purchase_order_id])
-        @invoices = @purchase_order.invoices
-        @orders =[]
-        @po_invoiced = 0
-        @po_budgeted = 0
-        @invoices.each do |i|
-          i.orders.each do|o|
-            if o.is_root?
-              @orders << o 
-              @po_invoiced += o.invoice_price
-              @po_budgeted += o.budget_price
+      # on
+      if !@invoice.orders.select{ |o| o.is_root? }.all?{|o| o.calculate.is_a? Numeric } 
+        flash[:alert] = "All services from this invoice do not have a valid Price. Please check invoice details before proceeding"
+        redirect_to invoice_path(@invoice)
+      else
+  
+        if @invoice.update(invoice_params)
+          @purchase_order = PurchaseOrder.find(params[:invoice][:purchase_order_id])
+          @invoices = @purchase_order.invoices
+          @orders =[]
+          @po_invoiced = 0
+          @po_budgeted = 0
+          @invoices.each do |i|
+            i.orders.each do|o|
+              if o.is_root?
+                @orders << o 
+                @po_invoiced += o.invoice_price
+                @po_budgeted += o.budget_price
+              end
             end
           end
+          @services_id = @orders.map(&:service_id)
+          @services = Service.where(id:@services_id)
+          respond_to do |format|
+            format.html { redirect_to purchase_order_path(@invoice.purchase_order) }
+            format.turbo_stream
+          end
+        else
+          render :show
         end
-        @services_id = @orders.map(&:service_id)
-        @services = Service.where(id:@services_id)
-        respond_to do |format|
-          format.html { redirect_to purchase_order_path(@invoice.purchase_order) }
-          format.turbo_stream
-        end
-      else
-        render :show
+
       end
     end
 

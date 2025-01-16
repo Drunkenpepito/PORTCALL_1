@@ -3,7 +3,9 @@ class ContractsController < ApplicationController
     before_action :set_contract, only: [:show, :edit, :update, :destroy]
     
     def index
-        @contracts = Contract.all
+        # @contracts = Contract.all
+        @q = Contract.ransack(params[:q])
+        @contracts = @q.result(distinct: true)
     end
     
     def show

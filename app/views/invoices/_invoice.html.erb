@@ -3,6 +3,9 @@
     <tr class="p-auto">
       <th scope="row " style="background-color: #124020;vertical-align: middle;">
         <%= link_to invoice.name.upcase, invoice_path(invoice), class:" m-auto white p-auto " %>
+        <% if !invoice.orders.select{ |o| o.is_root? }.all?{|o| o.calculate.is_a? Numeric } %> 
+           <span class="red">⚠</span>     
+        <% end %>  
       </th>
 
       <td style="background-color: #124020;vertical-align: middle;" class="text-center p-auto"><%= render "invoice_price", invoice:invoice %></td>
