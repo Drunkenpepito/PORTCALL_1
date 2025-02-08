@@ -1,0 +1,9 @@
+  <div class="d-flex flex-column">
+        <% if po_lines != [] %>
+          <% po_lines.each do |line| %>
+            <%= render "purchase_orders/po_budget_line", po_line: line %>
+          <% end %>
+        <% else %>
+          <div class= " h6 text-center text-secondary  ">NO BUDGET LINE </div>
+        <% end %>
+    </div>

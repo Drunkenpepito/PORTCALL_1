@@ -1,0 +1,9 @@
+<div class="card-body">
+  <div class="d-flex align-items-center">
+    <%= simple_form_for([@purchase_order, payment], html: { class: "form-inline" }) do |f| %>
+      <%= f.input :value, label: false, placeholder: "Amount", input_html: { class: "form-control mr-2" } %>
+      <%= f.input :date, as: :string, label: false, placeholder: "Due Date", input_html: { type: "date", class: "form-control mr-2" } %>
+      <%= f.submit "Save Payment", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

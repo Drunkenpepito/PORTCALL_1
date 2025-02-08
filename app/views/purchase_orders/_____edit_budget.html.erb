@@ -1,0 +1,37 @@
+
+<style> body { background-color:rgb(216, 176, 83); } </style>
+
+<div class= "d-flex text-center m-3">
+    <%= link_to sanitize("&larr; Back to PO"), purchase_order_path( @purchase_order), class:"btn1" %>
+</div>
+
+<div class= "d-flex text-center m-3">
+  <h2 class = " text-secondary m-auto  " >BUDGET for PO  <%= @purchase_order.name %> </h2>
+</div>
+
+<div class= "d-flex text-center m-3">
+    <div class= "m-auto">
+        <%= link_to "✚", new_purchase_order_po_line_path(@purchase_order), class: "btn1 border border-2 border-dark rounded-circle" %>
+    </div>
+</div>
+
+
+
+<!--   PO LINES   -->
+<%= turbo_frame_tag "po_lines_#{@purchase_order.id}"  do %>
+
+  <div class ="d-flex justify-content-center">
+    <table class="table  table table-bordered table-hover border border-light border-2">
+      <tbody>
+          <% if @po_lines %>
+            <%  @po_lines.each do |line| %>
+              <%= render 'po_lines/po_line', po_line: line %>
+            <% end %>
+          <% else %>
+          No Budget lines yet  
+          <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_06_143924) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_06_210521) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -109,6 +109,25 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_06_143924) do
     t.index ["tax_id"], name: "index_orders_taxes_on_tax_id"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "value"
+    t.date "date"
+    t.bigint "purchase_order_id"
+    t.index ["purchase_order_id"], name: "index_payments_on_purchase_order_id"
+  end
+
+  create_table "po_lines", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "value", default: 0
+    t.bigint "purchase_order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["purchase_order_id"], name: "index_po_lines_on_purchase_order_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -136,6 +155,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_06_143924) do
     t.string "name"
     t.string "description"
     t.integer "budget"
+    t.bigint "contract_id"
+    t.index ["contract_id"], name: "index_purchase_orders_on_contract_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -219,7 +240,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_06_143924) do
   add_foreign_key "order_variables", "orders"
   add_foreign_key "orders", "invoices"
   add_foreign_key "orders", "services"
+  add_foreign_key "payments", "purchase_orders"
+  add_foreign_key "po_lines", "purchase_orders"
   add_foreign_key "projects", "users"
+  add_foreign_key "purchase_orders", "contracts"
   add_foreign_key "services", "contracts"
   add_foreign_key "tax_regimes", "contracts"
   add_foreign_key "taxes", "invoices"

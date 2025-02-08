@@ -1,0 +1,11 @@
+.btn-discreet {
+  background-color: transparent;
+  border: none;
+  color: #6c757d; /* subtle gray */
+  font-size: 0.875rem;
+  padding: 0.25rem;
+}
+.btn-discreet:hover {
+  color: #495057;
+  text-decoration: underline;
+}

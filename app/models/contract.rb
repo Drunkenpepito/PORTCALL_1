@@ -2,6 +2,8 @@ class Contract < ApplicationRecord
     validates :name, presence: true
     has_many :services, dependent: :destroy
     has_many :tax_regimes, dependent: :destroy
+    has_many :invoices
+    has_many :purchase_orders
     # has_one :supplier
     
     def self.ransackable_attributes(auth_object = nil)

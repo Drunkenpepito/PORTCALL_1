@@ -1,0 +1,23 @@
+
+   <%= turbo_frame_tag @po_line  do %>
+    <div class="card mb-3">
+      <div class="card-body">
+        <%= simple_form_for @po_line, html: { class: "needs-validation", novalidate: true } do |f| %>
+          <% if @po_line.errors.any? %>
+            <div class="alert alert-danger">
+              <%= po_line.errors.full_messages.to_sentence.capitalize %>
+            </div>
+          <% end %>
+          <div class="form-group">
+            <%= f.input :name, label: false, placeholder: "Name", input_html: { class: "form-control", required: true } %>
+          </div>
+          <div class="form-group">
+            <%= f.input :value, label: false, placeholder: "Value", input_html: { class: "form-control", required: true } %>
+          </div>
+          <div class="form-group text-center">
+            <%= f.submit "💾", class: "btn btn-light" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>

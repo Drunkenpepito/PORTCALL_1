@@ -4,6 +4,11 @@ import "controllers"
 // import "@popperjs/core"
 // import "bootstrap"
 // import "@fortawesome/fontawesome-free/js/all"
-
 import "trix"
 import "@rails/actiontext"
+import "chartkick"
+import "Chart.bundle"
+import "chartkick/chart.js"
+
+
+

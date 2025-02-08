@@ -1,15 +1,19 @@
 <%= turbo_frame_tag "not_approved_invoice_#{invoice.id}" do %>
-    <div class="m-2 btn " >
-        <%= simple_form_for invoice, url: goodreceipt_invoice_path(invoice) , method: :patch do |f| %>
-            <%= f.input :purchase_order_id, label: false, input_html: { class:"d-none", value: @purchase_order.id } %>
-                <%= button_tag :submit , class: "btn btn-dark align-items-center border-light border-3 p-2"  do %>
-                    <%= invoice.name %> 
-                    <% if !invoice.orders.select{ |o| o.is_root? }.all?{|o| o.calculate.is_a? Numeric } %> 
-                        <span class="red p-2">⚠</span>     
-                    <% else %>
-                        <span class="text-success p-2 "> ✔︎</span>
+    <div class="m-2 d-flex justify-content-between " >
+        <div class=" h6 d-flex justify-content-between bg-dark align-items-center container border border-secondary border-3 rounded-5" >
+            <%= simple_form_for invoice, url: goodreceipt_invoice_path(invoice) , method: :patch do |f| %>
+                <%= f.input :purchase_order_id, label: false, input_html: { class:"d-none", value: @purchase_order.id } %>
+                    <%= button_tag :submit , class: " btn text-light align-items-center  p-2"  do %>
+                        <small style="font-size: 0.7rem;"><%= invoice.name %></small>
+                        <% if !invoice.orders.select{ |o| o.is_root? }.all?{|o| o.calculate.is_a? Numeric } %> 
+                            <span class="red p-2">⚠</span>     
+                        <% else %>
+                            <span class="text-success p-2 "> ✔︎</span>
+                        <% end %>
                     <% end %>
-                <% end %>
-        <% end %>
+            <% end %>
+        </div>
     </div>
 <% end %>
+
+

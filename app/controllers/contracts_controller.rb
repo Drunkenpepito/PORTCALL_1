@@ -45,6 +45,7 @@ class ContractsController < ApplicationController
     end
     
     def destroy
+        raise
         if @contract.services.each {|s| s.orders.any? }
             alert = "Contract has services with orders, cannot be deleted"
         else

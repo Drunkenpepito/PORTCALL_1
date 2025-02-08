@@ -1,0 +1,18 @@
+
+
+<%= turbo_frame_tag "edit_budget_line#{po_line.id}" do %>
+  <tr class="p-auto">
+    <%= simple_form_for po_line, url: edit_po_line_path(po_line), method: :patch, html: { class: "needs-validation", novalidate: true } do |f| %>
+      <% if po_line.errors.any? %>
+        <div class="alert alert-danger">
+          <%= po_line.errors.full_messages.to_sentence.capitalize %>
+        </div>
+      <% end %>
+      <td style="background-color:#0d2850; vertical-align: middle;"><%= f.input :name, label: false, placeholder: "Name", input_html: { class: "form-control text-primary", required: true }, label_html: { class: "custom-label" } %></td>
+      <td style="background-color:#0d2850;" class="text-center"><%= f.input :value, label: false, placeholder: "Value", input_html: { class: "form-control text-primary", required: true }, label_html: { class: "custom-label" } %></td>
+      <td style="background-color:#0d2850;"><%= f.submit "💾", class: "btn btn-primary" %></td>
+      <td style="background-color:#0d2850;"><%= link_to "❌", po_line_path(po_line), method: :delete, data: { confirm: "Are you sure you want to delete this PO line?" }, class: "btn" %></td>
+    <% end %>
+  </tr>
+<% end %>
+

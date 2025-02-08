@@ -1,0 +1,10 @@
+<%= turbo_frame_tag po_line do %>
+    <div class="  d-flex justify-content-between text-secondary m-1" >
+        <span class= "text-secondary p-1 w-50" style="font-size: 0.9rem;"><%= po_line.name.upcase %></span>
+        <span class="p-1 w-50"style="font-size: 0.9rem;"><%=number_with_delimiter(po_line.value,delimiter: ' ') %> €</span>
+        <span class="d-flex  justify-content-end">
+            <%= link_to "✏️", edit_po_line_path(po_line), class: "btn btn-dark  ",style:"font-size: 0.5rem;" %>
+            <%= button_to "❌", po_line_path(po_line), method: :delete, data: { confirm: "Are you sure you want to delete this PO line?" }, style:"font-size: 0.5rem;", class: "btn" %>
+        </span>
+    </div>
+<% end %>

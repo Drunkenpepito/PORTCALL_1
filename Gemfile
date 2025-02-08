@@ -30,6 +30,11 @@ gem 'caxlsx'
 gem 'caxlsx_rails'
 gem 'ransack'
 gem 'httparty' # helps to make http requests
+gem "groupdate"
+gem "chartkick"
+# gem 'flatpickr'
+gem "simple_calendar"
+
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]

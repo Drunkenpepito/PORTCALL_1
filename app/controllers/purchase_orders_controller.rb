@@ -15,10 +15,17 @@ class PurchaseOrdersController < ApplicationController
     def create
       
       @purchase_order = PurchaseOrder.new(purchase_order_params)
+      @contract = Contract.find(params[:purchase_order][:contract_id])
+      @services = @contract.services.select{ |s| s.is_root? }
       if @purchase_order.save!
+        @services.select{ |s| s.is_root? }.each  do |s| 
+          @po_line = PoLine.new(purchase_order_id: @purchase_order.id, name: s.name)
+          @po_line.save!  
+        end
+        @po_lines = PoLine.where(purchase_order_id: @purchase_order.id)
         respond_to do |format|
           format.html { redirect_to purchase_orders_path }
-          # format.turbo_stream
+          #  format.turbo_stream
         end
       else
         render :new
@@ -28,6 +35,12 @@ class PurchaseOrdersController < ApplicationController
       @purchase_order = PurchaseOrder.find(params[:id])
     end
 
+    def edit_budget
+      @purchase_order = PurchaseOrder.find(params[:id])
+      @contract = @purchase_order.contract
+      @services = @contract.services.select{ |s| s.is_root? }
+      @po_lines = PoLine.where(purchase_order_id: @purchase_order.id)
+    end
     def update
       @purchase_order = PurchaseOrder.find(params[:id])
       if @purchase_order.update(purchase_order_params)
@@ -40,6 +53,7 @@ class PurchaseOrdersController < ApplicationController
     def destroy
       @purchase_order = PurchaseOrder.find(params[:id])
       @purchase_order.destroy
+      raise
       respond_to do |format|
         format.html { redirect_to purchase_order_path(@purchase_order) }
         format.turbo_stream
@@ -48,6 +62,10 @@ class PurchaseOrdersController < ApplicationController
     
     def show 
       @purchase_order = PurchaseOrder.find(params[:id])
+      @po_lines = PoLine.where(purchase_order_id: @purchase_order.id)
+      @purchase_order.budget = @po_lines.sum(:value)
+      @purchase_order.save!
+      @contract = @purchase_order.contract
       @invoices = @purchase_order.invoices
       @nopo_invoices = Invoice.where(purchase_order_id: nil)
       @orders = [] 
@@ -64,6 +82,8 @@ class PurchaseOrdersController < ApplicationController
       end
       @services_id = @orders.map(&:service_id)
       @services = Service.where(id:@services_id)
+
+      
     end
 
   def excel_po
@@ -83,7 +103,7 @@ class PurchaseOrdersController < ApplicationController
     private
   
     def purchase_order_params
-      params.require(:purchase_order).permit(:name, :description, :budget)
+      params.require(:purchase_order).permit(:name, :description, :budget, :contract_id)
     end
 
     def send_xls_file(package)

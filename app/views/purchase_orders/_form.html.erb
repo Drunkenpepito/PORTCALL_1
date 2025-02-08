@@ -1,19 +1,49 @@
 
+<style> body { background-color:rgb(216, 176, 83); } </style>
 
-<div class=" rounded-4 border border-5 bg-light m-3 p-3">
-  <%= simple_form_for purchase_order, html: { class: "d-flex flex-column" } do |f| %>
-    
-    <% if purchase_order.errors.any? %>
-      <div class="error-message">
-        <%= purchase_order.errors.full_messages.to_sentence.capitalize %>
-      </div>
-    <% end %>
-    <div class="container d-flex">
-      <%= f.input :name, placeholder: "NAME", input_html: { autofocus: true ,class:"form1"} %>
-      <%= f.input :description, placeholder: "DESCRIPTION", input_html: { autofocus: true ,class:"form1"} %>
-      <%= f.input :budget, placeholder: "BUDGET", input_html: { autofocus: true ,class:"form1"} %>
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">PO Form</h3>
     </div>
-    <div class= " btn1 m-auto text-center "><%= f.submit class: " m-auto btn" %></div>
+    <div class="card-body">
+      <%= simple_form_for purchase_order, html: { class: "needs-validation", novalidate: true } do |f| %>
+        
+        <% if purchase_order.errors.any? %>
+          <div class="alert alert-danger">
+            <%= purchase_order.errors.full_messages.to_sentence.capitalize %>
+          </div>
+        <% end %>
 
-  <% end %>
+        <div class="form-row">
+          <div class="form-group col-md-12 ">
+            <%= f.input :name,  placeholder: "Name", input_html: { class: "form-control  text-primary ", required: true } , label_html: { class: "custom-label" } %>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <%= f.input :description, placeholder: "Description", input_html: { class: "form-control text-primary", required: true }, label_html: { class: "custom-label" }  %>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12 ">
+            <%= f.input :contract_id,  collection: Contract.all, label_method: :name, value_method: :id, prompt: "Select a Contract", input_html: { class: "form-control text-primary", required: true } , label_html: { class: "custom-label" } %>
+          </div>
+        </div>
+
+     
+
+        <div class="d-flex align-items-center "  style="height: 100px;">
+          <div class=" text-center">
+            <div class="d-flex col-md-12 justify-content-center align-items-center">
+              <%= f.submit "Submit", class: " btn btn-primary " %>
+            </div>
+          </div>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
 </div>

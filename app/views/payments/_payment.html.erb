@@ -1,0 +1,10 @@
+<%= turbo_frame_tag payment do %>
+    <div class="  d-flex justify-content-between text-secondary m-2" >
+        <span class= "text-secondary p-1 w-50" style="font-size: 0.9rem;"><%=number_with_delimiter(payment.value, delimiter:' ') %> €</span>
+        <span class="p-1 w-50" style="font-size: 0.9rem;"><%= payment.date.strftime("%d/%m") %></span>
+        <div class="d-flex justify-content-end">
+            <%= link_to "✏️", edit_payment_path(payment), class: "btn btn-dark btn-sm", style:"font-size: 0.5rem;" %>
+            <td style="background-color:#0d2850;"><%= button_to "❌", payment_path(payment), method: :delete, data: { confirm: "Are you sure you want to delete this Payment?" }, class: "btn", style:"font-size: 0.5rem;" %></td>
+        </div>
+    </div>
+<% end %>

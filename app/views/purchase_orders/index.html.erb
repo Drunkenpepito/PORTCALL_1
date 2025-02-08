@@ -1,11 +1,11 @@
-<style> body { background-color: #5c0707; } </style>
+<style> body { background-color:rgb(216, 176, 83); } </style>
 
 
 
 <div class=" d-flex align-items-center blue p-3 ">
   <span class="m-auto white fs-2 ">PO
     <%= link_to "✚",new_purchase_order_path,class: "btn1 border border-2  border-dark rounded-circle" %> 
-    <%= link_to excel_po_path(format: :xlsx), class:"btn" do%>
+    <%= link_to excel_po_purchase_orders_path(format: :xlsx), class:"btn" do%>
         <%= image_tag 'excel.jpeg', width: 30, height: 30 %>
     <% end %>
   </span>

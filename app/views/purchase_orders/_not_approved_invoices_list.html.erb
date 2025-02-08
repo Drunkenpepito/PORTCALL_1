@@ -1,9 +1,12 @@
-  <div class="d-flex justify-content-center border border-3 bg-secondary flex-row ">
-    <% if  @nopo_invoices != [] && @nopo_invoices != nil%>
-      <%= turbo_frame_tag "not_approved_invoices_list" do %>
+  <%= turbo_frame_tag "not_approved_invoices_list" do %>
+      <% if  @nopo_invoices != [] && @nopo_invoices != nil%>
         <% @nopo_invoices.each do |invoice| %>
-              <%= render 'not_approved_invoice', invoice: invoice %>
+          <%= render 'not_approved_invoice', invoice: invoice %>
         <% end %>
       <% end %>
-    <% end %>
-  </div>
+  <% end %>
+
+
+
+    
+     

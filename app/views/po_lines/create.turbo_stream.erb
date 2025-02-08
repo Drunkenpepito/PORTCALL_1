@@ -1,0 +1,11 @@
+
+<%= turbo_stream.update PoLine.new, "" %>
+
+<%= turbo_stream.append "po_budget_lines" do %>
+    <%= render "purchase_orders/po_budget_line", po_line: @po_line %>
+<% end %>
+
+
+
+
+

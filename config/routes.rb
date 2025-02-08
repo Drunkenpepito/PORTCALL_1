@@ -107,8 +107,21 @@ Rails.application.routes.draw do
 
   end
   resources :taxes , only: [:show, :index,  :destroy , :edit, :update,]
-  resources :purchase_orders
-    get "excel_po", to: "purchase_orders#excel_po" , as:"excel_po"
+  resources :purchase_orders do
+    resources :po_lines, only: [:new, :create, :index]
+    resources :payments, only: [:new, :create, :index]
+    member do
+      get 'edit_budget'
+    end
+    collection do
+      get "excel_po", to: "purchase_orders#excel_po" , as:"excel_po"
+    end
+    
+  end
+  resources :po_lines, only: [:edit, :update, :show, :destroy]
+  resources :payments, only: [:edit, :update, :show, :destroy]
 
   resources :projects, only: [:index ]
+
+ 
 end

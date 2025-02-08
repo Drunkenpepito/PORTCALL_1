@@ -31,6 +31,10 @@ body {
   text-decoration: none;
 }
 
+.bleu {
+  color: #517392 ;
+  text-decoration: none;
+}
 
 .lightblue {
   color: #397cd9;
@@ -255,4 +259,31 @@ body {
   padding-left: 0.5rem;
   flex-wrap: nowrap;
   justify-content: space-between;
+}
+
+.custom-label {
+  font-weight: bold;
+  color:#09507a;
+  font-size: 0.7em;
+  margin-bottom: 0.5em;
+  display: block;
+}
+
+.btn-xs {
+  padding: 0.25rem 0.4rem;
+  font-size: 0.45rem;
+  line-height: 1;
+  border-radius: 0.2rem;
+}
+
+.btn-discreet {
+  background-color: transparent;
+  border: none;
+  color: #6c757d; /* subtle gray */
+  font-size: 0.875rem;
+  padding: 0.25rem;
+}
+.btn-discreet:hover {
+  color: #495057;
+  text-decoration: underline;
 }

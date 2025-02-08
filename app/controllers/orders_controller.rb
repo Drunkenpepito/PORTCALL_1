@@ -11,15 +11,23 @@ class OrdersController < ApplicationController
       @order = Order.new
       @invoice = Invoice.find(params[:invoice_id])
       @contract = @invoice.contract
-      @services = @contract.services.select{|s| s.is_root? == true}
+      @services = @contract.services
+
     end
+
+ 
 
     def neworderadhoc
       @order= Order.new
       @invoice =Invoice.find(params[:id])
     end
 
-
+# A CHANGER 
+#quand on cree un ordr ad hoc , il associe le service de nom " service not in contract " 
+# ce n'est pas exactement ce que l'on veut 
+# on veut que il associe le nom de l'order au nom de ce nouveau service
+# on veut ensuite que ce service cree a partir de l'order ad hoc soit identifié comme service "special" cree a posteriori du contrat 
+# on voudra donc changer la vue du contrat show avce la liste de services mais aussi ces services qui proviennet de ceux qui valident les fatcures 
     def createorderadhoc
       @order = Order.new(order_params)
       @order.invoice = Invoice.find(params[:id])
@@ -74,6 +82,9 @@ class OrdersController < ApplicationController
       @order.name = @service.name
       @order.service = @service
       @order.invoice = @invoice
+
+   
+
       if @order.save!
         orderize(@service, @order)
         redirect_to invoice_path(@invoice) 
