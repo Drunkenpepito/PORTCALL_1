@@ -1,5 +1,5 @@
 class PurchaseOrder < ApplicationRecord
-  has_many :invoices
+  has_many :invoices, dependent: :destroy
   belongs_to :contract # In order that Budget lines and P0 lines can be compared on PO show view
   has_many :po_lines, dependent: :destroy
   has_many :payments
