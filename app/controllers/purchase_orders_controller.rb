@@ -53,9 +53,8 @@ class PurchaseOrdersController < ApplicationController
     def destroy
       @purchase_order = PurchaseOrder.find(params[:id])
       @purchase_order.destroy
-      raise
       respond_to do |format|
-        format.html { redirect_to purchase_order_path(@purchase_order) }
+        format.html { redirect_to purchase_orders_path }
         format.turbo_stream
       end
     end
