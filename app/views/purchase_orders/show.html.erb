@@ -5,7 +5,6 @@
     <%= link_to sanitize("&larr; Back to POs"), purchase_orders_path, class:"btn1" %>
   </div>
 
-<div class ="container p-3 m-auto ">
 
 <%# PO DETAILS %>
     <h2 class = "d-flex justify-content-center white " >PO <%= @purchase_order.name %> </h2>
@@ -31,9 +30,9 @@
 
 
 
-  <div class = "d-flex justify-content-between" >
+<div class ="container p-3 m-auto ">
+<div class = "d-flex justify-content-center" >
 <%# BUDGET %>
-  <h6 class = "d-flex justify-content-center blue " >
     <div class="  bg-dark border border-3 m-3 p-3 rounded-5 position-relative">  
 
       <% if @contract != nil && @contract.services != [] %>
@@ -71,61 +70,80 @@
   </h6>
           
 <%# SPEND %>
-  <h6 class = "d-flex justify-content-center blue " >
+
+  <div class = "d-flex justify-content-center blue " >
     <div class=" bg-dark border border-3 m-3 p-3 rounded-5">   
         <h6 class= "white text-center m-3">
           <div class= "container d-flex m-auto justify-content-center m-3">
-            <h5 class="d-flex align-items-center text-center text-warning me-3">SPEND</h5>
+            <span class="d-flex align-items-center text-center text-warning h3 me-3">SPEND</span>
             <%  if @services!= [] %>
-              <span class="p-2 text-warning col-6"><%= render 'po_budgeted_twin', purchase_order: @purchase_order %></span>
+              <span class="p-2 text-warning h3"><%= render 'po_budgeted_twin', purchase_order: @purchase_order %></span>
             <% end %>
           </div>
         </h6>
       <%= render 'po_services_list', services: @services %>
     </div>
-  </h6>
+  </div>
 
-<%# PO INVOICE LIST %>
-            <h6 class= "d-flex justify-content-center">
-              <div class =  " bg-dark border border-3 m-3 p-3 rounded-5 "> 
-                <div class="m-2">
-                    <h6 class= " m-3 green text-center">
-                      <div class= "container d-flex m-auto justify-content-center m-3">
-                        <h5 class="d-flex align-items-center text-center white me-3">INVOICES</h5>
-                        <% if @po_invoiced != 0 %> 
-                          <span class="p-2 white col-6 "><%= render 'po_invoiced', purchase_order: @purchase_order %></span>
-                        <% end %>
-                      </div>
-                    </h6>
-                  <%= render 'po_invoices_list', invoices: @invoices %>
-                </div>/
-              </div>
-            <h6>
+
+</div>
+</div>
+<div class ="container p-3 m-auto ">
+<div class = "d-flex justify-content-center" >
+<%# INVOICES APPROVED %>
+    <h6 class= "d-flex justify-content-center">
+      <div class =  " bg-dark border border-3 m-3 p-3 rounded-5 "> 
+        <div class="m-2">
+            <h6 class= " m-3 green text-center">
+              <%# <div class= "container d-flex m-auto justify-content-center m-3"> %>
+                <div class="d-flex align-items-center justify-content-center text-success me-3"> INVOICES APPROVED </div>
+                <% if @po_invoiced != 0 %> 
+                  <div class="p-2 text-success  "><%= render 'po_invoiced', purchase_order: @purchase_order %></div>
+                <% end %>
+              <%# </div> %>
+            </h6>
+          <%= render 'po_invoices_list', invoices: @invoices %>
+        </div>/
+      </div>
+    <h6>
 
 
 <%# INVOICES NOT APPROVED %>
 
-  <div class ="d-flex justify-content-center">
+    <h6 class= "d-flex justify-content-center">
+      <div class =  " bg-dark border border-3 m-3 p-3 rounded-5 "> 
+        <div class="m-2">
+            <h6 class= " m-3 green text-center">
+              <%# <div class= "container d-flex m-auto justify-content-center m-3"> %>
+                <div class="d-flex align-items-center text-center text-light me-3"> INVOICES NOT APPROVED </div>
+                <% if @nopo_invoiced != 0 %> 
+                  <div class="p-2 white  "><%= render 'nopo_invoiced', purchase_order: @purchase_order %></div>
+                <% end %>
+              <%# </div> %>
+            </h6>
+          <%= render 'not_approved_invoices_list' %>
+        </div>/
+      </div>
+    <h6>
+
+  <%# <div class ="d-flex justify-content-center">
       <div class =  " container  p-2">
         <h4 class= "text-light m-3 text-center "> GR  </h4>
-        <span class="test-end"><%= render 'not_approved_invoices_list'%></span>
+        <span class="test-end"><%= render 'not_approved_invoices_list'</span>
       </div>
-  </div>
-
+  </div> %>
 
 
 </div>
-
-
-<div class = " d-flex justify-content-between align-items-center " >
-
+</div>
+<div class = " d-flex justify-content-center align-items-center " >
 <%# LIST PAYMENTS %>
-    <div class = " justify-content-center blue w-50 " >
+    <div class = " justify-content-center blue  " >
       <div class=" bg-dark border border-3 m-3 p-3 rounded-5 position-relative">  
 
           <div class= "d-flex justify-content-center white text-center m-3">
             <div class= " d-flex text-secondary justify-content-center align-items-center h4">
-              <div class= "container d-flex  justify-content-center">
+              <div class= " d-flex  justify-content-center">
                 <span class="p-2 bleu "  >PAYMENT SCHEDULE</span>
                 <span class="p-2 bleu"> <%= number_with_delimiter(@purchase_order.payments.sum(&:value), delimiter:' ') if @purchase_order.payments != []%> €</span>
               </div>           
@@ -179,8 +197,3 @@
 
 
 </div>
-</div>
-  
-
-
-

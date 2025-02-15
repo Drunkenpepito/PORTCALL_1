@@ -67,7 +67,8 @@ class PurchaseOrdersController < ApplicationController
       @purchase_order.save!
       @contract = @purchase_order.contract
       @invoices = @purchase_order.invoices
-      @nopo_invoices = Invoice.where(purchase_order_id: nil)
+      @nopo_invoices = Invoice.where(purchase_order_id: nil, contract:@contract)
+      @nopo_invoiced = @nopo_invoices.sum(&:price)
       @orders = [] 
       @po_invoiced = 0
       @po_budgeted = 0

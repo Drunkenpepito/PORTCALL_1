@@ -1,0 +1,3 @@
+<%= turbo_frame_tag "nopo_invoiced_#{purchase_order.id}" do %> 
+    <%= number_with_delimiter( @nopo_invoiced.round(0), delimiter:' ')  %>
+<% end %>
