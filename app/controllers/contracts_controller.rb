@@ -5,7 +5,7 @@ class ContractsController < ApplicationController
     def index
         # @contracts = Contract.all
         @q = Contract.ransack(params[:q])
-        @contracts = @q.result(distinct: true)
+        @contracts = @q.result.includes(:supplier).order('updated_at DESC')
     end
     
     def show
@@ -63,6 +63,6 @@ class ContractsController < ApplicationController
     end
     
     def contract_params
-        params.require(:contract).permit(:name)
+        params.require(:contract).permit(:name, :supplier_id)
     end
 end

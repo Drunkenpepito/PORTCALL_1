@@ -1,7 +1,7 @@
 <style> body { background-color: #0d2850; } </style>
 
 <div class= "d-flex justify-content-center">
-  <%= simple_form_for @contract, html: { class: "contract form white" } do |f| %>
+  <!-- <%= simple_form_for @contract, html: { class: "contract form white" } do |f| %>
     <% if @contract.errors.any? %>
       <div class="error-message">
         <%= @contract.errors.full_messages.to_sentence.capitalize %>
@@ -10,6 +10,9 @@
 
     <%= f.input :name, label:false, input_html: { autofocus: true, class:"form1" } %>
     <%= f.submit class: "btn1 m-auto" %>
-  <% end %>
+  <% end %> %>
+-->
+    <%= render "form", contract: @contract %>
+
 
 </div>

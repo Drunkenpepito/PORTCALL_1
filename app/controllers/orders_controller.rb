@@ -131,7 +131,7 @@ class OrdersController < ApplicationController
       @order = Order.find(params[:order_id])
       @tax.orders << @order
       respond_to do |format|
-        format.html {redirect_to order_path(@order)}
+        format.html {redirect_to order_path(@order.parent)}
         format.turbo_stream
       end
     end
@@ -141,7 +141,7 @@ class OrdersController < ApplicationController
       @order = Order.find(params[:order_id])
       @tax.orders.delete(@order)
       respond_to do |format|
-        format.html {redirect_to order_path(@order)}
+        format.html {redirect_to order_path(@order.parent)}
         format.turbo_stream
       end
     end

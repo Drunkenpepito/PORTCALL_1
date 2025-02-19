@@ -1,14 +1,24 @@
+<style> body { background-color: #0d2850; } </style>
 
-<div class="container rounded-4 border border-5  bg-light m-3">
-  <%= simple_form_for contract, html: { class: "contract form " } do |f| %>
+<div class="container rounded-4  m-3" style="background-color: #0d2850;">
+  <%= simple_form_for contract, html: { class: " " } do |f| %>
     <% if contract.errors.any? %>
       <div class="error-message">
         <%= contract.errors.full_messages.to_sentence.capitalize %>
       </div>
     <% end %>
 
-    <%= f.input :name, placeholder: "Name",input_html: { autofocus: true ,class:"form1"} %>
-    <%# <%= f.input :supplier_id, collection: Supplier.all ,input_html: { autofocus: true ,class:"form1"} %> 
-    <%= f.submit class: "btn1" %>
+    <div class="row m-2">
+      <div class="col-md-12">
+        <%= f.input :name, label: false, placeholder: "Name", input_html: { autofocus: true, class:"form1 form-control text-primary", style:"border-radius: 8px;" } %>
+      </div>
+    </div>
+    <div class="row m-2">
+      <div class="col-md-12">
+        <%= f.input :supplier_id, label: false, collection: Supplier.all.order('name ASC'), label_method: :name, value_method: :id, prompt: "Select a Supplier", input_html: { autofocus: true, class:"form1 form-control text-primary" , style:"border-radius: 8px;" } %>
+      </div>
+    </div>
+
+    <%= f.submit class: "btn1 m-4" %>
   <% end %>
 </div>

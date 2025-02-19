@@ -1,7 +1,7 @@
 class Supplier < ApplicationRecord
 
   before_validation :set_cw
-  # has_many :contracts
+  has_many :contracts
   has_rich_text :description
 
   # validation
@@ -13,6 +13,8 @@ class Supplier < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["contact", "name"]
   end
+
+  
   def self.ransackable_associations(auth_object = nil)
     ["contact", "name"]
   end
