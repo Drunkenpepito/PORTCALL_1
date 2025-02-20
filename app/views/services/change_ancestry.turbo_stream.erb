@@ -4,13 +4,13 @@
     <%= render "contracts/root_service" , service: @og_service %>
 <%end%> 
 
-<%= turbo_stream.replace "service_#{@new_parent_service.id}" do %> 
-    <%= render "contracts/root_service" , service: @new_parent_service %>
-<%end%> 
-
-<%  if @type == "th" %>
+<%  if @new_parent_service.nil? %>
     <%= turbo_stream.append "contract_services_list#{@og_service.contract.id}" do %> 
         <%= render "contracts/root_service" , service: @og_service %>
     <%end%> 
+<% else %>
+    <%= turbo_stream.replace "service_#{@new_parent_service.id}" do %> 
+         <%= render "contracts/root_service" , service: @new_parent_service %>
+    <%end%>         
 <% end %>
 
