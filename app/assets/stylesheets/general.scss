@@ -281,3 +281,40 @@ body {
   color: #495057;
   text-decoration: underline;
 }
+
+
+.span50 {
+  display: inline-block;
+  width: 50px; /* Définissez la largeur souhaitée */
+  overflow: hidden; /* Pour gérer le dépassement de texte */
+  text-overflow: ellipsis; /* Pour ajouter des points de suspension si le texte dépasse */
+  white-space: nowrap; /* Pour empêcher le texte de se décomposer en plusieurs lignes */
+}
+.span100 {
+  display: inline-block;
+  width: 100px; /* Définissez la largeur souhaitée */
+  overflow: hidden; /* Pour gérer le dépassement de texte */
+  text-overflow: ellipsis; /* Pour ajouter des points de suspension si le texte dépasse */
+  white-space: nowrap; /* Pour empêcher le texte de se décomposer en plusieurs lignes */
+}
+.span150 {
+  display: inline-block;
+  width: 150px; /* Définissez la largeur souhaitée */
+  overflow: hidden; /* Pour gérer le dépassement de texte */
+  text-overflow: ellipsis; /* Pour ajouter des points de suspension si le texte dépasse */
+  white-space: nowrap; /* Pour empêcher le texte de se décomposer en plusieurs lignes */
+}
+.span200 {
+  display: inline-block;
+  width: 200px; /* Définissez la largeur souhaitée */
+  overflow: hidden; /* Pour gérer le dépassement de texte */
+  text-overflow: ellipsis; /* Pour ajouter des points de suspension si le texte dépasse */
+  white-space: nowrap; /* Pour empêcher le texte de se décomposer en plusieurs lignes */
+}
+.span250 {
+  display: inline-block;
+  width: 250px; /* Définissez la largeur souhaitée */
+  overflow: hidden; /* Pour gérer le dépassement de texte */
+  text-overflow: ellipsis; /* Pour ajouter des points de suspension si le texte dépasse */
+  white-space: nowrap; /* Pour empêcher le texte de se décomposer en plusieurs lignes */
+}

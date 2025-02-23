@@ -27,7 +27,7 @@ end
 def budget
   p =0
   self.orders.each do |o|
-    p += o.budget_price if o.is_root? && o.invoice_price != nil
+    p += o.budget_price if o.is_root? && o.budget_price != nil
   end
   p
 end

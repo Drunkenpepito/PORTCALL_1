@@ -93,17 +93,18 @@ Rails.application.routes.draw do
     resources :orders, only: [:new, :create, :index]
     resources :taxes, only: [:new, :create,]
     get "excel_invoice", to: "invoices#excel_invoice" , as:"excel_invoice"
+
     member do
-      patch 'unlink'
+      post 'unlink'
+      post 'edit_gr', to: "invoices#edit_gr" 
+      patch 'update_gr', to: 'invoices#update_gr'
+      post 'goodreceipt'
     end
 
     collection do
       get 'store'
     end
 
-    member do
-      patch 'goodreceipt'
-    end
 
   end
   resources :taxes , only: [:show, :index,  :destroy , :edit, :update,]

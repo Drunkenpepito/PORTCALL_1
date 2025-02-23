@@ -68,6 +68,7 @@ class PurchaseOrdersController < ApplicationController
       @invoices = @purchase_order.invoices
       @nopo_invoices = Invoice.where(purchase_order_id: nil, contract:@contract)
       @nopo_invoiced = @nopo_invoices.sum(&:price)
+      @all_invoices = @invoices + @nopo_invoices
       @orders = [] 
       @po_invoiced = 0
       @po_budgeted = 0
@@ -83,7 +84,25 @@ class PurchaseOrdersController < ApplicationController
       @services_id = @orders.map(&:service_id)
       @services = Service.where(id:@services_id)
 
-      
+      monthly_values = @purchase_order.payments.group_by_month(:date).sum(:value) 
+      # monthly_values2 = @invoices.group_by_month(:payment_date).sum(:budget) 
+
+      budget = @po_lines.sum(&:value)
+      @budget_data = {}
+      @actual_data = {}
+      @planned_data = {} 
+      running_total = 0 
+      running_total2 = 0
+      monthly_values.sort.each do |month, value| 
+        running_total += value 
+        @planned_data[month] = running_total 
+        @budget_data[month] = budget
+      end 
+      # monthly_values2.sort.each do |month, value|
+      #   running_total2 += value
+      #   @actual_data[month] = running_total2
+      # end
+       
     end
 
   def excel_po

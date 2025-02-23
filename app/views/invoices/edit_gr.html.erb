@@ -3,14 +3,14 @@
 <%= turbo_frame_tag @invoice do %>
   <div class ="row bg-dark text-center align-items-center  border rounded-5 m-auto p-5 ">
   <div class= "d-flex justify-content-center align-items-center">
-    <%= simple_form_for @invoice, html: { class: "contract form white" } do |f| %>
+    <%= simple_form_for @invoice, url: update_gr_invoice_path(@invoice),  html: { class: "contract form white" } do |f| %>
       <% if @invoice.errors.any? %>
         <div class="error-message">
           <%= @invoice.errors.full_messages.to_sentence.capitalize %>
         </div>
       <% end %>
-      <%= f.input :name, label: false, input_html: { autofocus: true, class:"form1" } %>
-        <%= f.input :description, input_html: { autofocus: true, class:"form1" } %>
+        <span class= "m-2 p-2"> <%= f.input :good_receipt, input_html: { autofocus: true, class:"" } %></span>
+        <span class= "m-2 p-2"> <%= f.input :payment_date, input_html: { autofocus: true, class:"" } %></span>
       <%= f.submit class: "btn btn-success rounded-3 border p-2 m-2" %>
     <% end %>
 

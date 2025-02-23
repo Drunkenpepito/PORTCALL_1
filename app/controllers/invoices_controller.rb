@@ -49,6 +49,21 @@ class InvoicesController < ApplicationController
     def edit
     end
 
+    def edit_gr
+      @invoice = Invoice.find(params[:id])
+      @purchase_order = @invoice.purchase_order
+    end
+
+    def update_gr
+      @invoice = Invoice.find(params[:id])
+      @purchase_order = @invoice.purchase_order
+      if @invoice.update(invoice_params)
+        redirect_to purchase_order_path(@purchase_order)
+      else
+        render :edit_gr
+      end
+    end
+
     def update
       if @invoice.update(invoice_params)
       redirect_to invoices_path, notice: "Invoice was successfully updated."
@@ -96,39 +111,42 @@ class InvoicesController < ApplicationController
       # On a mis un boutton fomulaire au lieu de simplement faire une route qui apporte le invoice id and purchase order
       # du coup, on a deja fait l'associataion du Purchase order_id a l'invoice
      
-      # on
+      @invoice = Invoice.find(params[:id])
+      @purchase_order = PurchaseOrder.find(params[:format])
+      @invoice.purchase_order = @purchase_order
+
       if !@invoice.orders.select{ |o| o.is_root? }.all?{|o| o.calculate.is_a? Numeric } 
         flash[:alert] = "All services from this invoice do not have a valid Price. Please check invoice details before proceeding"
         redirect_to invoice_path(@invoice)
-      else
+      end
   
-        if @invoice.update(invoice_params)
-          @purchase_order = PurchaseOrder.find(params[:invoice][:purchase_order_id])
-          @invoices = @purchase_order.invoices
-          @orders =[]
-          @po_invoiced = 0
-          @po_budgeted = 0
-          @invoices.each do |i|
-            i.orders.each do|o|
-              if o.is_root?
-                @orders << o 
-                @po_invoiced += o.invoice_price
-                @po_budgeted += o.budget_price
-              end
+      if @invoice.save!
+        # @purchase_order = PurchaseOrder.find(params[:invoice][:purchase_order_id])
+        @invoices = @purchase_order.invoices
+        @orders =[]
+        @po_invoiced = 0
+        @po_budgeted = 0
+        @invoices.each do |i|
+          i.orders.each do|o|
+            if o.is_root?
+              @orders << o 
+              @po_invoiced += o.invoice_price
+              @po_budgeted += o.budget_price
             end
           end
-          @services_id = @orders.map(&:service_id)
-          @services = Service.where(id:@services_id)
-          respond_to do |format|
-            format.html { redirect_to purchase_order_path(@invoice.purchase_order) }
-            format.turbo_stream
-          end
-        else
-          render :show
         end
-
+        @services_id = @orders.map(&:service_id)
+        @services = Service.where(id:@services_id)
+        # respond_to do |format|
+          redirect_to purchase_order_path(@invoice.purchase_order) 
+          # format.turbo_stream
+        # end
+      else
+        render :show
       end
+
     end
+    
 
     def unlink
       @invoice = Invoice.find(params[:id])
@@ -150,10 +168,10 @@ class InvoicesController < ApplicationController
         end
         @services_id = @orders.map(&:service_id)
         @services = Service.where(id:@services_id)
-        respond_to do |format|
-          format.html { redirect_to purchase_order_path(@purchase_order) }
-          format.turbo_stream
-        end
+        # respond_to do |format|
+          redirect_to purchase_order_path(@purchase_order) 
+          # format.turbo_stream
+        # end
       end
     end
 
@@ -180,7 +198,7 @@ class InvoicesController < ApplicationController
     end
   
     def invoice_params
-      params.require(:invoice).permit(:name, :description, :contract_id, :purchase_order_id)
+      params.require(:invoice).permit(:name, :description, :contract_id, :purchase_order_id, :good_receipt, :payment_date)
     end
 
     def send_xls_file(package)

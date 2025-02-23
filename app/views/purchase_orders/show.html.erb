@@ -1,4 +1,4 @@
-<style> body { background-color:rgb(216, 176, 83); } </style>
+<style> body { background-color:grey } </style>
 
 
   <div class=" blue p-3 ">
@@ -7,37 +7,44 @@
 
 
 <%# PO DETAILS %>
-    <h2 class = "d-flex justify-content-center white " >PO <%= @purchase_order.name %> </h2>
-    <% if @purchase_order.contract %>
-      <h6 class = "d-flex justify-content-center gray " ><%= @purchase_order.contract.name %> </h6>
-    <% else %>
-      <h6 class = "d-flex justify-content-center gray " >No contract linked to this PO </h6>
-    <% end %>
-    <h6 class = "d-flex justify-content-center white " ><%= @purchase_order.description %> </h6>
-    <h4 class = "d-flex justify-content-center " >
-        <span class="p-2 text-secondary">  </span> 
-        <% if @purchase_order.budget != nil %>
-          <span class="p-2 text-secondary"> <%= number_with_delimiter(@purchase_order.budget, delimiter:' ') %> </span> 
-          <span class="p-2 text-secondary"> - </span> 
-          <span class="p-2 text-warning "><%= render 'po_budgeted', purchase_order: @purchase_order %></span>
-          <span class="p-2 text-secondary"> = </span> 
-          <span class="p-2 text-secondary "><%= render 'remaining_budget', purchase_order: @purchase_order %></span>
-        <% end %>
-    </h4>
+<div class ="container p-3 m-auto "  data-controller="toggle-budget" >
+
+  <div class = " container w-50 d-flex flex-column  bg-secondary justify-content-center p-3 border border-3 position-relative " >
+      <span class = "p-2 d-flex justify-content-center text-light h1  " >PO <%= @purchase_order.name %> </span>
+      <div class = "p-2 d-flex justify-content-center white h4 text-primary " ><%= @purchase_order.description %> </div>
+      <span class="badge btn btn-outline-light rounded position-absolute top-0 start-0 m-2 " data-action="click->toggle-budget#toggle">BUDGET</span>
+                                                  <%# <% if @purchase_order.contract 
+                                                    <h6 class = "d-flex justify-content-center gray " ><%= @purchase_order.contract.name  </h6>
+                                                  <% else 
+                                                    <h6 class = "d-flex justify-content-center gray " >No contract linked to this PO </h6>
+                                                  <% end %> 
+                                                  
+      <h4 class = "d-flex justify-content-center " >
+          <span class="p-2 text-secondary">  </span> 
+          <% if @purchase_order.budget != nil %>
+            <span class="p-2 text-success"> <%= number_with_delimiter(@purchase_order.budget, delimiter:' ') %> </span> 
+            <span class="p-2 text-light"> - </span> 
+            <span class="p-2 text-warning "><%= render 'po_budgeted', purchase_order: @purchase_order %></span>
+            <span class="p-2 text-light"> = </span> 
+            <span class="p-2 text-primary "><%= render 'remaining_budget', purchase_order: @purchase_order %></span>
+          <% end %>
+      </h4>
+  </div>
 
 
 
 
 
 
-<div class ="container p-3 m-auto ">
-<div class = "d-flex justify-content-center" >
+
+<div class = "d-flex justify-content-center" data-controller="toggle-family" >
 <%# BUDGET %>
-    <div class="  bg-dark border border-3 m-3 p-3 rounded-5 position-relative">  
+    <div class="bg-dark border border-3 m-3 p-3 rounded-5 position-relative d-none" data-toggle-budget-target="budget"  >  
 
       <% if @contract != nil && @contract.services != [] %>
-        <h6 class= "white text-center m-3">
+        <h6 class= "white text-center m-3 ">
           <div class= "container d-flex  justify-content-center">
+            <span class="badge btn btn-outline-light rounded position-absolute top-0 start-0 m-2 " data-action="click->toggle-family#toggle">SPEND</span>
             <span class="d-flex align-items-center text-center text-success me-3 h3">BUDGET</span>
             <span class="p-2 text-success h3 "> <%= number_with_delimiter(@po_lines.sum(&:value), delimiter:' ') %> € </span>
           </div>
@@ -62,16 +69,16 @@
                   class: "text-light text-decoration-none p-2" %>
           </span>
 
-        <% else %>
-         'No contract associated to this PO
-        <% end %>
+      <% else %>
+        'No contract associated to this PO
+      <% end %>
                 
     </div>
-  </h6>
+  
           
 <%# SPEND %>
 
-  <div class = "d-flex justify-content-center blue " >
+  <div class = "d-flex justify-content-center blue d-none " data-toggle-family-target="family" >
     <div class=" bg-dark border border-3 m-3 p-3 rounded-5">   
         <h6 class= "white text-center m-3">
           <div class= "container d-flex m-auto justify-content-center m-3">
@@ -89,56 +96,35 @@
 </div>
 </div>
 <div class ="container p-3 m-auto ">
-<div class = "d-flex justify-content-center" >
-<%# INVOICES APPROVED %>
-    <h6 class= "d-flex justify-content-center">
-      <div class =  " bg-dark border border-3 m-3 p-3 rounded-5 "> 
-        <div class="m-2">
-            <h6 class= " m-3 green text-center">
-              <%# <div class= "container d-flex m-auto justify-content-center m-3"> %>
-                <div class="d-flex align-items-center justify-content-center text-success me-3"> INVOICES APPROVED </div>
-                <% if @po_invoiced != 0 %> 
-                  <div class="p-2 text-success  "><%= render 'po_invoiced', purchase_order: @purchase_order %></div>
-                <% end %>
-              <%# </div> %>
-            </h6>
-          <%= render 'po_invoices_list', invoices: @invoices %>
-        </div>/
-      </div>
-    <h6>
 
-
-<%# INVOICES NOT APPROVED %>
-
-    <h6 class= "d-flex justify-content-center">
-      <div class =  " bg-dark border border-3 m-3 p-3 rounded-5 "> 
-        <div class="m-2">
-            <h6 class= " m-3 green text-center">
-              <%# <div class= "container d-flex m-auto justify-content-center m-3"> %>
-                <div class="d-flex align-items-center text-center text-light me-3"> INVOICES NOT APPROVED </div>
-                <% if @nopo_invoiced != 0 %> 
-                  <div class="p-2 white  "><%= render 'nopo_invoiced', purchase_order: @purchase_order %></div>
-                <% end %>
-              <%# </div> %>
-            </h6>
-          <%= render 'not_approved_invoices_list' %>
-        </div>/
-      </div>
-    <h6>
-
-  <%# <div class ="d-flex justify-content-center">
-      <div class =  " container  p-2">
-        <h4 class= "text-light m-3 text-center "> GR  </h4>
-        <span class="test-end"><%= render 'not_approved_invoices_list'</span>
-      </div>
-  </div> %>
-
-
+<%# INVOICES  %>
+                                 
+  <div class ="d-flex flex-column bg-dark p-2 justify-content-center border border-light border-3 rounded-5">
+    <div class="container text-light bg-dark " >
+      <span class= "d-flex justify-content-center h2  p-2 ">INVOICES</span>
+    </div>
+    <div class="container text-light bg-dark " >
+      <span class="span100 text-start ">INVOICE</span>
+      <span class="span250 text-start ">DESCRIPTION</span>
+      <span class="span150 text-start ">GOOD RECEIPT</span>
+      <span class="span150 text-start">PAYMENT DATE</span>
+      <span class="span150 text-start ">ACTION</span>
+      <span class="span50 text-start "> -</span>
+    </div>
+      <%= turbo_frame_tag "invoices" do %>
+        <% if @all_invoices != nil %>
+          <%= render 'invoices', invoices: @all_invoices  %>
+        <% else %>
+          NO INVOICE FOR THIS PO YET
+        <% end %>
+      <% end %>
+  </div>
+                        
 </div>
-</div>
-<div class = " d-flex justify-content-center align-items-center " >
+
+<div class = " d-flex justify-content-center align-items-center " data-controller="toggle-family" >
 <%# LIST PAYMENTS %>
-    <div class = " justify-content-center blue  " >
+    <div class = " justify-content-center blue d-none " data-toggle-family-target="family" >
       <div class=" bg-dark border border-3 m-3 p-3 rounded-5 position-relative">  
 
           <div class= "d-flex justify-content-center white text-center m-3">
@@ -180,18 +166,24 @@
 
 <%# CHART\ %>
 
-  <% monthly_values = @purchase_order.payments.group_by_month(:date).sum(:value) %>
-  <% accumulated_data = {} %>
-  <% running_total = 0 %>
-  <% monthly_values.sort.each do |month, value| %>
-    <% running_total += value %>
-    <% accumulated_data[month] = running_total %>
-  <% end %>
 
-  <div class= "d-flex border border-3 rounded-5 bg-dark w-50 p-3" >
-        <%= column_chart accumulated_data, dataset: { borderWidth: 3 }, legend: false, width: "600px", height: "400px", colors: ["#b8d5ee"], prefix: "€", thousands: "," , discrete: true, library: { scales: { xAxes: [display: false], yAxes: [display: false]}} %>
+  <%# <div class= "d-flex border border-3 rounded-5 bg-dark w-50 p-3" >
+    <%= column_chart @planned_data, dataset: { borderWidth: 3 }, legend: false, width: "600px", height: "400px", colors: ["#b8d5ee"], prefix: "€", thousands: "," , discrete: true, library: { scales: { xAxes: [display: false], yAxes: [display: false]}} 
+  </div> %>
+
+  <%# <div class="d-flex border border-3 rounded-5 bg-dark w-50 p-3">
+    <%= line_chart  @planned_data , dataset: { borderWidth: 3 }, legend: true, width: "600px", height: "400px", colors: ["#b8d5ee", "#ff0000"], prefix: "€", thousands: "," 
+  </div> %>
+
+  <div class="d-flex border border-3 rounded-5 bg-dark w-50 p-3 position-relative"   >
+    <span class="badge btn btn-outline-light rounded position-absolute top-0 start-0 m-2 " data-action="click->toggle-family#toggle">Payment schedule</span>
+
+    <%= line_chart [
+      { name: "Planned Payments", data: @planned_data },
+      { name: "Budget ", data: @budget_data }
+    ], dataset: { borderWidth: 3 }, legend: true, width: "600px", height: "400px", colors: ["#b8d5ee", "#ff0000"], prefix: "€", thousands: "," %>
   </div>
- 
+  
 
 
 
