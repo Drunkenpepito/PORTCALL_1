@@ -12,7 +12,8 @@ class OrdersController < ApplicationController
       @invoice = Invoice.find(params[:invoice_id])
       @contract = @invoice.contract
       @services = @contract.services
-
+      @root_services = @services.select{ |s| s.is_root? }
+      # @selectors = @services.map { |s| [s.selector_name, s.id] }
     end
 
  

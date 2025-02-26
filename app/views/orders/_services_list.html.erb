@@ -1,0 +1,15 @@
+  <table>
+    <% @root_services.each do |service| %>
+      <% if service.name != "Service not in Contract" %> 
+        <tr class= "text-start">
+          <th class="text-secondary" scope="row">
+            <label >
+              <%= radio_button_tag 'order[service_id]', service.id, false %>
+                <%= service.name %>
+                <%= render 'children_list', services: service.descendants.arrange %>
+            </label>
+          </th>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>

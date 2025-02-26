@@ -1,0 +1,14 @@
+<ul>
+  <% services.each do |service, children| %>
+      <li class= text-start" >
+        <%= radio_button_tag 'order[service_id]', service.id, false %>
+        <%= service.name%>
+        <% if service.calculate.is_a? Numeric %>
+          <span class="green">✔︎</span>
+        <% else %>
+          <span class="text-danger">𝘅</span>
+        <% end %>
+      </li>
+      <%= render 'children_list', services: children if children.present? %>
+  <% end %>
+</ul>
