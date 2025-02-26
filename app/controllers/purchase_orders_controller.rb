@@ -79,13 +79,16 @@ class PurchaseOrdersController < ApplicationController
               @po_invoiced += o.invoice_price
               @po_budgeted += o.budget_price
             end
+            i.budget_price = @po_budgeted
+            i.invoice_price = @po_invoiced
+            i.save!
         end
       end
       @services_id = @orders.map(&:service_id)
       @services = Service.where(id:@services_id)
 
       monthly_values = @purchase_order.payments.group_by_month(:date).sum(:value) 
-      # monthly_values2 = @invoices.group_by_month(:payment_date).sum(:budget) 
+      monthly_values2 = @invoices.group_by_month(:payment_date).sum(:budget_price) 
 
       budget = @po_lines.sum(&:value)
       @budget_data = {}
@@ -98,10 +101,10 @@ class PurchaseOrdersController < ApplicationController
         @planned_data[month] = running_total 
         @budget_data[month] = budget
       end 
-      # monthly_values2.sort.each do |month, value|
-      #   running_total2 += value
-      #   @actual_data[month] = running_total2
-      # end
+      monthly_values2.sort.each do |month, budget_price|
+        running_total2 += budget_price
+        @actual_data[month] = running_total2
+      end
        
     end
 

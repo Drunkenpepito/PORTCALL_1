@@ -151,9 +151,14 @@ class InvoicesController < ApplicationController
     def unlink
       @invoice = Invoice.find(params[:id])
       @purchase_order = @invoice.purchase_order
+      
+      
       if @invoice.update( purchase_order_id: nil)
         
         @invoices = @purchase_order.invoices
+        @nopo_invoices = Invoice.where(purchase_order_id: nil, contract:@contract)
+        @all_invoices = @invoices + @nopo_invoices
+
         @orders =[]
         @po_invoiced = 0
         @po_budgeted = 0
@@ -168,10 +173,10 @@ class InvoicesController < ApplicationController
         end
         @services_id = @orders.map(&:service_id)
         @services = Service.where(id:@services_id)
-        # respond_to do |format|
-          redirect_to purchase_order_path(@purchase_order) 
-          # format.turbo_stream
-        # end
+        respond_to do |format|
+          # redirect_to purchase_order_path(@purchase_order) 
+          format.turbo_stream
+        end
       end
     end
 
@@ -185,10 +190,6 @@ class InvoicesController < ApplicationController
       end
     end
       
-  
-
-
-
 
 
     private

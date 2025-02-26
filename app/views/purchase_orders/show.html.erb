@@ -39,7 +39,7 @@
 
 <div class = "d-flex justify-content-center" data-controller="toggle-family" >
 <%# BUDGET %>
-    <div class="bg-dark border border-3 m-3 p-3 rounded-5 position-relative d-none" data-toggle-budget-target="budget"  >  
+    <div class="bg-dark border border-3 m-3 p-3 rounded-5 position-relative" data-toggle-budget-target="budget"  >  
 
       <% if @contract != nil && @contract.services != [] %>
         <h6 class= "white text-center m-3 ">
@@ -78,7 +78,7 @@
           
 <%# SPEND %>
 
-  <div class = "d-flex justify-content-center blue d-none " data-toggle-family-target="family" >
+  <div class = "d-flex justify-content-center blue " data-toggle-family-target="family" >
     <div class=" bg-dark border border-3 m-3 p-3 rounded-5">   
         <h6 class= "white text-center m-3">
           <div class= "container d-flex m-auto justify-content-center m-3">
@@ -99,13 +99,15 @@
 
 <%# INVOICES  %>
                                  
-  <div class ="d-flex flex-column bg-dark p-2 justify-content-center border border-light border-3 rounded-5">
+  <div class ="d-flex flex-column bg-dark  m-3 justify-content-center border border-light border-4 rounded-5">
     <div class="container text-light bg-dark " >
       <span class= "d-flex justify-content-center h2  p-2 ">INVOICES</span>
     </div>
-    <div class="container text-light bg-dark " >
+    <div class="container text-secondary bg-dark " >
       <span class="span100 text-start ">INVOICE</span>
       <span class="span250 text-start ">DESCRIPTION</span>
+      <span class="span100 text-start ">NET PRICE</span>
+      <span class="span100 text-start ">GROSS PRICE</span>
       <span class="span150 text-start ">GOOD RECEIPT</span>
       <span class="span150 text-start">PAYMENT DATE</span>
       <span class="span150 text-start ">ACTION</span>
@@ -175,13 +177,9 @@
     <%= line_chart  @planned_data , dataset: { borderWidth: 3 }, legend: true, width: "600px", height: "400px", colors: ["#b8d5ee", "#ff0000"], prefix: "€", thousands: "," 
   </div> %>
 
-  <div class="d-flex border border-3 rounded-5 bg-dark w-50 p-3 position-relative"   >
+  <div class="d-flex border border-3 rounded-5 bg-dark w-50 p-3 position-relative m-3"    >
     <span class="badge btn btn-outline-light rounded position-absolute top-0 start-0 m-2 " data-action="click->toggle-family#toggle">Payment schedule</span>
-
-    <%= line_chart [
-      { name: "Planned Payments", data: @planned_data },
-      { name: "Budget ", data: @budget_data }
-    ], dataset: { borderWidth: 3 }, legend: true, width: "600px", height: "400px", colors: ["#b8d5ee", "#ff0000"], prefix: "€", thousands: "," %>
+    <%=  render 'chart' %> 
   </div>
   
 
