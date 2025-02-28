@@ -67,7 +67,7 @@ class PurchaseOrdersController < ApplicationController
       @contract = @purchase_order.contract
       @invoices = @purchase_order.invoices
       @nopo_invoices = Invoice.where(purchase_order_id: nil, contract:@contract)
-      @nopo_invoiced = @nopo_invoices.sum(&:price)
+      @nopo_invoiced = @nopo_invoices.sum(&:invoice_price)
       @all_invoices = @invoices + @nopo_invoices
       @orders = [] 
       @po_invoiced = 0
@@ -76,8 +76,8 @@ class PurchaseOrdersController < ApplicationController
         i.orders.each do|o|
             if o.is_root?
               @orders << o 
-              @po_invoiced += o.invoice_price
-              @po_budgeted += o.budget_price
+              @po_invoiced += o.calculate_gross
+              @po_budgeted += o.calculate_net
             end
             i.budget_price = @po_budgeted
             i.invoice_price = @po_invoiced

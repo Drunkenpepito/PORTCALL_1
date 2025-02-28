@@ -3,7 +3,7 @@
     <tr class="p-auto">
       <th scope="row " style="background-color: #124020;vertical-align: middle;">
         <%= link_to invoice.name.upcase, invoice_path(invoice), class:" m-auto white p-auto " %>
-        <% if !invoice.orders.select{ |o| o.is_root? }.all?{|o| o.calculate.is_a? Numeric } %> 
+        <% if !invoice.orders.includes(:order_variables).select{ |o| o.is_root? }.all?{|o| o.calculate.is_a? Numeric } %> <!-- changes with bullet  -->
            <span class="red">⚠</span>     
         <% end %>  
       </th>

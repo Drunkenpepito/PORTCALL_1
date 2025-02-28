@@ -29,7 +29,12 @@
 
         <div class="form-row">
           <div class="form-group col-md-12 ">
-            <%= f.input :contract_id,  collection: Contract.all, label_method: :name, value_method: :id, prompt: "Select a Contract", input_html: { class: "form-control text-primary", required: true } , label_html: { class: "custom-label" } %>
+            <%= f.input :contract_id,
+              collection: Contract.all,
+              label_method: :display_name,
+              value_method: :id, prompt: "Select a Contract",
+              input_html: { class: "form-control text-primary",required: true } ,
+              label_html: { class: "custom-label" } %>
           </div>
         </div>
 
@@ -47,3 +52,4 @@
     </div>
   </div>
 </div>
+ 

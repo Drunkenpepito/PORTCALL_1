@@ -60,18 +60,7 @@ class Service < ApplicationRecord
     end
   end
 
-  def selector_name
-    if is_root?
-      name
-    else
-      '➖➖' * depth + name
-    end
-  end
-
-  def depth
-    parent.nil? ? 0 : 1 + parent.depth
-  end
-
+  
   # def total_if_no_fomula
   #   self.descendants.reverse.each { |s| s.has_children? && s.formula == "" && s.children.map(&:calculate).all?{ |c| c != nil}? s.value = s.children.sum(&:calculate) && s.save : s.value = 0  }
   # end

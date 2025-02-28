@@ -8,7 +8,7 @@ class InvoicesController < ApplicationController
       # else
       #   @invoices = Invoice.all 
       # end
-      @q = Invoice.ransack(params[:q])
+      @q = Invoice.includes(:orders, :purchase_order).ransack(params[:q])
       @invoices = @q.result(distinct: true) 
      
     end
@@ -51,12 +51,13 @@ class InvoicesController < ApplicationController
 
     def edit_gr
       @invoice = Invoice.find(params[:id])
-      @purchase_order = @invoice.purchase_order
+      @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
+      
     end
 
     def update_gr
       @invoice = Invoice.find(params[:id])
-      @purchase_order = @invoice.purchase_order
+      @purchase_order = PurchaseOrder.find(params[:invoice][:purchase_order_id])
       if @invoice.update(invoice_params)
         redirect_to purchase_order_path(@purchase_order)
       else
@@ -112,7 +113,7 @@ class InvoicesController < ApplicationController
       # du coup, on a deja fait l'associataion du Purchase order_id a l'invoice
      
       @invoice = Invoice.find(params[:id])
-      @purchase_order = PurchaseOrder.find(params[:format])
+      @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
       @invoice.purchase_order = @purchase_order
 
       if !@invoice.orders.select{ |o| o.is_root? }.all?{|o| o.calculate.is_a? Numeric } 
@@ -130,8 +131,8 @@ class InvoicesController < ApplicationController
           i.orders.each do|o|
             if o.is_root?
               @orders << o 
-              @po_invoiced += o.invoice_price
-              @po_budgeted += o.budget_price
+              @po_invoiced += o.calculate_gross
+              @po_budgeted += o.calculate_net
             end
           end
         end
@@ -166,8 +167,8 @@ class InvoicesController < ApplicationController
           i.orders.each do|o|
             if o.is_root?
               @orders << o 
-              @po_invoiced += o.invoice_price
-              @po_budgeted += o.budget_price
+              @po_invoiced += o.calculate_gross
+              @po_budgeted += o.calculate_net
             end
           end
         end

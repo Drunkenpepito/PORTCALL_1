@@ -1,5 +1,7 @@
 
-<div class="d-flex rounded-4 border border-5  bg-light m-3">
+<style> body { background-color: #124020; } </style>
+
+<div class="d-flex rounded-4 border border-5  bg-dark m-3">
     <%= simple_form_for [@invoice,@order], method: :post, url: createorderadhoc_path(@invoice), html: { class: "service form p-auto" } do |f| %>
         <% if @order.errors.any? %>
             <div class="error-message">

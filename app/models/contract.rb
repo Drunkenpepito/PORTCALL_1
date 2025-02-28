@@ -21,4 +21,8 @@ class Contract < ApplicationRecord
             s.has_children?   &&   s.formula == ""  &&   s.children.map(&:calculate).all? { |c| c != nil}?
             s.formula = s.children.sum(&:calculate).to_i   :   s.formula = "" }
     end
+
+    def display_name
+        "#{name} - #{supplier.name}" if supplier.present?
+    end
 end

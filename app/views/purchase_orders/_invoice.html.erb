@@ -4,8 +4,8 @@
                 <div class = " d-flex text-light align-items-center p-1 ">
                    <span class="span100"> <%= link_to invoice.name.upcase, invoice_path(invoice), class:" text-light "  %></span>
                    <span class="span250"> <%= invoice.description %></span>
-                   <span class="span100"> <%= invoice.price %></span>
-                   <span class="span100"> <%= invoice.price %></span>
+                   <span class="span100"> <%= invoice.budget_price %></span>
+                   <span class="span100"> <%= invoice.invoice_price %></span>
                    <span class="span150"><%= invoice.good_receipt  %></span>
                    <span class="span150"><%= invoice.payment_date %></span>
                    <span class="span150"><%= button_to "REMOVE",unlink_invoice_path(invoice),method: :post, data: { turbo_method: :post }, class: " btn btn-sm btn-light rounded-5 border border-dark "  %></span>
@@ -15,12 +15,12 @@
                 <div class = " d-flex text-dark align-items-center p-1">
                    <span class="span100"> <%= link_to invoice.name.upcase, invoice_path(invoice)  %></span>
                    <span class="span250"> <%= invoice.description %></span>
-                   <span class="span100"> <%= invoice.price %></span>
-                   <span class="span100"> <%= invoice.price %></span>
+                   <span class="span100"> <%= invoice.budget_price %></span>
+                   <span class="span100"> <%= invoice.invoice_price %></span>
                    <span class="span150"> <%= invoice.good_receipt  %></span>
                    <span class="span150"><%= invoice.payment_date  %></span>
                    <span class="span150"><%= button_to "APPROVE",goodreceipt_invoice_path(invoice, @purchase_order),class: " btn btn-sm btn-dark  border rounded-5 " if invoice.purchase_order == nil %></span>
-                   <span class="span50"><%= button_to "✏️",edit_gr_invoice_path(invoice),  class: "btn  m-auto  " %></span>
+                   <span class="span50"><%= button_to "✏️",edit_gr_invoice_path(invoice, purchase_order_id: @purchase_order.id), class: "btn  m-auto  " %></span>
                 </div>
                <% end %>
             </div>

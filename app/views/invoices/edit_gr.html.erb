@@ -4,6 +4,7 @@
   <div class ="row bg-dark text-center align-items-center  border rounded-5 m-auto p-5 ">
   <div class= "d-flex justify-content-center align-items-center">
     <%= simple_form_for @invoice, url: update_gr_invoice_path(@invoice),  html: { class: "contract form white" } do |f| %>
+      <%= f.hidden_field :purchase_order_id, value: @purchase_order.id %>
       <% if @invoice.errors.any? %>
         <div class="error-message">
           <%= @invoice.errors.full_messages.to_sentence.capitalize %>

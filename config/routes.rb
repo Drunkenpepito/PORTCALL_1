@@ -98,7 +98,7 @@ Rails.application.routes.draw do
       post 'unlink'
       post 'edit_gr', to: "invoices#edit_gr" 
       patch 'update_gr', to: 'invoices#update_gr'
-      post 'goodreceipt'
+      post 'goodreceipt/:purchase_order_id', to: "invoices#goodreceipt", as: :goodreceipt
     end
 
     collection do

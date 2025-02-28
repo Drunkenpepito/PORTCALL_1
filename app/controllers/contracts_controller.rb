@@ -9,7 +9,7 @@ class ContractsController < ApplicationController
     end
     
     def show
-        @services = @contract.services.select{ |s| s.is_root? }
+        @services = @contract.services.includes(:variables).select{ |s| s.is_root? } # modifie grace a bullet 
         @services_all_contracts = Service.all.select{ |s| s.is_root? }
 
         @contract = Contract.find(params[:id])

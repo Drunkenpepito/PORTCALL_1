@@ -11,13 +11,14 @@
 
   <div class = " container w-50 d-flex flex-column  bg-secondary justify-content-center p-3 border border-3 position-relative " >
       <span class = "p-2 d-flex justify-content-center text-light h1  " >PO <%= @purchase_order.name %> </span>
-      <div class = "p-2 d-flex justify-content-center white h4 text-primary " ><%= @purchase_order.description %> </div>
+      <%# <div class = "p-2 d-flex justify-content-center white h4 text-primary " ><%= @purchase_order.description  </div> %>
       <span class="badge btn btn-outline-light rounded position-absolute top-0 start-0 m-2 " data-action="click->toggle-budget#toggle">BUDGET</span>
-                                                  <%# <% if @purchase_order.contract 
-                                                    <h6 class = "d-flex justify-content-center gray " ><%= @purchase_order.contract.name  </h6>
-                                                  <% else 
-                                                    <h6 class = "d-flex justify-content-center gray " >No contract linked to this PO </h6>
-                                                  <% end %> 
+      <% if @purchase_order.contract %>
+        <div class = "d-flex justify-content-center  h6 text-primary "><%= @purchase_order.contract.name %></div>
+        <div class = "d-flex justify-content-center  h6 text-light "><%= @purchase_order.contract.supplier.name if @purchase_order.contract.supplier.present? %></div>
+      <% else %>
+        <h6 class = "d-flex justify-content-center gray " > No contract linked to this PO </h6>
+      <% end %>
                                                   
       <h4 class = "d-flex justify-content-center " >
           <span class="p-2 text-secondary">  </span> 
@@ -39,7 +40,7 @@
 
 <div class = "d-flex justify-content-center" data-controller="toggle-family" >
 <%# BUDGET %>
-    <div class="bg-dark border border-3 m-3 p-3 rounded-5 position-relative" data-toggle-budget-target="budget"  >  
+    <div class="bg-dark border border-3 m-3 p-3 rounded-5 position-relative d-none" data-toggle-budget-target="budget"  >  
 
       <% if @contract != nil && @contract.services != [] %>
         <h6 class= "white text-center m-3 ">
@@ -78,7 +79,7 @@
           
 <%# SPEND %>
 
-  <div class = "d-flex justify-content-center blue " data-toggle-family-target="family" >
+  <div class = "d-flex justify-content-center blue d-none " data-toggle-family-target="family" >
     <div class=" bg-dark border border-3 m-3 p-3 rounded-5">   
         <h6 class= "white text-center m-3">
           <div class= "container d-flex m-auto justify-content-center m-3">
