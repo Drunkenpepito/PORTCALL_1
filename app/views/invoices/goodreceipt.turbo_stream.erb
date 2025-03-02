@@ -26,4 +26,9 @@
    <%= render "purchase_orders/remaining_budget", purchase_order: @purchase_order %>
 <%end%> 
 
+<%= turbo_stream.update "chart" do %>
+   <%= render "purchase_orders/chart" %>
+<% end %>
+
+
 

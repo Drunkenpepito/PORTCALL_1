@@ -170,13 +170,13 @@
 <%# CHART\ %>
 
 
-  <%# <div class= "d-flex border border-3 rounded-5 bg-dark w-50 p-3" >
-    <%= column_chart @planned_data, dataset: { borderWidth: 3 }, legend: false, width: "600px", height: "400px", colors: ["#b8d5ee"], prefix: "€", thousands: "," , discrete: true, library: { scales: { xAxes: [display: false], yAxes: [display: false]}} 
-  </div> %>
+                            <%# <div class= "d-flex border border-3 rounded-5 bg-dark w-50 p-3" >
+                              <%= column_chart @planned_data, dataset: { borderWidth: 3 }, legend: false, width: "600px", height: "400px", colors: ["#b8d5ee"], prefix: "€", thousands: "," , discrete: true, library: { scales: { xAxes: [display: false], yAxes: [display: false]}} 
+                            </div> %>
 
-  <%# <div class="d-flex border border-3 rounded-5 bg-dark w-50 p-3">
-    <%= line_chart  @planned_data , dataset: { borderWidth: 3 }, legend: true, width: "600px", height: "400px", colors: ["#b8d5ee", "#ff0000"], prefix: "€", thousands: "," 
-  </div> %>
+                            <%# <div class="d-flex border border-3 rounded-5 bg-dark w-50 p-3">
+                              <%= line_chart  @planned_data , dataset: { borderWidth: 3 }, legend: true, width: "600px", height: "400px", colors: ["#b8d5ee", "#ff0000"], prefix: "€", thousands: "," 
+                            </div> %>
 
   <div class="d-flex border border-3 rounded-5 bg-dark w-50 p-3 position-relative m-3"    >
     <span class="badge btn btn-outline-light rounded position-absolute top-0 start-0 m-2 " data-action="click->toggle-family#toggle">Payment schedule</span>

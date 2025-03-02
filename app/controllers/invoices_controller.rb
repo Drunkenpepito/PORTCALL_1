@@ -109,9 +109,6 @@ class InvoicesController < ApplicationController
     end
 
     def goodreceipt
-      # On a mis un boutton fomulaire au lieu de simplement faire une route qui apporte le invoice id and purchase order
-      # du coup, on a deja fait l'associataion du Purchase order_id a l'invoice
-     
       @invoice = Invoice.find(params[:id])
       @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
       @invoice.purchase_order = @purchase_order
@@ -122,7 +119,6 @@ class InvoicesController < ApplicationController
       end
   
       if @invoice.save!
-        # @purchase_order = PurchaseOrder.find(params[:invoice][:purchase_order_id])
         @invoices = @purchase_order.invoices
         @orders =[]
         @po_invoiced = 0

@@ -7,7 +7,7 @@ class Order < ApplicationRecord
   # after_create :create_taxes
   validates :name, presence: true
   has_and_belongs_to_many :taxes
-  after_save :update_invoice_price_and_budget
+  after_save :update_invoice_price
 
   def create_order_variables
     service.variables.sort_by(&:position).each do |v|

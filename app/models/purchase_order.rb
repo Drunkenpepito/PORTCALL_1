@@ -10,7 +10,7 @@ class PurchaseOrder < ApplicationRecord
   end
   
   def self.ransackable_associations(auth_object = nil)
-    ["name", "description"]
+    ["name", "description","contract", "supplier"]
   end
 
 end

@@ -13,7 +13,7 @@
 
 <div class=" d-flex align-items-center justify-content-center blue p-3">
   <%= search_form_for @q do |f| %>
-    <%= f.search_field :name_or_description_cont %>
+    <%= f.search_field :name_or_description_or_contract_name_or_contract_supplier_name_cont %>
     <%= f.submit "🔎" %>
   <% end %>
 </div>

@@ -2,7 +2,7 @@ class OrderVariable < ApplicationRecord
   belongs_to :order
   acts_as_list scope: :order
   
-  after_update_commit :order_update_gross_and_net
+  # after_update_commit :order_update_gross_and_net
 
   private
 

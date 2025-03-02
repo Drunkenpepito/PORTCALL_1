@@ -112,8 +112,8 @@ class OrdersController < ApplicationController
   
     def show 
       @order = Order.includes(:order_variables).find(params[:id])
-      @orders = @order.children 
-     
+      @orders = @order.children.to_a
+      @orders << @order  if @order.children.empty? 
     end
   
 
