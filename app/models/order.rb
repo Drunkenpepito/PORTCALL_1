@@ -8,6 +8,7 @@ class Order < ApplicationRecord
   validates :name, presence: true
   has_and_belongs_to_many :taxes
   after_save :update_invoice_price
+  # after_update :update_invoice_price
 
   def create_order_variables
     service.variables.sort_by(&:position).each do |v|
@@ -81,39 +82,41 @@ class Order < ApplicationRecord
   # end
   # 
   #
-
-  def calculate_net
-    calculated = calculate
-    net_price = if !self.has_children?
-        (calculated * ( 1 + taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4) if calculated.is_a? Numeric
-    else
-        self.children.sum(&:calculate_net)
-    end
-    # save
-  end
-
-  def calculate_gross
-    calculated = calculate
-    gross_price = if !has_children?
-        ((calculated * ( 1 + taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)* ( 1 + taxes.where(isfee:false).sum(&:percentage)*0.01)).round(4) if calculated.is_a? Numeric
-    else
-        children.sum(&:calculate_gross)
-    end
-  end
-
-  private
-
+  
   def update_invoice_price
+    raise
     return unless invoice.present?
     invoice.calculate_net
     invoice.calculate_gross
   end
 
-  # def update_gross_and_net
-  #   calculate_gross
-  #   calculate_net
-  # end
+  def update_gross_and_net
+    calculate_gross
+    calculate_net
+  end
 
+  
+  def calculate_net
+    calculated = calculate
+    net_price = if !self.has_children?
+      (calculated * ( 1 + taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4) if calculated.is_a? Numeric
+    else
+      self.children.sum(&:calculate_net)
+    end
+    # save
+  end
+  
+  def calculate_gross
+    calculated = calculate
+    gross_price = if !has_children?
+      ((calculated * ( 1 + taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)* ( 1 + taxes.where(isfee:false).sum(&:percentage)*0.01)).round(4) if calculated.is_a? Numeric
+    else
+      children.sum(&:calculate_gross)
+    end
+  end
+  
+  
+  private
 
 
 

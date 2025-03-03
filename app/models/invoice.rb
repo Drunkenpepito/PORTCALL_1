@@ -5,6 +5,8 @@ class Invoice < ApplicationRecord
   has_many :taxes, dependent: :destroy
   belongs_to :purchase_order, optional: true # allows us to remove value back to nil
 
+  after_initialize :set_default_price
+
 
   scope :with_supplier, ->(supplier) { where( supplier:) }
 
@@ -33,21 +35,25 @@ end
 # end
 # 
 
-def calculate_gross
-  invoice_price = 0
-  orders.each do |order|
-    invoice_price += order.calculate_gross if order.is_root? && !order.calculate_gross.nil?
+def gross
+  self.invoice_price = 0
+  orders.select{ |o| o.is_root? }.each do |order|
+      self.invoice_price += order.calculate_gross  if  !order.calculate_gross.nil?
   end
-  save
+  self.save
 end
 
-def calculate_net
-  budget_price = 0
-  orders.each do |order|
-    budget_price += order.calculate_net if order.is_root? && !order.calculate_net.nil?
+def net
+  self.budget_price = 0
+  orders.select{ |o| o.is_root? }.each do |order|
+      self.budget_price += order.calculate_net if !order.calculate_net.nil?
   end
-  save
+  self.save
 end
 
+def set_default_price
+  self.invoice_price ||= 0
+  self.budget_price ||= 0
+end
 
 end
