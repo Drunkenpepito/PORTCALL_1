@@ -152,7 +152,7 @@ class OrdersController < ApplicationController
     private
     
     def order_params
-      params.require(:order).permit(:name, :description, :ancestry, :service_id)
+      params.require(:order).permit(:name, :description, :ancestry, :service_id, :invoice_id, :net, :gross)
     end
 
     def set_order

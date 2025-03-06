@@ -107,20 +107,20 @@
             <td class="text-start h5" ><%= link_to order.name.upcase, order_path(order), class:"blue" %> </td>
           <%# FEES %>
                 <% order.invoice.taxes.where(isfee:true).each do |tax| %>
-                  <% if order.calculate.is_a? Numeric %> 
+                  <% if order.net.is_a? Numeric %> 
                     <td><%= render "tax_order", order:order, tax:tax  %></td>
                   <% else %>
                     <td>❌</td>
                   <% end %>
                 <% end %>
           <%# BUDGET PRICE %>
-                <% if order.calculate.is_a? Numeric %> 
+                <% if order.net.is_a? Numeric %> 
                   <td class="text-center"><%= render "budget_price", order:order %>
                 <% else %>
                   <td>❌</td>
                 <% end %>
           <%# TAXES %>
-                <% if order.calculate.is_a? Numeric %> 
+                <% if order.net.is_a? Numeric %> 
                   <% @order.invoice.taxes.where(isfee:false).each do |tax| %>
                     <td><%= render "tax_order", order:order, tax:tax  %></td>
                   <% end %>
@@ -128,7 +128,7 @@
                   <td>❌</td>
                 <% end %>
           <%# INVOICE PRICE   %>
-                <% if order.calculate.is_a? Numeric %> 
+                <% if order.gross.is_a? Numeric %> 
                     <td><%= render "invoice_price", order:order %></td>
                 <% else %>
                   <td>❌</td>

@@ -3,12 +3,11 @@ class Order < ApplicationRecord
   belongs_to :service
   belongs_to :invoice
   has_many :order_variables, -> { order(position: :asc) }, dependent: :destroy
-  after_create :create_order_variables
-  # after_create :create_taxes
   validates :name, presence: true
   has_and_belongs_to_many :taxes
-  after_save :update_invoice_price
-  # after_update :update_invoice_price
+  
+  after_create :create_order_variables
+
 
   def create_order_variables
     service.variables.sort_by(&:position).each do |v|
@@ -44,8 +43,6 @@ class Order < ApplicationRecord
     result
   end
 
-
-
   def formula
     if order_variables != []
       order_variables.sort_by(&:position).map do |v|
@@ -58,60 +55,35 @@ class Order < ApplicationRecord
       #pour avoir le bon calculate  
     end
   end
-
-  # def budget_price
-  #   if !self.has_children? 
-  #       (self.calculate * ( 1 + self.taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4) if self.calculate.is_a? Numeric
-  #   else
-  #     # POSSIBLE QU'IL Y AIT UN PB ICI SI UN DES ORDER.PRICE N'EST PAS UN NUMERIC
-  #     if self.children.all?{|o| o.budget_price.is_a? Numeric } 
-  #       self.children.sum(&:budget_price)
-  #     end
-  #   end
-  # end
-
-  # def invoice_price
-  #   if !self.has_children?
-  #       ((self.calculate * ( 1 + self.taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)* ( 1 + self.taxes.where(isfee:false).sum(&:percentage)*0.01)).round(4) if self.calculate.is_a? Numeric
-  #   else
-  #     # POSSIBLE QU'IL Y AIT UN PB ICI SI UN DES ORDER.PRICE N'EST PAS UN NUMERIC
-  #     if self.children.all?{|o| o.invoice_price.is_a? Numeric } 
-  #       self.children.sum(&:invoice_price)
-  #     end
-  #   end
-  # end
-  # 
-  #
   
-  def update_invoice_price
-    raise
-    return unless invoice.present?
-    invoice.calculate_net
-    invoice.calculate_gross
-  end
-
   def update_gross_and_net
     calculate_gross
     calculate_net
   end
 
-  
   def calculate_net
     calculated = calculate
-    net_price = if !self.has_children?
-      (calculated * ( 1 + taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4) if calculated.is_a? Numeric
-    else
-      self.children.sum(&:calculate_net)
+    calculated_net = (calculated.is_a?(Numeric)) ? (calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)).round(4) : nil
+    unless calculated_net.nil?
+      new_net = if !has_children?
+                  calculated_net
+                else
+                  children.sum(&:net)
+                end
+      update_column(:net, new_net)
     end
-    # save
   end
-  
+
   def calculate_gross
     calculated = calculate
-    gross_price = if !has_children?
-      ((calculated * ( 1 + taxes.where(isfee:true).sum(&:percentage)*0.01)).round(4)* ( 1 + taxes.where(isfee:false).sum(&:percentage)*0.01)).round(4) if calculated.is_a? Numeric
-    else
-      children.sum(&:calculate_gross)
+    calculated_gross = (calculated.is_a?(Numeric)) ? ((calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)).round(4) * (1 + taxes.where(isfee: false).sum(&:percentage) * 0.01)).round(4) : nil
+    unless calculated_gross.nil?
+      new_gross = if !has_children?
+                    calculated_gross
+                   else
+                    children.sum(&:gross)
+                   end
+      update_column(:gross, new_gross)
     end
   end
   

@@ -72,18 +72,18 @@ class PurchaseOrdersController < ApplicationController
       @orders = [] 
       @po_invoiced = 0
       @po_budgeted = 0
-      @invoices.each do |i|
-        i.orders.each do|o|
-            if o.is_root?
-              @orders << o 
-              @po_invoiced += o.calculate_gross
-              @po_budgeted += o.calculate_net
-            end
-            i.budget_price = @po_budgeted
-            i.invoice_price = @po_invoiced
-            i.save!
-        end
-      end
+      # @invoices.each do |i|
+      #   i.orders.each do|o|
+      #       if o.is_root?
+      #         @orders << o 
+      #         @po_invoiced += o.calculate_gross
+      #         @po_budgeted += o.calculate_net
+      #       end
+      #       i.budget_price = @po_budgeted
+      #       i.invoice_price = @po_invoiced
+      #       i.save!
+      #   end
+      # end
       @services_id = @orders.map(&:service_id)
       @services = Service.where(id:@services_id)
 

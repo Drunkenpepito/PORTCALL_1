@@ -1,8 +1,8 @@
               <%= turbo_frame_tag "order_#{order.id}_tax#{tax.id}" do %>
-                <% if order.calculate %>
+                <% if order.net %>
                   <% if tax.orders.include?(order)%>
                   <div class ="d-flex justify-content-center">
-                    <span class="d-flex  align-items-center"><%= (order.calculate * tax.percentage * 0.01).round(2) %></span>
+                    <span class="d-flex  align-items-center"><%= (order.net * tax.percentage * 0.01).round(2) %></span>
                     <span class="text-warning "><%= button_to "𝘅" , order_unlink_tax_path(order, tax), method: :post ,   class: "btn btn-sm"%></span>
                   </div>
                   <% else %>

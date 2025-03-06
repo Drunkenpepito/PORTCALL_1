@@ -25,6 +25,7 @@ end
   def update
     @order_variable = OrderVariable.find(params[:id])
     @order = @order_variable.order
+    @invoice = @order.invoice
     if @order_variable.update(order_variable_params)
       # @order.path.reverse.each { |o|  o.calculate }
       respond_to do |format|

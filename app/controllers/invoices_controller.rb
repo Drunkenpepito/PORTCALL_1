@@ -120,18 +120,18 @@ class InvoicesController < ApplicationController
   
       if @invoice.save!
         @invoices = @purchase_order.invoices
-        @orders =[]
-        @po_invoiced = 0
-        @po_budgeted = 0
-        @invoices.each do |i|
-          i.orders.each do|o|
-            if o.is_root?
-              @orders << o 
-              @po_invoiced += o.calculate_gross
-              @po_budgeted += o.calculate_net
-            end
-          end
-        end
+        # @orders =[]
+        # @po_invoiced = 0
+        # @po_budgeted = 0
+        # @invoices.each do |i|
+        #   i.orders.each do|o|
+        #     if o.is_root?
+        #       @orders << o 
+        #       @po_invoiced += o.calculate_gross
+        #       @po_budgeted += o.calculate_net
+        #     end
+        #   end
+        # end
         @services_id = @orders.map(&:service_id)
         @services = Service.where(id:@services_id)
         # respond_to do |format|
@@ -156,18 +156,18 @@ class InvoicesController < ApplicationController
         @nopo_invoices = Invoice.where(purchase_order_id: nil, contract:@contract)
         @all_invoices = @invoices + @nopo_invoices
 
-        @orders =[]
-        @po_invoiced = 0
-        @po_budgeted = 0
-        @invoices.each do |i|
-          i.orders.each do|o|
-            if o.is_root?
-              @orders << o 
-              @po_invoiced += o.calculate_gross
-              @po_budgeted += o.calculate_net
-            end
-          end
-        end
+        # @orders =[]
+        # @po_invoiced = 0
+        # @po_budgeted = 0
+        # @invoices.each do |i|
+        #   i.orders.each do|o|
+        #     if o.is_root?
+        #       @orders << o 
+        #       @po_invoiced += o.calculate_gross
+        #       @po_budgeted += o.calculate_net
+        #     end
+        #   end
+        # end
         @services_id = @orders.map(&:service_id)
         @services = Service.where(id:@services_id)
         respond_to do |format|
@@ -188,7 +188,6 @@ class InvoicesController < ApplicationController
     end
       
 
-
     private
 
     def set_invoice
@@ -196,7 +195,7 @@ class InvoicesController < ApplicationController
     end
   
     def invoice_params
-      params.require(:invoice).permit(:name, :description, :contract_id, :purchase_order_id, :good_receipt, :payment_date)
+      params.require(:invoice).permit(:name, :description, :contract_id, :purchase_order_id, :good_receipt, :payment_date, :invoice_price, :budget_price)
     end
 
     def send_xls_file(package)
