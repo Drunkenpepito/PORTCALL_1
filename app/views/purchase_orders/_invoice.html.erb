@@ -1,8 +1,8 @@
-         <%= turbo_frame_tag invoice do %>
+<%= turbo_frame_tag invoice do %>
             <div class="container m-auto bg-secondary text-secondary  border border-light " >
                 <% if invoice.purchase_order == @purchase_order %> 
                 <div class = " d-flex text-light align-items-center p-1 ">
-                   <span class="span100"> <%= link_to invoice.name.upcase, invoice_path(invoice), class:" text-light "  %></span>
+                   <span class="span100"> <%= link_to invoice.name.upcase, invoice_path(invoice), data: { turbo: false }, class:" text-light "  %></span>
                    <span class="span250"> <%= invoice.description %></span>
                    <span class="span100"> <%= invoice.budget_price %></span>
                    <span class="span100"> <%= invoice.invoice_price %></span>
@@ -13,7 +13,7 @@
                 </div>
                <% else %>
                 <div class = " d-flex text-dark align-items-center p-1">
-                   <span class="span100"> <%= link_to invoice.name.upcase, invoice_path(invoice)  %></span>
+                   <span class="span100"> <%= link_to invoice.name.upcase, invoice_path(invoice), data: { turbo: false }  %></span>
                    <span class="span250"> <%= invoice.description %></span>
                    <span class="span100"> <%= invoice.budget_price %></span>
                    <span class="span100"> <%= invoice.invoice_price %></span>
