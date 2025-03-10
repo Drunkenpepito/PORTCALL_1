@@ -1,5 +1,6 @@
 class PurchaseOrdersController < ApplicationController
-  
+  before_action :update_chart, only: [:show]
+  include ChartUpdater
 
     def index
       # @purchase_orders = PurchaseOrder.all
@@ -63,50 +64,19 @@ class PurchaseOrdersController < ApplicationController
       @purchase_order = PurchaseOrder.find(params[:id])
       @po_lines = PoLine.where(purchase_order_id: @purchase_order.id)
       @purchase_order.budget = @po_lines.sum(:value)
-      @purchase_order.save!
+      # @purchase_order.save!
       @contract = @purchase_order.contract
       @invoices = @purchase_order.invoices
       @nopo_invoices = Invoice.where(purchase_order_id: nil, contract:@contract)
       @nopo_invoiced = @nopo_invoices.sum(&:invoice_price)
       @all_invoices = @invoices + @nopo_invoices
-      @orders = [] 
-      @po_invoiced = 0
-      @po_budgeted = 0
-      # @invoices.each do |i|
-      #   i.orders.each do|o|
-      #       if o.is_root?
-      #         @orders << o 
-      #         @po_invoiced += o.calculate_gross
-      #         @po_budgeted += o.calculate_net
-      #       end
-      #       i.budget_price = @po_budgeted
-      #       i.invoice_price = @po_invoiced
-      #       i.save!
-      #   end
-      # end
+      @orders = @invoices.map(&:orders).flatten.select{ |o| o.is_root? }
       @services_id = @orders.map(&:service_id)
       @services = Service.where(id:@services_id)
-
-      monthly_values = @purchase_order.payments.group_by_month(:date).sum(:value) 
-      monthly_values2 = @invoices.group_by_month(:payment_date).sum(:budget_price) 
-
-      budget = @po_lines.sum(&:value)
-      @budget_data = {}
-      @actual_data = {}
-      @planned_data = {} 
-      running_total = 0 
-      running_total2 = 0
-      monthly_values.sort.each do |month, value| 
-        running_total += value 
-        @planned_data[month] = running_total 
-        @budget_data[month] = budget
-      end 
-      monthly_values2.sort.each do |month, budget_price|
-        running_total2 += budget_price
-        @actual_data[month] = running_total2
-      end
-       
+      @services_id = @orders.map(&:service_id)
+      @services = Service.where(id:@services_id)
     end
+
 
   def excel_po
     @purchase_orders = PurchaseOrder.includes(invoices: :orders).all

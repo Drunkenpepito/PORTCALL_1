@@ -1,6 +1,6 @@
 <% @total = 0 %>
     <% @invoices.each do |invoice| %>
          <%# <% invoice.orders.sort_by(&:ancestry).reverse!.each { |order| order.formula.save!} %>  
-        <% @total += Order.where(service_id:service.id, invoice_id:invoice.id).sum(&:calculate_net) %>
+        <% @total += Order.where(service_id:service.id, invoice_id:invoice.id).sum(&:net) %>
     <% end %>
 <%= number_with_delimiter(@total.round(0), delimiter:' ') %>

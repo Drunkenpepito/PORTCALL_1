@@ -40,7 +40,7 @@
 
 <div class = "d-flex justify-content-center" data-controller="toggle-family" >
 <%# BUDGET %>
-    <div class="bg-dark border border-3 m-3 p-3 rounded-5 position-relative d-none" data-toggle-budget-target="budget"  >  
+    <div class="bg-dark border border-3 m-3 p-3 rounded-5 position-relative " data-toggle-budget-target="budget"  >  
 
       <% if @contract != nil && @contract.services != [] %>
         <h6 class= "white text-center m-3 ">
@@ -79,12 +79,12 @@
           
 <%# SPEND %>
 
-  <div class = "d-flex justify-content-center blue d-none " data-toggle-family-target="family" >
+  <div class = "d-flex justify-content-center blue " data-toggle-family-target="family" >
     <div class=" bg-dark border border-3 m-3 p-3 rounded-5">   
         <h6 class= "white text-center m-3">
           <div class= "container d-flex m-auto justify-content-center m-3">
             <span class="d-flex align-items-center text-center text-warning h3 me-3">SPEND</span>
-            <%  if @services!= [] %>
+            <%  if @services != [] %>
               <span class="p-2 text-warning h3"><%= render 'po_budgeted_twin', purchase_order: @purchase_order %></span>
             <% end %>
           </div>

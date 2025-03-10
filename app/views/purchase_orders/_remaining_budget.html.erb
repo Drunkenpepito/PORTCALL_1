@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "budget_#{purchase_order.id}" do %> 
-    <% if  purchase_order.budget != nil && purchase_order.budget >= @po_budgeted %>
-        <span class="p-2 "><%= number_with_delimiter(purchase_order.budget -= @po_budgeted.round(0), delimiter:' ') %> </span>
+    <% if  purchase_order.budget != nil && purchase_order.budget >= purchase_order.spend  %>
+        <span class="p-2 "><%= number_with_delimiter(purchase_order.budget -= purchase_order.spend.round(0), delimiter:' ') %> </span>
     <% else %>
         <span class="p-2 ">0</span> 
     <% end %>

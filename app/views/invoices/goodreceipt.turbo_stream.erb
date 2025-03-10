@@ -1,34 +1,26 @@
-<%= turbo_stream.append "po_invoices_list"  do %>
-  <%= render "purchase_orders/po_invoice", invoice: @invoice %>  
-<%end%>
 
-<%= turbo_stream.remove "not_approved_invoice_#{@invoice.id}"  do %>
-  <%= render "purchase_orders/not_approved_invoices_list", invoices: @invoices %>
-<%end%>
 
-<%= turbo_stream.replace "po_services_list" do %>
-   <%= render "purchase_orders/po_services_list", services: @services %>
-<%end%> 
+
+
+<%= turbo_stream.remove @invoice %>
+
+<%= turbo_stream.append "invoices" do %>
+   <%= render "purchase_orders/invoice", invoice: @invoice %>
+<% end  %>
 
 <%= turbo_stream.update "po_budgeted_#{@purchase_order.id}" do %>
-   <%= render "purchase_orders/po_budgeted", purchase_order: @purchase_order %>
-<%end%> 
-
-<%= turbo_stream.update "po_budgeted_#{@purchase_order.id}_twin" do %>
-   <%= render "purchase_orders/po_budgeted_twin", purchase_order: @purchase_order %>
-<%end%> 
-
-<%= turbo_stream.update "po_invoiced_#{@purchase_order.id}" do %>
-   <%= render "purchase_orders/po_invoiced", purchase_order: @purchase_order %>
-<%end%> 
-
-<%= turbo_stream.update "remaining_budget_#{@purchase_order.id}" do %>
-   <%= render "purchase_orders/remaining_budget", purchase_order: @purchase_order %>
-<%end%> 
-
-<%= turbo_stream.update "chart" do %>
-   <%= render "purchase_orders/chart" %>
+  <%= render "purchase_orders/po_budgeted", purchase_order: @purchase_order %>
 <% end %>
 
+<%= turbo_stream.update "po_budgeted_#{@purchase_order.id}_twin" do %>
+  <%= render "purchase_orders/po_budgeted_twin", purchase_order: @purchase_order  %>
+<% end %>
 
+<%= turbo_stream.update "po_services_list" do %>
+  <%= render  "purchase_orders/po_services_list", services: @services  %>
+<% end %>
+
+<%= turbo_stream.replace "chart" do %>
+  <%= render "purchase_orders/chart" %>
+<% end %>
 

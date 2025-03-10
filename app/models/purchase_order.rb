@@ -13,4 +13,13 @@ class PurchaseOrder < ApplicationRecord
     ["name", "description","contract", "supplier"]
   end
 
+
+  def calculate_spend
+    self.spend = 0
+    invoices.each do |invoice|
+       self.spend += invoice.budget_price if !invoice.budget_price.nil?
+    end
+    save
+  end
+
 end
