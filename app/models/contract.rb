@@ -25,4 +25,21 @@ class Contract < ApplicationRecord
     def display_name
         "#{name} - #{supplier.name}" if supplier.present?
     end
+
+
+    # def calculate_contract_invoice_price
+    #     self.invoice_price = 0
+    #     orders.select{ |o| o.is_root? }.each do |order|
+    #         self.invoice_price += order.gross  if  !order.gross.nil?
+    #     end
+    #     save
+    #   end
+    
+    #   def calculate_contract_budget_price
+    #     self.budget_price = 0
+    #     orders.select{ |o| o.is_root? }.each do |order|
+    #         self.budget_price += order.net if !order.net.nil?
+    #     end
+    #     save
+    #   end
 end

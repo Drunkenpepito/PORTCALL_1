@@ -83,11 +83,11 @@ class OrdersController < ApplicationController
       @order.name = @service.name
       @order.service = @service
       @order.invoice = @invoice
-
-   
-
+     
       if @order.save!
         orderize(@service, @order)
+        @order.calculate_net
+        @order.calculate_gross
         redirect_to invoice_path(@invoice) 
       else
         render :new
@@ -174,6 +174,8 @@ class OrdersController < ApplicationController
         o.service_id = s.id
         o.parent = order
         o.invoice = order.invoice
+        o.gross = s.gross
+        o.net = s.net
         # @tab.each do |t|
         #   t[1].orders << o if t[0].services << s
         # end

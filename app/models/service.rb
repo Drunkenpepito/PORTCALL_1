@@ -44,19 +44,50 @@ class Service < ApplicationRecord
     end
   end
 
-  def budget_price
-    if !self.has_children? && self.calculate != nil
-      (self.calculate * ( 1 + self.tax_regimes.where(isfee:true).sum(&:percentage)*0.01)).round(4)
-    else
-      self.children.sum(&:budget_price)
+  # def budget_price
+  #   if !self.has_children? && self.calculate != nil
+  #     (self.calculate * ( 1 + self.tax_regimes.where(isfee:true).sum(&:percentage)*0.01)).round(4)
+  #   else
+  #     self.children.sum(&:budget_price)
+  #   end
+  # end
+
+  # def invoice_price
+  #   if !self.has_children?  && self.calculate != nil
+  #   ((self.calculate * ( 1 + self.tax_regimes.where(isfee:true).sum(&:percentage)*0.01)).round(4)* ( 1 + self.tax_regimes.where(isfee:false).sum(&:percentage)*0.01)).round(4) 
+  #   else
+  #     self.children.sum(&:invoice_price)
+  #   end
+  # end
+
+  def update_gross_and_net
+    calculate_gross
+    calculate_net
+  end
+
+  def calculate_net
+    calculated = calculate
+    calculated_net = (calculated.is_a?(Numeric)) ? (calculated * (1 + tax_regimes.where(isfee: true).sum(&:percentage) * 0.01)).round(4) : nil
+    unless calculated_net.nil?
+      new_net = if !has_children?
+                  calculated_net
+                else
+                  children.sum(&:net)
+                end
+      update_column(:net, new_net)
     end
   end
 
-  def invoice_price
-    if !self.has_children?  && self.calculate != nil
-    ((self.calculate * ( 1 + self.tax_regimes.where(isfee:true).sum(&:percentage)*0.01)).round(4)* ( 1 + self.tax_regimes.where(isfee:false).sum(&:percentage)*0.01)).round(4) 
-    else
-      self.children.sum(&:invoice_price)
+  def calculate_gross
+    calculated = calculate
+    calculated_gross = (calculated.is_a?(Numeric)) ? ((calculated * (1 + tax_regimes.where(isfee: true).sum(&:percentage) * 0.01)).round(4) * (1 + tax_regimes.where(isfee: false).sum(&:percentage) * 0.01)).round(4) : nil
+    unless calculated_gross.nil?
+      new_gross = if !has_children?
+                    calculated_gross
+                   else
+                    children.sum(&:gross)
+                   end
+      update_column(:gross, new_gross)
     end
   end
 
