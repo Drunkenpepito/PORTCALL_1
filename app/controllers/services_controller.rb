@@ -126,7 +126,8 @@ class ServicesController < ApplicationController
         @tax = TaxRegime.find(params[:id])
         @service = Service.find(params[:service_id])
         @tax.services << @service
-        @service.update_gross_and_net  # recalcul synchronisé
+        @service.update_net  
+        @service.update_gross
         respond_to do |format|
           format.html {redirect_to service_path(@service.parent)}
           format.turbo_stream
@@ -137,7 +138,8 @@ class ServicesController < ApplicationController
         @tax = TaxRegime.find(params[:id])
         @service = Service.find(params[:service_id])
         @tax.services.delete(@service)
-        @service.update_gross_and_net
+        @service.update_net  
+        @service.update_gross
         respond_to do |format|
           format.html {redirect_to service_path(@service.parent)}
           format.turbo_stream

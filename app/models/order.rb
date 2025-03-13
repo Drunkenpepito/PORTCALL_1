@@ -86,6 +86,23 @@ class Order < ApplicationRecord
       update_column(:gross, new_gross)
     end
   end
+
+  def update_gross
+    calculated = calculate
+    calculated_gross = (calculated.is_a?(Numeric)) ? ((calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)).round(4) * (1 + taxes.where(isfee: false).sum(&:percentage) * 0.01)).round(4) : nil
+    unless calculated_gross.nil?
+      update(gross: calculated_gross)
+    end
+  end
+
+  def update_net
+    calculated = calculate
+    calculated_net = (calculated.is_a?(Numeric)) ? (calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)).round(4) : nil
+    unless calculated_net.nil?
+    update(net: calculated_net)
+    end
+  end
+
   
   
   private
