@@ -2,7 +2,7 @@
     <% if service.has_children? %>
         <%= service.children.sum(&:gross) %>
     <% else %>
-        <% if service.calculate.is_a? Numeric  %>
+        <% if service.gross.is_a? Numeric  %>
             <%= render "services/invoice_price", service:@service %>
         <% end %>
     <% end %>

@@ -2,6 +2,8 @@ class TaxRegimesController < ApplicationController
 
   before_action :set_tax_regime, only: [:edit, :update, :destroy]
 
+ 
+
   def new
     @contract = Contract.find(params[:contract_id])
     @tax_regime = TaxRegime.new
@@ -35,6 +37,8 @@ class TaxRegimesController < ApplicationController
       @contract = @tax_regime.contract
       redirect_to contract_path( @contract), notice: "Tax was successfully destroyed."
   end
+
+
 
   private
     

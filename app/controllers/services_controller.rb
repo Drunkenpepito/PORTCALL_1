@@ -1,8 +1,8 @@
 class ServicesController < ApplicationController
 
     before_action :set_service, only: [:show, :update, :calculate]
-    # before_action :show_totals, only: [:show]
-    
+    # after_action :update_gross_and_net, only: [:link_tax_service, :unlink_tax_service]
+
     def index
         @services = Service.all
         @contract = Contract.find(params[:contract_id])
@@ -123,16 +123,10 @@ class ServicesController < ApplicationController
     end
 
     def link_tax_service
-        # je veux faire une action reactive en modifiant une data de la DB
-        # Stimulus n'est pas le meilleur choix 
-        # Bouton --> Action controller --> Turbo frame/stream pour atualiser DOM parait la meilleure option dans ce cas
-        # l'action necessaire est: ajouter un element de la table de jointure tax_services
-        # on ecrit la route qui nous amene les params id tax et id service 
-        # Il reste la methode d'ecriture du record dans la table de jointure:
         @tax = TaxRegime.find(params[:id])
         @service = Service.find(params[:service_id])
-        # request.format = :turbo_stream
         @tax.services << @service
+        @service.update_gross_and_net  # recalcul synchronisé
         respond_to do |format|
           format.html {redirect_to service_path(@service.parent)}
           format.turbo_stream
@@ -143,6 +137,7 @@ class ServicesController < ApplicationController
         @tax = TaxRegime.find(params[:id])
         @service = Service.find(params[:service_id])
         @tax.services.delete(@service)
+        @service.update_gross_and_net
         respond_to do |format|
           format.html {redirect_to service_path(@service.parent)}
           format.turbo_stream
@@ -215,6 +210,13 @@ class ServicesController < ApplicationController
 
     def set_service
         @service = Service.find(params[:id])
+    end
+
+    def update_gross_and_net
+        @service = Service.find(params[:service_id])
+        @service.update_gross
+        @service.update_net
+        @service.ancestors.each(&:update_gross_and_net)
     end
     
     def service_params

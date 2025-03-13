@@ -16,7 +16,6 @@ class OrdersController < ApplicationController
       # @selectors = @services.map { |s| [s.selector_name, s.id] }
     end
 
- 
 
     def neworderadhoc
       @order= Order.new
@@ -131,7 +130,7 @@ class OrdersController < ApplicationController
       @tax = Tax.find(params[:id])
       @order = Order.find(params[:order_id])
       @tax.orders << @order
-      # request.format = :turbo_stream
+      @order.update_gross_and_net
       respond_to do |format|
         format.html {redirect_to order_path(@order.parent)}
         format.turbo_stream
@@ -142,7 +141,7 @@ class OrdersController < ApplicationController
       @tax = Tax.find(params[:id])
       @order = Order.find(params[:order_id])
       @tax.orders.delete(@order)
-      # request.format = :turbo_stream
+      @order.update_gross_and_net
       respond_to do |format|
         format.html {redirect_to order_path(@order.parent)}
         format.turbo_stream

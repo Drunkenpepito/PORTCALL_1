@@ -2,7 +2,6 @@
     "services/tax_service" , tax:@tax, service: @service 
 <%end%> 
 
- 
 
 <%# UPDATE TAX or FEE %>
 <%= turbo_stream.update "service_#{@service.id}_tax_#{@tax.id}" do %>
@@ -32,4 +31,8 @@
     <%= render "services/invoice_prices" ,  service: @service.parent %>
   <% end %>
 <% end %>
+
+
+
+
 

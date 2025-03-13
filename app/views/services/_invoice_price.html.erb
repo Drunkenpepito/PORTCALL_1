@@ -1,3 +1,3 @@
 <%= turbo_frame_tag "invoice_price_service#{service.id}" do %>
-    <span class= "green"><%= service.gross if service.calculate.is_a? Numeric %></span>
+    <span class= "green"><%= service.gross %></span>
 <% end %>
