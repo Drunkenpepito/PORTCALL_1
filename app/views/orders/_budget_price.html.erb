@@ -1,4 +1,4 @@
 
 <%= turbo_frame_tag "budget_price_#{order.id}" do %>
-    <%= order.net.to_f.round(4) if order.net.is_a? Numeric %>
+    <%= order.net if order.net.is_a? Numeric %>
 <% end %>
