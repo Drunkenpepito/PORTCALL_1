@@ -1,3 +1,8 @@
 <%= turbo_stream.update "variable_list" do %>
   <%= render "variables/variable_list", service: @service %>
 <%end%>
+
+
+<%= turbo_stream.update "budget_price_service_#{@service.id}" do %>
+  <%= render "services/budget_price", service: @service %>
+<%end%>
