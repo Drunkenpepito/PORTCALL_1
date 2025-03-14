@@ -27,7 +27,7 @@
           <% @orders.each do |order| %>
             <tr>
               <th scope="row">
-                <li class="blue" data-controller="toggle-family"><%= link_to order.name.upcase, order_path(order), class:" h4" %>
+                <li class="blue" data-controller="toggle-family"><%= link_to order.name.upcase, order_path(order), class:"h4" %>
                   <% if  order.gross.is_a? Numeric %>
                     <span><%= link_to order.gross, order_path(order), class:"green" %></span>
                   <% else %>
@@ -36,7 +36,7 @@
                   <button class="btn" data-action="click->toggle-family#toggle">
                   ▽
                   </button>
-                  <span data-toggle-family-target="family" ><%= render 'sub_menu_orders', orders: order.descendants.arrange  %></span>
+                  <span data-toggle-family-target="family"><%= render 'sub_menu_orders', orders: order.descendants.arrange  %></span>
                 </li>
               </th>
             </tr>
