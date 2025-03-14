@@ -2,7 +2,7 @@
                 <% if order.net %>
                   <% if tax.orders.include?(order)%>
                   <div class ="d-flex justify-content-center">
-                    <span class="d-flex  align-items-center"><%= (order.calculate * tax.percentage * 0.01).round(4) %></span>
+                    <span class="d-flex  align-items-center"><%= (order.calculate * tax.percentage * 0.01).to_f.round(4) %></span>
                     <span class="text-warning "><%= button_to "𝘅" , order_unlink_tax_path(order, tax), method: :post ,   class: "btn btn-sm"%></span>
                   </div>
                   <% else %>

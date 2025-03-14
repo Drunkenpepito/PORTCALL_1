@@ -63,7 +63,7 @@ class Order < ApplicationRecord
 
   def calculate_net
     calculated = calculate
-    calculated_net = (calculated.is_a?(Numeric)) ? (calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)).to_f.round(4) : nil
+    calculated_net = (calculated.is_a?(Numeric)) ? (calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)).round(4) : nil
     unless calculated_net.nil?
       new_net = if !has_children?
                   calculated_net
@@ -76,7 +76,7 @@ class Order < ApplicationRecord
 
   def calculate_gross
     calculated = calculate
-    calculated_gross = (calculated.is_a?(Numeric)) ? ((calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)).to_f.round(4) * (1 + taxes.where(isfee: false).sum(&:percentage) * 0.01)).to_f.round(4) : nil
+    calculated_gross = (calculated.is_a?(Numeric)) ? ((calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)).round(4) * (1 + taxes.where(isfee: false).sum(&:percentage) * 0.01)).round(4) : nil
     unless calculated_gross.nil?
       new_gross = if !has_children?
                     calculated_gross
@@ -89,7 +89,7 @@ class Order < ApplicationRecord
 
   def update_gross
     calculated = calculate
-    calculated_gross = (calculated.is_a?(Numeric)) ? ((calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)).round(4) * (1 + taxes.where(isfee: false).sum(&:percentage) * 0.01)).to_f.round(4) : nil
+    calculated_gross = (calculated.is_a?(Numeric)) ? ((calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)).round(4) * (1 + taxes.where(isfee: false).sum(&:percentage) * 0.01)).round(4) : nil
     unless calculated_gross.nil?
       update(gross: calculated_gross)
     end
@@ -97,7 +97,7 @@ class Order < ApplicationRecord
 
   def update_net
     calculated = calculate
-    calculated_net = (calculated.is_a?(Numeric)) ? (calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)).round(4) : nil
+    calculated_net = (calculated.is_a?(Numeric)) ? (calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)) : nil
     unless calculated_net.nil?
     update(net: calculated_net)
     end
