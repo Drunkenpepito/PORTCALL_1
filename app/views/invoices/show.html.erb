@@ -9,11 +9,13 @@
     <% end %>
 
 <div class= "container d-flex m-auto justify-content-center m-3">
-  <h2 class = "d-flex green me-3" >INVOICE <%= @invoice.name %> </h2>
+  <h2 class = "d-flex text-light me-3" >INVOICE <%= @invoice.name %> </h2>
   <h2 style="background-color: #124020;" class="text-center "><%= link_to "✏️",edit_invoice_path(@invoice),class: "btn white m-auto " %></h2>
-
 </div>
-<h6 class = "d-flex justify-content-center white m-3" ><%= @invoice.description %> </h6>
+
+<div class= "container d-flex m-auto justify-content-center m-3 text-success"> <%= @invoice.invoice_price %> </div>
+<%# <h6 class = "d-flex justify-content-center white m-3" ><%= @invoice.description  </h6> %>
+
 <% if @invoice.purchase_order %> 
   <div class = "d-flex justify-content-center white m-3" >
     <h6 class = " white btn btn-warning m-3 border " >PO <%= link_to @invoice.purchase_order.name, purchase_order_path(@invoice.purchase_order) %> </h6>
@@ -26,7 +28,7 @@
       <% if @orders != nil %>
           <% @orders.each do |order| %>
             <tr>
-              <th scope="row">
+              <td  scope="row">
                 <li class="blue" data-controller="toggle-family"><%= link_to order.name.upcase, order_path(order), class:" h4" %>
                   <% if  order.gross.is_a? Numeric %>
                     <span class="text-center text-success fs-4"><%= render "orders/invoice_price", order:order %></span>
@@ -38,7 +40,7 @@
                   </button>
                   <span data-toggle-family-target="family" ><%= render 'sub_menu_orders', orders: order.descendants.arrange  %></span>
                 </li>
-              </th>
+              </td>
             </tr>
           <% end %>
       <% end %>

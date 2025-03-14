@@ -132,6 +132,7 @@ class OrdersController < ApplicationController
       @tax.orders << @order
       @order.update_net
       @order.update_gross
+
       respond_to do |format|
         format.html {redirect_to order_path(@order.parent)}
         format.turbo_stream
