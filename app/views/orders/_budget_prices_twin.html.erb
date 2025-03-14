@@ -1,0 +1,10 @@
+
+<%= turbo_frame_tag "budget_prices_twin#{order.id}" do %>
+    <% if order.children != [] && order.children.all?{|o| o.net.is_a? Numeric } %>
+        <%= order.children.sum(&:net) %>
+    <% else %>
+        <% if order.net.is_a? Numeric  %>
+            <%= render "orders/budget_price", order:order %>
+        <% end %>
+    <% end %>
+<% end %>

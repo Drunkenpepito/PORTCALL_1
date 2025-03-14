@@ -92,7 +92,7 @@ class Order < ApplicationRecord
     calculated_gross = (calculated.is_a?(Numeric)) ? ((calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)).round(4) * (1 + taxes.where(isfee: false).sum(&:percentage) * 0.01)).round(4) : nil
     unless calculated_gross.nil?
       update(gross: calculated_gross)
-      order.ancestors.each(&:update_gross)
+      ancestors.each(&:update_gross)
     end
   end
 
@@ -101,7 +101,7 @@ class Order < ApplicationRecord
     calculated_net = (calculated.is_a?(Numeric)) ? (calculated * (1 + taxes.where(isfee: true).sum(&:percentage) * 0.01)) : nil
     unless calculated_net.nil?
     update(net: calculated_net)
-    order.ancestors.each(&:update_net)
+    ancestors.each(&:update_net)
     end
 
   end

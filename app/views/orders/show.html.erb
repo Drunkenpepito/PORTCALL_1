@@ -38,7 +38,7 @@
     <div class="container rounded-4 border border-3 border-secondaary  bg-dark <%='d-none' if @order.has_children?%>">
                               
                                 <div class= "d-flex justify-content-center">
-                                  <span  class="text-success fs-4 text-center"> <%= render "budget_prices", order:@order %> </span>
+                                  <span  class="text-success fs-4 text-center"> <%= render "budget_prices_twin", order:@order %> </span>
                                 </div>
                                 <%= turbo_frame_tag "order_variable_list" do %>
                                   <% if  @order.order_variables.empty? %>
