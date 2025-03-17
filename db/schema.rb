@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_17_194830) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_17_205752) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -202,7 +202,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_17_194830) do
 
   create_table "tax_regimes", force: :cascade do |t|
     t.string "name"
-    t.integer "percentage"
+    t.decimal "percentage", default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "contract_id"
@@ -212,7 +212,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_17_194830) do
 
   create_table "taxes", force: :cascade do |t|
     t.string "name"
-    t.integer "percentage"
+    t.decimal "percentage", default: "0.0"
     t.boolean "isfee"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
