@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
 
     # skip_before_action :authenticate_user!
-    before_action :set_order, only: [:show, :edit, :update, :destroy]
+    before_action :set_order, only: [:show, :edit, :update, :destroy, :edit_comment]
 
     def index
     end
@@ -95,10 +95,21 @@ class OrdersController < ApplicationController
   
     def destroy
       @order.destroy!    
+      @order.calculate_net
+      @order.calculate_gross
         redirect_to invoice_path(@order.invoice) 
     end
 
     def edit
+    end
+
+    def edit_comment
+      @order = Order.find(params[:id])
+      if @order.update(comment: params[:order][:comment])
+        redirect_to order_path(@order), notice: "Comment was successfully updated."
+      else
+        render :edit_comment
+      end
     end
 
     def update
@@ -113,6 +124,7 @@ class OrdersController < ApplicationController
       @order = Order.includes(:order_variables).find(params[:id])
       @orders = @order.children.to_a
       @orders << @order  if @order.children.empty? 
+      @invoice= @order.invoice
     end
   
 
@@ -151,10 +163,28 @@ class OrdersController < ApplicationController
       end
     end
 
+    def change_ancestry
+      @og_service = Order.find(params[:id])        
+      @new_parent_service = Order.find(params[:parent_id]) unless params[:parent_id] == "123"
+      @type = params[:target_type]
+      if  params[:parent_id] == "123"
+          @og_service.ancestry = @og_service.root.ancestry
+      else
+          @og_service.parent = @new_parent_service
+      end
+      if @og_service.save!
+          request.format = :turbo_stream
+           respond_to do |format|
+              format.turbo_stream
+              format.html {redirect_to invoice_path(@og_service.invoice), notice: "Service was successfully moved."}
+           end
+      end
+  end
+
     private
     
     def order_params
-      params.require(:order).permit(:name, :description, :ancestry, :service_id, :invoice_id, :net, :gross)
+      params.require(:order).permit(:name, :description, :ancestry, :service_id, :invoice_id, :net, :gross, :comment)
     end
 
     def set_order

@@ -2,7 +2,11 @@ class Variable < ApplicationRecord
   belongs_to :service
   acts_as_list scope: :service 
 
-  after_update_commit :service_update_gross_and_net
+  after_create :service_update_gross_and_net
+  after_update :service_update_gross_and_net
+  after_destroy :service_update_gross_and_net
+
+  validates :value, format: { with: /\A[^,]*\z/, message: "Please replace  ',' with '.' 🙏 " }
 
   private
 

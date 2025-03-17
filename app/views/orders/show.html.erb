@@ -7,7 +7,8 @@
 <% else %>
   <%= link_to sanitize("&larr; Back"), invoice_path( @order.invoice) , class:"btn btn-secondary border border-3"%>
 <% end %>
-<%= link_to "Add Service",newchildorder_order_path(@order),class: "btn btn-warning border border-3 text-secondary" %>
+<%= link_to sanitize("✚ Contract Service"), new_invoice_order_path(@invoice), class: "btn btn-warning border border-3 text-secondary"%>
+<%= link_to "✚ Other Service",newchildorder_order_path(@order),class: "btn btn-warning border border-3 text-secondary" %>
 
 
 <div class = "d-flex justify-content-center h3 " > <%=  link_to @order.invoice.name.upcase, invoice_path(@order.invoice) , class:"green"%></div>

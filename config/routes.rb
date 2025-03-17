@@ -69,6 +69,7 @@ Rails.application.routes.draw do
       get :calculate
       get :newchildorder # cas ou on veut creer un order ad hoc qui a un parent
       post "orders/:id/createchildorder", to:"orders#createchildorder", as: :createchildorder
+      post 'edit_comment', to: 'orders#edit_comment'
     end
     resources :order_variables, only: [:new, :create]
     post "taxes/:id/link_tax_order", to:"orders#link_tax_order", as: :link_tax

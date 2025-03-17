@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_14_143659) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_17_194830) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -105,6 +105,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_14_143659) do
     t.text "description"
     t.decimal "net", default: "0.0"
     t.decimal "gross", default: "0.0"
+    t.text "comment"
     t.index ["ancestry"], name: "index_orders_on_ancestry"
     t.index ["invoice_id"], name: "index_orders_on_invoice_id"
     t.index ["service_id"], name: "index_orders_on_service_id"
@@ -177,8 +178,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_14_143659) do
     t.text "description"
     t.boolean "agency_fee"
     t.integer "value"
-    t.integer "net", default: 0
-    t.integer "gross", default: 0
+    t.decimal "net", default: "0.0"
+    t.decimal "gross", default: "0.0"
     t.index ["ancestry"], name: "index_services_on_ancestry"
     t.index ["contract_id"], name: "index_services_on_contract_id"
   end

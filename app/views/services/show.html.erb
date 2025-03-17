@@ -105,7 +105,8 @@
 
 
 
-<!--   CALCULATOR IS DISPLAYED ONLY IF CHILDREN -->
+<!--   CALCULATOR IS DISPLAYED ONLY IF NO CHILDREN -->
+
   <% if !@service.has_children?  %>
     <div class="container rounded-4 border border-5 bg-dark <%='d-none' if @service.has_children?%>">
 
@@ -113,7 +114,7 @@
 
                                 
                                 <div class= "d-flex justify-content-center">
-                                  <span  class="text-success fs-4 text-center"> <%= render "budget_prices", service:@service %> </span>
+                                  <span  class="text-success fs-4 text-center"> <%= render "invoice_prices", service:@service %> </span>
                                 </div>
 
                                 <%= turbo_frame_tag "variable_list" do %>
@@ -146,14 +147,14 @@
     </div>
 
 
-    <%# DESCRIPTION %>
+
+  <% end %>
+
+    <%# DESCRIPTION SHOWED WHATEVER THERE ARE CHIDREN OR NOT%>
     <div class="d-flex justify-content-center m-2 text-secondary">
       <% if @service.description != nil %>
         <%= @service.description %>
       <% end %>
     </div>
-
-  <% end %>
-
 
 </div>

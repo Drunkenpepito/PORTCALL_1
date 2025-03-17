@@ -1,7 +1,7 @@
 <ul>
    <% orders.each do |order, children| %>
-      <li>
-        <%= link_to_unless_current order.name, order_path(order),class: " #{ 'blue fw-light' if order.ancestry != nil } " %>
+      <li draggable="true" id= <%= order.id %> >
+        <%= link_to_unless_current order.name, order_path(order),class: " #{ 'blue fw-light' if order.ancestry != nil } ", id:order.id %>
         <% if order.gross.is_a? Numeric %> 
           <span><%= link_to order.gross, order_path(order), class:" badge text-wrap green" %></span>
             <% if @invoice.taxes != []  %> 

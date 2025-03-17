@@ -208,7 +208,7 @@ class ServicesController < ApplicationController
           var.save!
           # binding.pry
         end
-      end
+    end
 
     def set_service
         @service = Service.find(params[:id])

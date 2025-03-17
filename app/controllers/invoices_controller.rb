@@ -46,15 +46,13 @@ class InvoicesController < ApplicationController
     end
   end
 
-    
-
   def edit
+
   end
 
   def edit_gr
     @invoice = Invoice.find(params[:id])
     @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
-    
   end
 
   def update_gr
@@ -69,11 +67,11 @@ class InvoicesController < ApplicationController
 
   def update
     if @invoice.update(invoice_params)
-    redirect_to invoices_path, notice: "Invoice was successfully updated."
+      redirect_to invoices_path, notice: "Invoice was successfully updated."
     else
-    render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
-  end
+  end  
 
   
 

@@ -15,7 +15,14 @@
 
 <div class ="d-flex justify-content-center">
   <table class="table  table table-bordered table-hover border border-light border-2">
-
+    <thead>
+      <tr class="text-center table-dark h6 border border-3 border-light">
+        <th class="fs-6 text-light" scope="col">SUPPLIER</th>
+        <th scope="fs-6 text-light" scope="col">CONTRACT</th>
+        <th class="fs-6 text-light"  scope="col"></th>
+        <th class="fs-6 text-light" scope="col"></th>
+      </tr>
+    </thead>
     <tbody>
       <% if @contracts != nil %>
         <%= render @contracts %>

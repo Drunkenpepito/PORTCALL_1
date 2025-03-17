@@ -8,6 +8,7 @@
         <%= image_tag 'excel.jpeg', width: 30, height: 30 %>
     <% end %>
 
+
 <div class= "container d-flex m-auto justify-content-center m-3">
   <h2 class = "d-flex text-light me-3" >INVOICE <%= @invoice.name %> </h2>
   <h2 style="background-color: #124020;" class="text-center "><%= link_to "✏️",edit_invoice_path(@invoice),class: "btn white m-auto " %></h2>
@@ -23,24 +24,31 @@
 <% end %>
 <!--   MENU 2   -->
 <div class=" d-flex align-items-center justify-content-center blue p-3 ">
-  <table class="table table-success table-striped  table-hover border border-secondary border-5">
+  <table class="table table-success  table-hover border border-secondary border-5" data-controller="dragparent">
+    <thead>
+      <tr class="text-center table-dark h6 border border-3 border-light">
+        <th id="123" class="text-start fs-6 text-light" scope="col" draggable="true" >SERVICE</th>
+        <th class="text-start fs-6 text-light" scope="col">PRICE</th>
+        <th class="text-center fs-6 text-light"> COMMENT </th>
+        <th class="text-center fs-6 text-light"> </th>
+
+      </tr>
+    </thead>
     <tbody>
       <% if @orders != nil %>
           <% @orders.each do |order| %>
             <tr>
-              <td  scope="row">
-                <li class="blue" data-controller="toggle-family"><%= link_to order.name.upcase, order_path(order), class:" h4" %>
-                  <% if  order.gross.is_a? Numeric %>
-                    <span class="text-center text-success fs-4"><%= render "orders/invoice_price", order:order %></span>
-                  <% else %>
-                    ❌
-                  <% end %>
+              <td  >
+                <li class="blue" data-controller="toggle-family"><%= link_to order.name.upcase, order_path(order), class:"h4", draggable:true , id:order.id %>
                   <button class="btn" data-action="click->toggle-family#toggle">
                   ▽
                   </button>
                   <span data-toggle-family-target="family" ><%= render 'sub_menu_orders', orders: order.descendants.arrange  %></span>
                 </li>
               </td>
+              <td class="text-center text-success fs-4" scope="row " style="background-color:#rgb(211, 248, 231);vertical-align: middle;"><%= render "orders/invoice_price", order:order %></td>
+              <td class="text-center text-success fs-6" scope="row " style="background-color:#rgb(211, 248, 231);vertical-align: middle;"><%= order.comment %></td>
+              <td class="text-center text-success fs-6" scope="row " style="background-color:#rgb(211, 248, 231);vertical-align: middle;"><%= link_to "✏️", edit_comment_order_path(order),data: { method: :post },  class: "btn btn-sm m-auto" %></td>
             </tr>
           <% end %>
       <% end %>

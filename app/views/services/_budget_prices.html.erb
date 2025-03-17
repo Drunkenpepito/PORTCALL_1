@@ -3,8 +3,8 @@
     <% if service.has_children? %>
         <%= service.children.sum(&:gross) %>
     <% else %>
-        <% if service.net.is_a? Numeric  %>
-            <%= render "services/budget_price", service:service %>
+        <% if service.gross.is_a? Numeric  %>
+            <%= render "services/invoice_price", service:service %>
         <% end %>
     <% end %>
     €

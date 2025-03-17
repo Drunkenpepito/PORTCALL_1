@@ -1,21 +1,21 @@
 
 
     <tr class="p-auto">
-      <th scope="row " style="background-color: #124020;vertical-align: middle;">
+      <th scope="row " style="background-color:#366e47;vertical-align: middle;">
         <%= link_to invoice.name.upcase, invoice_path(invoice), class:" m-auto white p-auto " %>
         <% if !invoice.orders.includes(:order_variables).select{ |o| o.is_root? }.all?{|o| o.gross.is_a? Numeric  } %> <!-- changes with bullet  -->
            <span class="red">⚠</span>     
         <% end %>  
       </th>
 
-      <td style="background-color: #124020;vertical-align: middle;" class="text-center p-auto"><%= render "invoice_price", invoice:invoice %></td>
-      <td style="background-color: #124020;vertical-align: middle;"><%= link_to invoice.description, invoice_path(invoice), class:" text-secondary p-auto" %></td>
-      <td class=" text-center " style="background-color: #124020;vertical-align: middle;">
-        <div class="white"><%= invoice.purchase_order.description if invoice.purchase_order %></div>
+      <td style="background-color: #366e47;vertical-align: middle;" class="text-start p-auto"><%= render "invoice_price", invoice:invoice %></td>
+      <td style="background-color: #366e47;vertical-align: middle;"><%= link_to invoice.description, invoice_path(invoice), class:" text-light p-auto" %></td>
+      <td class=" text-start" style="background-color: #366e47;vertical-align: middle;font-size: 0.8em;">
+        <div><%= link_to invoice.contract.supplier.name, supplier_path(invoice.contract.supplier), class:" text-light p-auto"  if invoice.contract.supplier  %></div>
       </td>
-      <td style="background-color: #124020;" class="col-m-auto ">
-    
+      <td style="background-color: #366e47;;vertical-align: middle;font-size: 0.8em; " class="col ">
+        <div class="white"><%= link_to invoice.purchase_order.name , purchase_order_path(invoice.purchase_order), class:" text-light p-auto"  if invoice.purchase_order %></div>
       </td>
-      <td style="background-color: #124020;" class="text-center "><%= link_to "✏️",edit_invoice_path(invoice),class: "btn white m-auto " %></td>
-      <td style="background-color: #124020;"><%= button_to "❌",invoice_path(invoice),method: :delete,class: "btn white m-auto" %></td>
+      <td style="background-color: #366e47;" class="text-center "><%= link_to "✏️",edit_invoice_path(invoice),class: "btn btn-sm m-auto " %></td>
+      <td style="background-color: #366e47;"><%= button_to "❌",invoice_path(invoice),method: :delete,class: "btn btn-sm m-auto" %></td>
     </tr>

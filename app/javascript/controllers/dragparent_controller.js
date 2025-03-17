@@ -44,6 +44,7 @@ export default class extends Controller {
     
 
       const url = "/services/change_ancestry"
+      console.log(url)
       patch(url,{
         headers: {
           "Content-Type": "application/json",

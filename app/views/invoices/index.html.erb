@@ -17,6 +17,17 @@
 
 <div class ="d-flex justify-content-center">
   <table class="table table-striped  table-hover border border-light">
+    <thead>
+      <tr class="text-center table-dark h6 border border-3 border-light">
+        <th class="text-start fs-6 text-light" scope="col">INVOICE</th>
+        <th scope="text-start fs-6 text-light"> PRICE </th>
+        <th class="text-start fs-6 text-light"  scope="col">SERVICES</th>
+        <th class="text-start fs-6 text-light" scope="col">SUPPLIER</th>
+        <th class="text-start fs-6 text-light" scope="col">PO</th>
+        <th class="text-start fs-6 text-light" scope="col"></th>
+        <th class="text-start fs-6 text-light" scope="col"></th>
+      </tr>
+    </thead>
     <tbody>
       <%= render @invoices %>
     </tbody>
