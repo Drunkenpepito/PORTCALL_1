@@ -30,8 +30,66 @@
                                 <% end %>
                               </span>
 
+
+
+<!--   CALCULATOR IS DISPLAYED ONLY IF NO CHILDREN -->
+
+  <% if !@service.has_children?  %>
+    <div class="container rounded-4 border border-5 bg-dark <%='d-none' if @service.has_children?%>">
+
+      <!--   FORMULA = VARIABLE LIST    -->
+
+                                
+                                <div class= "d-flex justify-content-center">
+                                  <span  class="text-success fs-4 text-center"> <%= render "invoice_prices", service:@service %> </span>
+                                </div>
+
+                                <%= turbo_frame_tag "variable_list" do %>
+                                  <% if  @service.variables.empty? %>
+                                    <h4>NO FORMULA</h4>
+                                  <% else %>
+                                    <%= render "variables/variable_list", service: @service , class:"calculator-card p-3"%>
+                                  <% end %>
+                                <% end %>
+
+        <!--   FORMULA ELEMENTS   -->
+                                <div class="d-flex ">
+
+                                  <%# <h2>ADD OPERATOR</h2> %>
+                                  <div class="operateur-add me-5 m-3 p-2">
+                                    <%= render 'buttons/operators' %>
+                                  </div>
+
+                                  <%# <h2>ADD VARIABLE</h2> %>
+                                  <div class=" m-auto">
+                                    <div class="d-flex align-items-center ">
+                                      <%= render 'buttons/add_value', service: @service,
+                                      variable: Variable.new( operator:false ,fixed: false,role: "value") %>
+                                    </div>
+                                  </div>
+
+
+                                </div>
+
+    </div>
+
+
+
+  <% end %>
+
+    <%# DESCRIPTION SHOWED WHATEVER THERE ARE CHIDREN OR NOT%>
+    <div class="d-flex justify-content-center m-2 text-secondary">
+      <% if @service.description != nil %>
+        <%= @service.description %>
+      <% end %>
+    </div>
+
+</div>
+
+
+
 <!--   SERVICE FAMILY IS DISPLAYED ONLY IF CHILDREN %> -->
-  <% if @service.has_children?  %>
+  <%# <% if @service.has_children?  %> 
     <table class="table table-striped table-hover border border-secondary border-3 m-auto p-auto<%='d-none' if !@service.has_children? %>">
 
       
@@ -101,60 +159,6 @@
       </tbody>
 
     </table>
-  <% end %>
+  <%# <% end %> 
 
 
-
-<!--   CALCULATOR IS DISPLAYED ONLY IF NO CHILDREN -->
-
-  <% if !@service.has_children?  %>
-    <div class="container rounded-4 border border-5 bg-dark <%='d-none' if @service.has_children?%>">
-
-      <!--   FORMULA = VARIABLE LIST    -->
-
-                                
-                                <div class= "d-flex justify-content-center">
-                                  <span  class="text-success fs-4 text-center"> <%= render "invoice_prices", service:@service %> </span>
-                                </div>
-
-                                <%= turbo_frame_tag "variable_list" do %>
-                                  <% if  @service.variables.empty? %>
-                                    <h4>NO FORMULA</h4>
-                                  <% else %>
-                                    <%= render "variables/variable_list", service: @service , class:"calculator-card p-3"%>
-                                  <% end %>
-                                <% end %>
-
-        <!--   FORMULA ELEMENTS   -->
-                                <div class="d-flex ">
-
-                                  <%# <h2>ADD OPERATOR</h2> %>
-                                  <div class="operateur-add me-5 m-3 p-2">
-                                    <%= render 'buttons/operators' %>
-                                  </div>
-
-                                  <%# <h2>ADD VARIABLE</h2> %>
-                                  <div class=" m-auto">
-                                    <div class="d-flex align-items-center ">
-                                      <%= render 'buttons/add_value', service: @service,
-                                      variable: Variable.new( operator:false ,fixed: false,role: "value") %>
-                                    </div>
-                                  </div>
-
-
-                                </div>
-
-    </div>
-
-
-
-  <% end %>
-
-    <%# DESCRIPTION SHOWED WHATEVER THERE ARE CHIDREN OR NOT%>
-    <div class="d-flex justify-content-center m-2 text-secondary">
-      <% if @service.description != nil %>
-        <%= @service.description %>
-      <% end %>
-    </div>
-
-</div>
