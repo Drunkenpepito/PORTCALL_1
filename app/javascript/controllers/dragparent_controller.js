@@ -3,6 +3,7 @@ import { patch } from "@rails/request.js"; // to help the http request
 
 
 export default class extends Controller {
+  static values = { type: String  }
   connect() {
     // Add the event listeners for drag and drop
     // bind the event handlers to the controller functions
@@ -23,6 +24,7 @@ export default class extends Controller {
     // triggered when an element or text selection is being dragged over a valid drop target
     // Prevent default to allow drop
     ev.preventDefault()
+    
   }
 
   dropHandler(ev) {
@@ -34,16 +36,17 @@ export default class extends Controller {
     const draggedElement = document.getElementById(og_service_id)
     const targetElement = ev.target
     const targetType = targetElement.tagName.toLowerCase();
-    console.log(og_service_id)
-    console.log(draggedElement.id)
-    console.log(targetElement.id)
-    console.log(targetType)
+    // console.log(og_service_id)
+    // console.log(draggedElement.id)
+    // console.log(targetElement.id)
+    // console.log(targetType)
+    // console.log(ev.target)
 
     // Check if the drop target is a valid drop zone
     if (targetElement && targetElement.id && targetElement !== draggedElement) {
     
 
-      const url = "/services/change_ancestry"
+      const url = `/${this.typeValue}/change_ancestry`
       console.log(url)
       patch(url,{
         headers: {

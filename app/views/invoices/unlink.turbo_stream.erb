@@ -23,6 +23,8 @@ turbo_stream.update "remaining_budget_#{@purchase_order.id}" do %>
 
 -->
 
+
+
 <%= turbo_stream.remove @invoice %>
 
 <%= turbo_stream.append "invoices" do %>
@@ -41,6 +43,6 @@ turbo_stream.update "remaining_budget_#{@purchase_order.id}" do %>
   <%= render  "purchase_orders/po_services_list", services: @services  %>
 <% end %>
 
-<%= turbo_stream.replace "chart" do %>
-  <%= render "purchase_orders/chart" %>
+<%= turbo_stream.replace "chart_#{@purchase_order.id}" do %>
+  <%= render "purchase_orders/chart", planned_data: @planned_data, actual_data: @actual_data, budget_data: @budget_data  %>
 <% end %>

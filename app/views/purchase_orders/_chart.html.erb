@@ -1,8 +1,8 @@
- <%= turbo_frame_tag "chart" do %>
+ <%= turbo_frame_tag "chart_#{@purchase_order.id}" do %>
     <%= line_chart [
-        { name: "Planned Payments", data: @planned_data },
-        { name: "Budget ", data: @budget_data },
-        { name: "Actual Payments ", data: @actual_data }
+        { name: "Planned Payments", data: planned_data },
+        { name: "Budget ", data: budget_data },
+        { name: "Actual Payments ", data: actual_data }
     ], dataset: { borderWidth: 3 }, legend: true, width: "600px", height: "400px", colors: ["#b8d5ee", "#ff0000", "#00ff00"], prefix: "€", thousands: "," %>
 <% end %>
 

@@ -1,7 +1,7 @@
 class InvoicesController < ApplicationController
   include ChartUpdater
   before_action :set_invoice, only: [:show, :edit, :update, :destroy, :goodreceipt]
-  after_action :update_chart, only: [:unlink, :goodreceipt]
+  # after_action :update_chart, only: [:unlink, :goodreceipt]
 
   def index
     # if params[:search] != nil
@@ -52,7 +52,7 @@ class InvoicesController < ApplicationController
 
   def edit_gr
     @invoice = Invoice.find(params[:id])
-    @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
+    @purchase_order = PurchaseOrder.find(params[:purchase_order]) 
   end
 
   def update_gr
@@ -65,13 +65,18 @@ class InvoicesController < ApplicationController
     end
   end
 
+
+
   def update
     if @invoice.update(invoice_params)
-      redirect_to invoices_path, notice: "Invoice was successfully updated."
+      respond_to do |format|
+        format.html { redirect_to invoices_path, notice: "Invoice was successfully updated." }
+        # format.turbo_stream
+      end
     else
       render :edit, status: :unprocessable_entity
     end
-  end  
+  end
 
   
 
@@ -124,6 +129,7 @@ class InvoicesController < ApplicationController
       @orders = @invoices.map(&:orders).flatten.select{ |o| o.is_root? }
       @services_id = @orders.map(&:service_id)
       @services = Service.where(id:@services_id)
+      update_chart
       respond_to do |format|
         
         # redirect_to purchase_order_path(@invoice.purchase_order) 
@@ -150,6 +156,7 @@ class InvoicesController < ApplicationController
       @orders = @invoices.map(&:orders).flatten.select{ |o| o.is_root? }
       @services_id = @orders.map(&:service_id)
       @services = Service.where(id:@services_id)
+      update_chart
       respond_to do |format|
         # redirect_to purchase_order_path(@purchase_order) 
         format.turbo_stream

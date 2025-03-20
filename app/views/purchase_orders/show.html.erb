@@ -180,7 +180,7 @@
 
   <div class="d-flex border border-3 rounded-5 bg-dark w-50 p-3 position-relative m-3"    >
     <span class="badge btn btn-outline-light rounded position-absolute top-0 start-0 m-2 " data-action="click->toggle-family#toggle">Payment schedule</span>
-    <%=  render 'chart' %> 
+    <%=  render 'chart', planned_data: @planned_data, actual_data: @actual_data, budget_data: @budget_data  %> 
   </div>
   
 

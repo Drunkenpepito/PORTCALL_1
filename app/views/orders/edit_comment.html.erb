@@ -1,4 +1,4 @@
-<%= simple_form_for @order, url: edit_comment_order_path(@order), method: :post, html: { class: "card" } do |f| %>
+<%= simple_form_for @order, html: { class: "card" } do |f| %>
   <% if @order.errors.any? %>
     <div class="error-message">
       <%= @order.errors.full_messages.to_sentence.capitalize %>

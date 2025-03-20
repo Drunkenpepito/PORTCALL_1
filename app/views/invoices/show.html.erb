@@ -24,7 +24,7 @@
 <% end %>
 <!--   MENU 2   -->
 <div class=" d-flex align-items-center justify-content-center blue p-3 ">
-  <table class="table table-success  table-hover border border-secondary border-5" data-controller="dragparent">
+  <table class="table table-success  table-hover border border-secondary border-5" data-controller="dragparent" data-dragparent-type-value = "orders" >
     <thead>
       <tr class="text-center table-dark h6 border border-3 border-light">
         <th id="123" class="text-start fs-6 text-light" scope="col" draggable="true" >SERVICE</th>
@@ -39,7 +39,7 @@
           <% @orders.each do |order| %>
             <tr>
               <td  >
-                <li class="blue" data-controller="toggle-family"><%= link_to order.name.upcase, order_path(order), class:"h4", draggable:true , id:order.id %>
+                <li class="blue" data-controller="toggle-family" draggable='true'  id='<%=order.id%>' ><%= link_to order.name.upcase, order_path(order), class:"h4"%>
                   <button class="btn" data-action="click->toggle-family#toggle">
                   ▽
                   </button>

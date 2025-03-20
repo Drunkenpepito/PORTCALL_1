@@ -2,6 +2,9 @@ module ChartUpdater
   extend ActiveSupport::Concern
 
   def update_chart
+    # on passe @purchase_order dans le lien de la vue du remove
+    # params[:id] necessaire ppur la vue show purchase order 
+    
     po_id = params[:purchase_order_id] || params[:id]
     @purchase_order = PurchaseOrder.find(po_id)
     @po_lines = PoLine.where(purchase_order_id: @purchase_order.id)

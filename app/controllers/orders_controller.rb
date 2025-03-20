@@ -105,12 +105,8 @@ class OrdersController < ApplicationController
 
     def edit_comment
       @order = Order.find(params[:id])
-      if @order.update(comment: params[:order][:comment])
-        redirect_to order_path(@order), notice: "Comment was successfully updated."
-      else
-        render :edit_comment
-      end
     end
+    
 
     def update
       if @order.update!(order_params)
@@ -166,7 +162,7 @@ class OrdersController < ApplicationController
     def change_ancestry
       @og_service = Order.find(params[:id])        
       @new_parent_service = Order.find(params[:parent_id]) unless params[:parent_id] == "123"
-      @type = params[:target_type]
+      # @type = params[:target_type]
       if  params[:parent_id] == "123"
           @og_service.ancestry = @og_service.root.ancestry
       else
@@ -180,6 +176,8 @@ class OrdersController < ApplicationController
            end
       end
   end
+
+  
 
     private
     

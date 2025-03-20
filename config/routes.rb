@@ -69,12 +69,15 @@ Rails.application.routes.draw do
       get :calculate
       get :newchildorder # cas ou on veut creer un order ad hoc qui a un parent
       post "orders/:id/createchildorder", to:"orders#createchildorder", as: :createchildorder
-      post 'edit_comment', to: 'orders#edit_comment'
+      get 'edit_comment', to: 'orders#edit_comment'
     end
     resources :order_variables, only: [:new, :create]
     post "taxes/:id/link_tax_order", to:"orders#link_tax_order", as: :link_tax
     post "taxes/:id/unlink_tax_order", to:"orders#unlink_tax_order", as: :unlink_tax
 
+    collection do
+      patch :change_ancestry
+    end
   end
   get "invoices/:id/neworder", to:"orders#neworderadhoc", as: :neworderadhoc # cas ou on veut creer un masterorder ad hoc qui n'a pas de parent
   post "invoices/:id/neworder", to:"orders#createorderadhoc", as: :createorderadhoc

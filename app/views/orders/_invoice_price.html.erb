@@ -1,3 +1,3 @@
 <%= turbo_frame_tag "invoice_price_#{order.id}" do %>
-    <%= order.gross if order.gross.is_a? Numeric %>
+    <%= order.gross.round(4) if order.gross.is_a? Numeric %>
 <% end %>

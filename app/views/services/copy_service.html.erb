@@ -14,7 +14,7 @@
             <tr >
               <th scope="row">
                 <% contract.services.select{|s| s.is_root?}.each do |service| %>
-                    <li class= 'blue' >
+                    <li class= ' bg-primary' >
                       <%= button_to service.name, service_paste_service_path( parent: @service, service_id:service.id), method: :post %>
                       <span >
                         <%= render 'sub_menu_services_2', services: service.descendants.arrange %>
