@@ -20,7 +20,7 @@
                    <span class="span150"> <%= invoice.good_receipt  %></span>
                    <span class="span150"><%= invoice.payment_date  %></span>
                    <span class="span150"><%= button_to "APPROVE",goodreceipt_invoice_path(invoice, @purchase_order),class: " btn btn-sm btn-success  border rounded-5 " if invoice.purchase_order == nil %></span>
-                   <span class="span50"><%= button_to "✏️",edit_gr_invoice_path(invoice), class: "btn  m-auto  " %></span>
+                   <span class="span50"><%= button_to "✏️",edit_gr_invoice_path(invoice, purchase_order:@purchase_order), class: "btn  m-auto  " %></span>
                 </div>
                <% end %>
             </div>

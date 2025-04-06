@@ -68,7 +68,7 @@ module Xlsx
     wb.add_worksheet(name: "#{invoice.name}") do |sheet|
       sheet.add_row ['SERVICE', 'BUDGET PRICE', 'INVOICE PRICE', 'PARENT', 'FORMULA'] , style: style2
       sheet.auto_filter = 'A1:E1'
-      invoice.orders.each { |o| sheet.add_row [o.name,o.budget_price, o.invoice_price, o.ancestry, o.formula], style: style1 }
+      invoice.orders.each { |o| sheet.add_row [o.name,o.net, o.gross, o.ancestors.map(&:name), o.formula], style: style1 }
     end
     return p
   end
