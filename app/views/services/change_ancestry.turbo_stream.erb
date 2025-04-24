@@ -1,8 +1,7 @@
 
 
-<%= turbo_stream.remove "service_#{@og_service.id}" do %> 
-    <%= render "contracts/root_service" , service: @og_service %>
-<%end%> 
+<%= turbo_stream.remove "service_#{@og_service.id}"  %> 
+<%= turbo_stream.remove "row_service_#{@og_service.id}"  %> 
 
 <%  if @new_parent_service.nil? %>
     <%= turbo_stream.append "contract_services_list#{@og_service.contract.id}" do %> 

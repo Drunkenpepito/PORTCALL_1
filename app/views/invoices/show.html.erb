@@ -39,7 +39,7 @@
           <% @orders.each do |order| %>
             <tr>
               <td  >
-                <li class="blue" data-controller="toggle-family" draggable='true'  id='<%=order.id%>' ><%= link_to order.name.upcase, order_path(order), class:"h4"%>
+                <li class="blue" data-controller="toggle-family" draggable='true'  id='<%=order.id%>' ><%= link_to order.name.upcase, order_path(order), class:"h4", id:order.id%>
                   <button class="btn" data-action="click->toggle-family#toggle">
                   ▽
                   </button>

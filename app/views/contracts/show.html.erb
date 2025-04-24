@@ -19,15 +19,17 @@
 
 <!--   SERVICES LIST   -->
 <div class= "d-flex justify-content-center m-3">
+  <%# <%= turbo_frame_tag "contract_services_list#{@contract.id}"  do %> 
   <table class="table table-bordered table-hover border border-light" data-controller="dragparent" data-dragparent-type-value = "services" >
       <thead  >
       <tr class="text-center "  >
         <th  id="123" class="text-center fs-6 text-secondary " scope="col" draggable = "true" >SERVICES</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id = <%= "contract_services_list#{@contract.id}" %>>
       <%= render 'services_list', services: @services %>
     </tbody>
   </table>
+  <%# <% end %> 
 </div>
 
